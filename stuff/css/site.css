@@ -1,0 +1,225 @@
+.hidden {
+display: none;
+}
+
+
+body {
+font-family: arial, helvetica, sans-serif;
+width: 100%;
+margin: 0;
+margin-top: 0;
+}
+
+#title {
+margin-left: 1em;
+position: fixed;
+top: 0;
+font-style: italic;
+}
+
+#page {
+width: 70%;
+margin: 0 10%;
+padding-top: 1em;
+padding-bottom: 2em;
+}
+
+#sidenav {
+list-style-type: none;
+font-size: 1.3em;
+position: absolute;
+top: 0;
+right: 2em;
+width: 15%;
+}
+
+#sideabout {
+right: 0;
+top: 0;
+padding: 10px 10px 2em;
+float: right;
+text-align: right;
+width: 12em;
+}
+
+#aboutnic {
+list-style-type: none;
+}
+
+
+
+#content {
+width: 100%;
+}
+
+
+
+#social {
+position: fixed;
+right: 0;
+top: 0;
+padding: 10px 10px;
+}
+
+.sidebar {
+float: right;
+position: absolute;
+top: 18em;
+right: 1%;
+width: 15%;
+background: Ivory;
+background: -webkit-gradient(linear, right top, left bottom, from(Ivory), to(LightCyan));
+background: -moz-linear-gradient(top,  MintCream, HoneyDew);
+border: 1px solid PowderBlue;
+padding: 0.5em 2em 2em 2em;
+-moz-border-radius: 31px;
+-webkit-border-radius: 31px;
+}
+
+.sidebar h1 {
+text-align: right;
+padding-right: 1em;
+}
+
+/* body */
+
+a {
+text-decoration: none;
+}
+
+a:link {
+color: MediumBlue;
+}
+
+a:visited {
+color: MidnightBlue;
+}
+
+
+h1,h2,h3 {
+background-color: GhostWhite;
+color: DarkSlateBlue;
+font-weight: bold;
+}
+
+h1 {
+border-top: thick solid DarkSlateBlue;
+font-size: 25pt;
+font-weight: bold;
+/*font-family: "hoverunit-1","hoverunit-2", "Courier";*/
+}
+
+h2 {
+font-size: 20pt;
+color: CadetBlue;
+border-bottom: thick solid CadetBlue;
+}
+
+#emph {
+display: block;
+text-align: center;
+font-size: 18pt;
+}
+
+ul ul {
+padding-left: 1em;
+}
+
+p,li {
+font-size: 16pt;
+color: DarkSlateGray;
+}
+
+small {
+font-size: xx-small;
+}
+
+pre {
+-moz-border-radius: 4px;
+-webkit-border-radius: 7px;
+padding: 2em;
+padding-left: 1em;
+/*margin: 5% -8% 5% -5%;*/
+background-color: White;
+font-size: 11pt;
+font-family: "droid-sans-mono-1", "droid-sans-mono-2", "Courier";
+}
+
+
+
+
+/* Footer */
+
+#footer {
+font-size: 16pt;
+margin-bottom:0;
+padding:1em;
+padding-bottom: 3em;
+border-top: thick solid MidnightBlue;
+background-color: DarkBlue;
+background: -webkit-gradient(linear, left top, left bottom, from(DarkBlue), to(Blue));
+background: -moz-linear-gradient(top,  DarkBlue, Blue);
+color: Ivory;
+}
+
+#footerside {
+float: right;
+margin-right: 5em;
+float: right;
+text-align: right;
+width: 12em;
+padding-bottom: 2em;
+}
+
+#footer * a:link {
+color: HoneyDew;
+}
+
+#footer * a:visited {
+color: HoneyDew;
+}
+
+#footer * li {
+list-style-type: none;
+color: HoneyDew;
+}
+
+#footer * h4 {
+margin-bottom: 0;
+}
+
+#footertoc ul {
+margin: 0;
+padding:.2em;
+}
+
+
+
+#gravatar {
+float: right;
+margin-left: 1em;
+margin-right: -2em;
+}
+
+#toc {
+list-style-type: none;
+}
+
+#footernav small {
+clear: both;
+font-size: .7em;
+}
+
+#copyright {
+padding-top: 1em;
+}
+
+/* end footer */
+
+
+a[href="http://www.woome.com"] {
+text-decoration: none;
+color: black;
+}
+
+/* End */

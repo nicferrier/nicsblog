@@ -1,0 +1,57 @@
+</div>
+</div>
+<div id='footer'>
+    <ul>
+	<li id='footerside'>
+	    <form action='https://www.paypal.com/cgi-bin/webscr' method='post'>
+		<input type='hidden' name='cmd' value='_s-xclick'/>
+		<input type='hidden' name='hosted_button_id' value='4UGG7UKDFWCQ6'/>
+		<input type='image'
+		       src='https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif' 
+		       border='0'
+			   name='submit'
+			   alt='Donate to efforts on any of this stuff with PayPal.'/>
+		<img alt='' border='0' src='https://www.paypalobjects.com/en_GB/i/scr/pixel.gif' width='1' height='1'/>
+	    </form>
+	</li>
+	<li id='footertoc'>
+	    <h4>Emacs Lisp</h4>
+            <ul>
+              <li><a href="/blog/2011_10/emacs_lisp_is_good_further_reports_suggest">Async programming and macros</a></li>
+              <li><a href="/blog/2011_09/elisp_testing">TDD with Lisp and ERT</a></li>
+              <li><a href="/blog/2010_10/elnode">Introducing Elnode, an EmacsLisp web server</a></li>
+              <li><a target="_other" href="http://emacswiki.org/wiki/NicFerrier">Nic's Emacs Wiki</a></li>
+              <li><a target="_other" href="https://github.com/nicferrier/elwikicreole">WikiCreole converter in EmacsLisp</a></li>
+              <li><a target="_other" href="https://github.com/nicferrier/elnode">the Elnode repository</a></li>
+              <li><a target="_other" href="https://github.com/nicferrier/emacs-fakir">the Fakir repository</a></li>
+            </ul>
+
+	    <h4>DevOps</h4>
+            <ul>
+              <li><a href="/blog/2011_11/virtualization_for_python">Dependancy management for Python with VEH</a></li>
+              <li><a href="/blog/2010_04/how-repos-work-at-woome">How release management worked at WooMe</a></li>
+              <li><a target="_other" href="https://github.com/nicferrier/veh">the VEH repository</a></li>
+	      <li><a target="_other" href="https://github.com/nicferrier/resolvconfpy">Python resolvconf program</a></li>
+	      <li><a target="_other" href="https://github.com/nicferrier/multiserver">Django multiple-instance server</a></li>
+	    </ul>
+	</li>
+    </ul>
+    <small id='copyright'>Copyright (C) 2009,2010,2011 Nic Ferrier</small>
+</div>
+<script type='text/javascript'>
+     var _gaq = _gaq || [];
+     _gaq.push(['_setAccount', 'UA-24502836-2']);
+     _gaq.push(['_trackPageview']);
+    (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+     })();
+</script>
+<script src="http://use.typekit.com/cgl3snr.js" language="Javascript"></script>
+<script>
+//<!--
+try{Typekit.load();}catch(e){}
+//-->
+</script>
+
