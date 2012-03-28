@@ -1,0 +1,253 @@
+= things to do with version control when you're dead =
+
+//Sunday 04 October 2009//
+
+In all the hype about [[http://git-scm.com/|git]] I urge you to take a
+step away from the baying and look at
+[[http://mercurial.selenic.com/wiki/|Mercurial]].  Mercurial is just a
+really nicely designed program, it does pretty much everything that
+git does but it does it in an extremely coherent and usable manner.
+			            
+I've been doing a lot of mercurial integration recently for
+[[http://www.woome.com|WooMe]]. There's some interesting things that you
+can do with just a bit of script and by using mercurial's hooks and
+some crons.
+
+== making feeds ==
+
+Here's a simple pipemill that I wrote for making a feed for
+[[http://nic.ferrier.me.uk/blog/|creare]]:
+
+{{{
+##! shell-script
+hg log --template '{node} {files}\n' \
+    | ( 
+while read node args
+do     
+ for i in $args
+ do 
+   hg log -r $node \
+     --template="<item>
+<link>${i}</link>
+<date>{date|isodate}</date>
+<summary>{desc|escape}</summary>
+<author>{author|escape}</author>
+</item>\n"
+ done
+done 
+)
+}}}
+
+This shows a really cool feature of mercurial:
+[[http://hgbook.red-bean.com/read/customizing-the-output-of-mercurial.html#id414947|templating]]. The templates used in the example above let me
+automatically present the revision control log as an rss feed.
+
+I actually use a python version of this to do creare's feed. Here's
+the code:
+
+{{{
+##! python
+"""
+Construct feeds from mercurial
+"""
+
+from mercurial import hg
+from mercurial import ui
+from mercurial import commands
+
+import re
+import itertools
+
+def _item(u, r, f, node):
+    u.pushbuffer()
+    commands.log(
+        u, 
+        r, 
+        rev=[node], 
+        date="", 
+        user="",
+        template="""<entry>
+  <title>{desc|escape}</title>
+  <link href="%s"/>
+  <author>
+   <name>{author|user}</name>
+  </author>
+  <updated>{date|isodate}</updated>
+ </entry>""" % f
+        )
+    return u.popbuffer().split("\n\n",1)[0]
+
+def items(path):
+    u = ui.ui()
+    r = hg.repository(
+        ui=u, 
+        path=path,
+        create=False
+        )
+    u.pushbuffer()
+    commands.log(
+        u, 
+        r, 
+        rev="", 
+        date="", 
+        user="",
+        template="""{node}|{files}\n"""
+        )
+    file_revs = u.popbuffer().split("\n")
+
+    def fn(node, filelist, match_re="^.*$"):
+        return [_item(u,r,f,node) \
+                    for f in filelist.split(" ") \
+                    if re.match(match_re, f)]
+
+    lst=[fn(*fr.split("|", 1), **{"match_re": "^[A-Z0-9a-z_-]+/[A-Z0-9a-z_-]+$"}) \
+             for fr in file_revs if len(fr) >1]
+    return itertools.chain(*lst)
+}}}
+
+And here's a little demo of how that's used:
+
+{{{
+##! python
+from os.path import abspath
+from os.path import dirname
+
+def feed(uri, path, title):
+    return """<?xml version="1.0" encoding="ascii"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+   <id>%(feedlocation)s/</id>
+   <link rel="alternate" href="%(bloglocation)s"/>
+   <title>%(title)s</title>
+   %(entrys)s
+</feed>
+""" % { 
+        "feedlocation": uri,
+        "bloglocation": uri,
+        "title": title,
+        "entrys": "\n".join([x for x in items(path)]),
+        }
+
+if __name__ == "__main__":
+    print feed(
+        "http://nic", 
+        "%s/../../" % dirname(abspath(__file__)),
+        "nics blog"
+        )
+}}}
+
+This shows up another thing that I really like about mercurial, the
+whole system is exposed to python. It makes for some very interesting
+hacks and adds an extra dimension to your toolkit.
+
+== wait!!! someone's gonna do something!!! ==
+
+Most of the things I've been doing at [[http://www.woome.com|WooMe]]
+have been around getting mercurial to do things automatically when
+someone pushes some changes to a repo.
+
+Mercurial has hooks to allow you to express actions that should be
+performed when interactions with the repo occur. These are just like
+triggers in CVS but a //lot// more comprehensive. One hook in
+particular is especially useful - //prechangegroup//.
+
+prechangeroup is called when someone is pushing something to a repo,
+but it's called in such a way that the hook script has access to the
+change but the change is not actually committed yet. Because of this
+the hook script has the opportunity to refuse the commit.
+
+For example, here's my XSLT check hook to stop people checking in XSLT
+files with tabs in them:
+
+{{{
+##! shell-script
+#!/bin/bash
+hg -R $HG_PENDING log -r $HG_NODE --template="{files}\n" \
+   | ( while read args
+do 
+  for i in $args
+  do 
+    echo $i | grep -q xslt && grep -qE '\t' ${HG_PENDING}/${i} && exit 1
+  done
+done
+)
+}}}
+
+The exit there will cause the push to fail and I'll be sure not to
+have to deal with a tab.
+
+With the prechangegroup hook, mercurial sets the  {{{HG_PENDING}}} and
+{{{HG_NODE}}} variables for you, the former being the repo and the
+latter being the relevant changeset.
+
+== avoiding the cruise liner ==
+
+I've never liked [[http://cruisecontrol.sourceforge.net/|cruise control]]
+personally. I know people who can make it jump through hoops but I
+never did learn all that fancy config.
+
+But for triggering a run of [[http://www.woome.com|WooMe]]'s tests
+it's pretty simple to do this with mercurial's hook scripts.
+
+To do this simply you need 2 scripts; 1 script monitors mercurial
+changes in whatever way you want and logs them and the other takes the
+log file and runs tests based on what's logged there.
+
+I chose to monitor a mercurial update on a repo. This fits with the
+way [[http://www.woome.com|WooMe]] developers work. A script to log
+updates is really simple:
+
+{{{
+##! shell-script
+#!/bin/bash
+echo "$(date +'%Y%m%d%H%M%S') $(PWD)" >> $(dirname $0)/hg-testable
+}}}
+
+Note that this time we don't have {{{HG_PENDING}}} but the hook //is//
+executed in the dir of the repo so we can grab the location to record easily.
+
+The script to take that log and execute test runs is pretty simple as
+well.
+
+{{{
+##! shell-script
+#!/bin/bash
+EXCLUDEFILE="$(dirname $0)/.hg-updatetest-exclude"
+LOGFILE=/tmp/testrun.$$
+grep $(date '+%Y%m%d%H') $(dirname $0)/hg-testable \
+    | awk '{print$2}' \
+    | sort \
+    | uniq \
+    | (
+while read repo
+do 
+  for exclude in $(cat $EXCLUDEFILE)
+  do
+    echo $repo | grep -q $exclude || echo $repo >> ${LOGFILE}
+    sedpattern="/.*$(echo $repo | sed -rne 's|/|\\/|gp')/d"
+    sed -irne "$sedpattern" $(dirname $0)/hg-testable
+  done
+done 
+)
+
+for i in ${LOGFILE}
+do
+  cd $(dirname $i)
+  ./manage.py --xml --test-db test
+done
+}}}
+
+The central trick here is a timing conceit. The {{{hg-testable}}} log
+file has the date stamp at the beginning of the file. If we grep for
+the current hour we'll find everything updated in the current hour.
+
+[[http://www.woome.com|We]] run this script via cron, once an hour so
+it catches everything that was updated in that hour. 
+
+Clearly it could be more complicated, but there's probably no need.
+
+== take it to the bridge ==
+
+Mercurial is so well put together, it's a really good example of how
+to buid a unix tool that developers will enjoy using. And none of
+this has even begun to explore how you can easily get at mercurial
+internals from python.

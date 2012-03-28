@@ -1,0 +1,229 @@
+= time management for hackers =
+
+//Stop all the clocks, cut off the telephone,//\\
+//Prevent the dog from barking with a juicy bone,//\\
+//Silence the pianos and with muffled drum//\\
+// - Auden//
+
+I have been reading [[http://oreilly.com/catalog/9780596007836|time management for sysadmins]]. 
+I was really hopefull when I brought the
+book that it would show me some stuff that would help me manage my
+time better.
+
+Alas, it really isn't much more than the standard time management
+techniques: [[http://www.davidco.com/|getting things done]] plus a
+pda. Not that I'm disrespecting Tom Limoncelli, he's spot on the that
+most sysadmins don't know a lot of this stuff. I wish I'd had this
+book 15 years ago.
+
+But it's not what I wanted.
+
+What did I want? More detail, less getting things done hand
+waving. 
+
+We kicked off [[http://www.woome.com|WooMe]] 2 years ago and mrs.nic and I had our fourth child
+at roughly the same time. My time management techniques were pushed to
+the limit. Ok. Past the limit. 
+
+I had to do something to keep tabs on the tasks of a 10 strong team of
+hackers. I started to force more of my stuff through a scripting
+mill. Trying to script things at least means you are specifying how
+you think things work. If only to yourself and your shell.
+
+So here's some techy tips, concrete things I've done that have given
+me more time and more ability to manage the time I have.
+
+== Databases ==
+
+Everybody, especially [[http://oreilly.com/catalog/9780596007836|Tom Limoncelli]], 
+will tell you that for time management you have to write everything
+down.  You have to record the stuff you've done and the stuff you're
+gonna do.  Let's be clear about this: you're making a bunch of
+databases. Probably not just one because some of them will be personal and
+some of them will be shared with other people. But, because you are a
+hacker it is vital that these databases should be ones that you can
+hack.
+
+The next obvious thing is that if there are lots of databases you need
+to try to reduce them to as few databases as possible, those you are
+left with you have to synchronize where necessary.
+
+The devil is in the //where necessary// bit.
+
+Out of interest here are my databases:
+
+ * the [[http://www.woome.com|WooMe]] ticket system, happens to be trac
+ * an emacs org-mode todo and //projects// file
+ * an emacs org-mode file of my contact database
+ ** I keep all the [[http://www.woome.com|WooMe]] tech team in here, mobiles etc...
+ * the [[http://www.woome.com|WooMe]] tech wiki where we keep lots of unstructured and structured info
+ * mercurial - all [[http://www.woome.com|WooMe]]'s code is kept here
+ 
+All these systems are easy to get data in and out of and that's why I
+chose them. Trac has a [[/blog/2009september/shell_integration|great API]] 
+for getting data in and out. org-mode is just text.
+
+Now the devilish bit: how do I synchronize them? I do things like:
+
+ * releases
+  * pulling to be released ticket numbers from trac into org-mode
+  * fiddling with them
+  * exporting them back to trac wiki
+ * making tickets from org-mode todo's
+ * jumping from a source file in emacs to the mercurial version
+
+These are all synchronizations and have been chosen through looking at
+what I do, not by building a general tool. I find editing ticket lists
+easier to do in emacs. I find code revisions easier to look at in
+hgweb than in emacs. I find I keep todo's of tickets for some time
+polishing ideas.
+
+To me, synchronizing just means not having silos. Make sure you move
+data around easily.
+
+
+== Scripts ==
+
+Time management like any management is overhead. What you do //not//
+want is for your time management to be a burden. This is certainly the
+reason I have resisted adopting formal strategies, I felt the overhead
+was too great. But this is the key thing that hackers can
+improve. Hackers automate stuff without thinking, why is it so many of
+us get stuck with not scripting our time management tools?
+
+I stopped having my own bin dir about 4 years ago, declaring it
+passe. However, since this year I have started to try writing scripts
+for everything I do more than a few times a day related to time
+management. I now have programs as trivial as this:
+
+{{{
+#!/bin/sh
+date '+%Y%m%d'
+}}}
+
+I call this //isotoday// - it prints the current date in iso format;
+
+or this:
+
+{{{
+#!/bin/sh
+date '+%A %d %B %Y'
+}}}
+
+I call this //today// it just prints the date in human form.
+
+Or even this:
+
+{{{
+#!/bin/sh
+date '+%Y%m%d%H%M'
+}}}
+
+I call this //isofull// and whenever I make a release of
+[[http://www.woome.com|WooMe]]'s code (which is about 2 or
+3 times a week) I type:
+
+{{{
+hg tag release_$(isofull)
+}}}
+
+
+It doesn't matter how small the script is. //today// is ridiculous
+really. I think the important point here is
+
+//@emph don't be shy//
+
+These tiny scripts do really save me brain time: typing //today//
+instead of the date command probably saves me 10 seconds everytime I
+do it. So I do it more.
+
+Another example is a simple shell command I have to turn org-mode
+lists into trac lists. So when I take notes of a meeting I can do it
+in org-mode and then pretty quickly publish to trac. 
+
+The corollary to this is don't spend a lot of time with tools that
+don't let you use scripts. I don't write a lot of text inside firefox
+because it isn't a great editing or scripting environment. 
+
+Even in firefox there are time saving tools: I have toolbar macros for
+creating trac tickets and doing trac searches.
+
+making a new ticket - I bind this to "nt"
+{{{
+https://trac.example.com/trac/newticket?summary=%s
+}}}
+
+doing a trac search - I bind this to "ts"
+{{{
+https://woomenauts.woome.com/trac/search?q=%s
+}}}
+
+
+== GTD - the bad bits ==
+
+GTD specifies that you keep 1 copy of your todo list and calendar for
+every single day.
+
+No way. It always struck me as an absolutely idiotic thing to do. Why
+would you do that? This is a problem with some of the standard time
+management advice I think, I've been told these things before and said
+to myself "I'm not doing that, it's nuts" because it sounded to me
+like a massive violation of DNRY. In other words I was too stupid to
+see beyond the implementation. The answer to this one is simple:
+Hackers have version control.
+
+So I guess I do now keep 365 versions of my todo list. But I do it by
+checking in my todo list at least at the start of every day, changing
+the date on the heading (just for diff context) removing all the DONE
+items and then checking it in again. And yes, I also script this.
+
+If I want to see a previous day I simply use hg log, here's a
+snapshot:
+
+{{{
+changeset:   9:89e86a150932
+tag:         tip
+user:        nferrier@localhost.localdomain
+date:        Tue Nov 03 04:29:11 2009 +0000
+summary:     starting the day
+
+diff -r d1fc56c13ab7 -r 89e86a150932 todo.org
+--- a/todo.org	Tue Nov 03 04:27:24 2009 +0000
++++ b/todo.org	Tue Nov 03 04:29:11 2009 +0000
+@@ -78,15 +78,11 @@
+ 
+ * woome
+ ** status
+-*** 20091102
++*** 20091103
+ **** TODO switch over mdb to frank's new db
+ ***** consolidated tables
+ ****** will be broken?
+ **** TODO fix up otu's script to pull data off files
+-**** DONE rate detection into rc
+-**** DONE add allan's expiry cron to rc
+-**** DONE make a ticket for seb to generate new images
+-***** should we drop the existing thumb from the db?
+ **** TODO change the movement of tickets so it doesn't change the owner
+ ***** when a dev pushes a ticket to george for product acceptance
+ ***** when a dev (or george) pushes to kelley for test
+}}}
+
+
+== The stuff you can't script ==
+
+Ok. There is stuff I can't script. I can't script concentration. Or
+clarity. That's up to you. 
+
+I am no great concentrator. I have 4 children and a twitter account. I
+can't concentrate on anything for more than about 5 minutes. But
+that's normally ok, I make sure that I have 5 minutes with good
+information. All this stuff about pomadoros and wot not is just macho
+will power stuff and I don't do it. But every week I get through a
+whole bunch of releases, keep my team running, deal with problems and
+write some code. I just do it in 5 minute slots. It's not
+revolutionary. It's just time slicing.
+
+As I think of more stuff I'll update it here.
+
+Chin chin.

@@ -1,0 +1,170 @@
+= a word in your shell, like =
+
+//Thursday 03 September 2009 09:13//
+
+As the end of the holidays approached and the kids are looking to go
+back to school (and DD2 starts this year! exciting!) I've been
+distracting myself by mucking about in shell and thinking how and why
+we do what we do with the command line.
+
+== hacking trac ==
+
+A tool I built for hacking around with
+[[http://trac.edgewall.org|Trac]] at [[http://www.woome.com|WooMe]] is
+a command line access tool for the most obvious things one does with Trac:
+
+ * makes tickets
+ * alters tickets
+ * edits wiki pages
+
+the fact that a tool like this didn't already exist was kind of a
+surprise. Trac has an excellent (cough) [[http://www.xmlrpc.com/|XMLRPC]] interface so I guess
+most people write bespoke little tools for managing trac.
+
+We at WooMe do too, but we write them in shell with
+[[http://trac-hacks.org/wiki/TracCmdScript|traccmd]]
+
+traccmd is really very simple, but that's not the point. It just
+exposes the obvious things to shell so you don't have to open a
+browser, fire up a tab, fill in forms, etc...
+
+I originally wrote it because I wanted a way to edit wiki pages in
+the mighty [[http://www.emacswiki.org|Emacs]]. There was already an
+Elisp/XMLRPC based program for doing that... but it worked inside
+Emacs and as Emacs is not multi-threaded it didn't work very well.
+
+The solution is the age old shell pattern: write a command line
+interface to it and then wrap that in higher tools. It's the way
+[[http://catb.org/jargon/html/U/UN-asterisk-X.html|unix]] was
+designed to work. So often we forget that and I'm not sure why. It's
+such a powerful way of working.
+
+With traccmd we've been able to build release management tools, stuff
+that embeds quite deeply into Trac things from inside our live
+environment, here's a snippet of the release candidate maker script:
+
+{{{
+traccmd.py ticket $(cat rc_ticket_depending_numbers) | grep summary 
+}}}
+
+from a list of ticket numbers that tells us in a nice formatted list
+what the ticket is about.
+
+== org2trac ==
+
+Something I wrote just last night in python is org2trac, this is kind
+of an example of the normal un*x shell tools letting me down. I needed
+to convert an Emacs [[http://www.orgmode.org|OrgMode]] list:
+
+{{{
+ * this is a list
+ ** this is a subpoint
+ * todo
+ ** manage all my work through orgmode
+ ** possibles
+ *** become elvis presley
+ ** write about org mode in a blog entry
+ ** make dinner
+ ** stop DS2 attacking the dog
+}}}
+
+into something that Trac likes as a [[http://www.wikicreole.org|Wiki]]
+format:
+
+{{{
+ * this is a list
+  * this is a subpoint
+ * todo
+  * manage all my work through orgmode
+  * possibles
+   * become elvis presley
+  * write about org mode in a blog entry
+  * make dinner
+  * stop DS2 attacking the dog
+}}}
+
+
+It's a simple little thing:
+
+{{{
+##! python
+#!/usr/bin/python
+import re
+import sys
+for line in sys.stdin:
+    sys.stdout.write(re.sub("(\**)(?=\*)", lambda m: " " * len(m.group(1)), line))
+}}}
+
+It's just a regex really. But it's still there, on the shell for you
+to do things with:
+
+{{{
+cat todo.org | org2trac | traccmd wikiput NicFerrier/todo
+}}}
+
+and of course in Emacs I can select a region and {{{ C-u M-| }}} and
+pipe a region of text through org2trac and replace it with the
+output (and I've just realized how cool it would be to record that in
+a screencast and show you it happening - if only I had that kind of
+time I'd be able to, well, I dunno, shower or something).
+
+== pyline ==
+
+The above little org hack was something I prototyped in
+[[http://code.activestate.com/recipes/437932/|pyline]] which is just
+an awesome little tool.
+
+I showed it to the sysadmins at WooMe who are all a bit keen to learn
+[[http://www.python.org|Python]], mainly because we use it like mad
+here. It's a brilliant learning tool for budding
+[[http://www.oreillynet.com/pub/a/womenintech/2007/09/11/charming-pythonistas.html||pythonistas]]
+because it lets you practice, replacing awk and sed with bits of
+python.
+
+Again, this is down to shell, it's so easy to test stuff, just keep
+shoving the input into your little command and test what comes out:
+
+{{{
+ps ajx | pyline 'word[5] if re.search("python", line) else None'
+}}}
+
+size limit it:
+
+{{{
+ps ajx | head | pyline 'word[5] if re.search("python", line) else None'
+}}}
+
+
+pattern limit it:
+
+
+{{{
+ps ajx | head | grep python | pyline 'word[5] if re.search("python", line) else None'
+}}}
+
+... it's just all so easy.
+
+== this must be going somewhere, right? ==
+
+Well, maybe. I think the point I am constantly learning is that shell
+is just the //best// integration tool, especially when you can get at
+it from your editor.
+
+I was going to wrap up with some thoughts about the
+[[http://doc.cat-v.org/plan_9/4th_edition/papers/acme/|acme editor]]
+but I think there is actually a slightly more interesting point
+here... what I've noticed is that the shell tools I use are all very
+simple themselves. So while shells have to some extent got quite
+complex and
+[[http://www.gnu.org/software/bash/manual/bashref.html#Quoting|hard to use]]
+I don't find myself using that stuff. Much.
+
+So what I find myself thinking is: would a simpler shell be even more
+powerful? let's take stuff out not put stuff in. Let's stick to the
+original vision and just make it easier to pipe things in and
+out. Maybe we should improve completion and access to obscure command
+options. Maybe we should think about helping people who don't use
+shell write now.
+
+Which is what acme was trying to do, to an extent. But that's another
+story.

@@ -1,0 +1,160 @@
+= ELisp Testing =
+
+I just found out that
+[[http://www.emacswiki.org/emacs/ErtTestLibrary|ERT]] has been included
+in Emacs trunk. This kinda tips the balance for using it to do unit
+testing.
+
+As an example, I've just added some cookie support to Elnode and I
+tried to do it in a Test Driven Development (TDD) style. Here is the
+cookie test:
+
+{{{
+##! emacs-lisp
+(ert-deftest elnode-test-cookie ()
+  "Test the cookie retrieval"
+  (flet (;; Define this so that the cookie list is not retrieved
+         (process-get (proc key)
+           nil)
+         ;; Just define it to do nothing
+         (process-put (proc key data)
+           nil)
+         ;; Get an example cookie header
+         (elnode-http-header (httpcon name)
+           "csrf=213u21321321412nsfnwlv; username=nicferrier"))
+    (let ((con ""))
+      (should (equal 
+               (pp-to-string 
+                 (elnode-http-cookie con "username")) 
+               "((\"username\" . \"nicferrier\"))\n")))))
+}}}
+
+== The test cycle ==
+
+The TDD (Test Driven Development) cycle is highly interactive and very
+suited to sitting inside an Emacs tinkering. It works pretty much the
+same as the standard Eval cycle:
+
+* write an ert test
+* write the code to test
+* eval both the ert test and the code
+* run {{{M-x ert}}} and then specify the test name
+
+{{{ert}}} gives you a test output buffer in a special major mode. It
+tells you why the test failed (if it did) and gives other information.
+
+You then go back and tweak the test, or the code and do it all over
+again.
+
+You can also run more than one test with ert. Just hitting {{{ENTER}}} will
+run all the tests defined in the buffer.
+
+
+== Writing the test ==
+
+You'll notice that I have a bunch of flet's in the test
+above. {{{flet}}} defines a local function. Basically, {{{flet}}}
+let's you do mocking very easily. Each of the {{{flet}}} definitions
+overrides a function used by the function under test to ensure the
+output of the tested function is predictable.
+
+Here's the source Elnode function, you can see why I had to {{{flet}}}
+some things:
+
+{{{
+##! emacs-lisp
+(defun elnode-http-cookie (httpcon name)
+  "Get the cookie value specified by the name"
+  (let ((cookie-list
+         (or
+          (process-get httpcon :elnode-http-coookie-list)
+          ;; Split out the cookies
+          (let* ((cookie-hdr (elnode-http-header httpcon "Cookie"))
+                 (parts (split-string cookie-hdr ";")))
+            (let ((lst (mapcar
+                        (lambda (s)
+                          (url-parse-args
+                           (if (string-match "[ \t]*\\(.*\\)[ \t]*$" s)
+                               (replace-match "\\1" nil nil s)
+                             s)))
+                        parts)))
+              (process-put httpcon :elnode-http-cookie-list lst)
+              lst)))))
+    (loop for cookie in cookie-list
+          do (if (assoc-string name cookie)
+                 (return cookie)))))
+}}}
+
+As it stands, I'm not happy with the return value from this cookie
+function so I'll be using TDD techniques to make that better.
+
+
+== A higher level example ==
+
+Here's another example test, this one is a test of an elnode handler
+from my elpad application:
+
+{{{
+##! emacs-lisp
+(ert-deftest elpad-test-pad-web-update ()
+  "Test the change handler works with POST from the web."
+  (with-temp-buffer
+    (rename-buffer (number-to-string (random)) 't)
+    (let ((change-text "this is a change")
+          (uid "nicferrier"))
+      (flet (;; Define pathinfo to return our example buffer name in the uri
+             (elnode-http-pathinfo (con)
+               (concat "/elpad/" (buffer-name) "/change/")
+               )
+             ;; Define the change that we'll receive
+             (elnode-http-param (con name) change-text)
+             ;; Define the method as a POST
+             (elnode-http-method (con) "POST")
+             ;; Define the user token that we need
+             (elnode-http-cookie (con name) `(("username" . ,uid)))
+             ;; Throw away start and return stuff
+             (elnode-http-start (con status headers))
+             (elnode-http-return (con body))
+             )
+        (let ((con ""))
+          (elpad--pad-change-handler con)
+          ;; Do we have a list (an alist actually) in the changes of the changeset?
+          (should (listp 
+                    (elpad--changeset-changes (assoc-default uid elpad--changes))))
+          ;; Do we have the change-text we just sent as the first item in the user's changeset?
+          (should (equal 
+                   change-text
+                   (elpad--change-text
+                    (cdar (elpad--changeset-changes (assoc-default uid elpad--changes)))))))))))
+}}}
+
+Because this one is testing an elnode handler we can override a whole
+bunch of elnode functions to return the values we want. The purpose of
+this test is to test that a web client can update a list of changes to
+a buffer inside a buffer local state.
+
+Elpad (an etherpad like clone for Emacs) currently has quite a few
+tests as I write it from the ground up using TDD. For example, I have
+another test under this which operates directly on the change
+structure. It does seem that LISP is well suited to this very
+iterative, tower of functions and tests development style.
+
+I can already see that some of the Elnode abstractions (all those flet
+functions in the example Elpad test above) could become standard and
+perhaps part of Elnode itself but once I've written a few copying them
+around isn't such a big deal.
+
+== TDD FTW ==
+
+TDD is a good iterative step over the standard write-eval-run with
+some dummy data-type approach that is natural with LISP. I struggled
+initially with Elnode testing but I think that was mostly in toolkit
+selection.
+
+Now that ERT is in Emacs trunk I'm very happy with the approach. It's
+slowing down my initial development a lot but also meaning I can walk
+away and think more about the LISP structure and the HTTP
+interactions more. That can only be a good thing.
+
+Give it a try yourself and let [[http://twitter.com/nicferrier|me]] know
+what you think.

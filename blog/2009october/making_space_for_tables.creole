@@ -1,0 +1,377 @@
+= Making space for tables =
+
+//Sunday 25 October 2009 19:56//
+
+So [[http://djangoproject.com|django]] is a really cool framework for
+writing webapps in [[http://python.org|python]]. I've been using it
+for quite a while and it sits underneath
+[[http://www.woome.com|WooMe]]. WooMe is full of django hackers and
+geeks. We've even written our own multi database support.
+
+One of the things that was done at WooMe recently was making our tests
+run on a tiny database with minimal data in it. Our full test suite
+still took a crazy amount of time so then I altered the test runner so
+that it could create the tiny test database on a ramdisk.
+
+This is a bit like running on sqllite, everything can be in memory and
+the disc isn't hammered at all. Using sqllite is an alternative of
+course, but my projects always seem to end up with database
+(postgresql) specific code in them.
+
+I implemented this by having the testrunner make a tablespace on a
+ramdisk and then creating the db with that tablespace as the default,
+here's a snippet from WooMe's run_tests.py:
+
+{{{
+##! python
+# Create a tablespace if we need to
+ts_defn = ""
+try:
+    tb = settings.TEST_DATABASE_TABLESPACE
+except AttributeError:
+    pass
+else:
+    import psycopg2
+    try:
+        cursor.execute("CREATE TABLESPACE %s_tablespace LOCATION '%s'" % (
+                TEST_DATABASE_NAME,
+                tb))
+    except (psycopg2.OperationalError, 
+            psycopg2.ProgrammingError), e:
+        try:
+            cursor.execute("DROP DATABASE %s" % (
+                    TEST_DATABASE_NAME))
+        except:
+            pass
+
+        cursor.execute("DROP TABLESPACE %s_tablespace" % (
+                TEST_DATABASE_NAME))
+        cursor.execute("CREATE TABLESPACE %s_tablespace LOCATION '%s'" % (
+                TEST_DATABASE_NAME,
+                tb))
+
+        # Set the syntax to be used in the create db statement
+        ts_defn = """TABLESPACE = "%s_tablespace" """ % TEST_DATABASE_NAME
+
+# Create the db
+try:
+    create_stmt = "CREATE DATABASE %s %s %s" % (
+        qn(TEST_DATABASE_NAME), 
+        suffix,
+        ts_defn
+        )
+    cursor.execute(create_stmt)
+except Exception, e:
+    # Error creating db
+        sys.stderr.write("Got an error creating the test database: %s\n" % e)
+}}}
+
+But, you have to ask yourself: will no one think of the children??
+This is rubbish. Why would the test runner make a tablespace? This is
+postgres specific, it's just not good enough. It must be possible to
+do a better job. (1 rubbish in the way that isn't actually solving
+the problem, in that way it's great).
+
+== A better job ==
+
+It turns out Django has the beginnings of an API for controlled
+database creation. As far as I can see, only the
+[[http://code.djangoproject.com/browser/django/trunk/django/db/backends/oracle/creation.py|Oracle backend]] 
+supports this API right now. But we can make a new backend
+that inherits from one of the existing ones. I started by extending
+postgresql_psycopg. You need this kind of directory structure in your
+project root:
+
+{{{
+mypg/
+ __init__.py
+ base.py
+ introspection.py
+ creation.py
+}}}
+
+{{{base.py}}} and {{{introspection.py}}} are both really simple:
+
+
+base.py:
+{{{
+##! python
+from django.db.backends.postgresql_psycopg2.base import *
+}}}
+
+introspection.py:
+{{{
+##! python
+from django.db.backends.postgresql_psycopg2.introspection import *
+}}}
+
+I've tried to optimize the extra files away. Alas, I don't understand
+Python namespacing well enough to handle the quite complex import
+stuff that django does with db backends.
+
+creation.py is where we're going to add our extra code so this is more
+complex:
+
+{{{
+##! python
+from django.db.backends.postgresql.creation import *
+from mypg import MyTestMetaDb
+
+def create_test_db(settings, connection, verbosity=1, autoclobber=False):
+    """The standard Django entry point to test db creation"""
+    return MyTestMetaDb(settings, connection, verbosity, autoclobber).create()
+
+def destroy_test_db(settings, 
+                    connection, 
+                    old_database_name, 
+                    verbosity=1, 
+                    autoclobber=False):
+    return MyTestMetaDb(
+        settings, 
+        connection, 
+        verbosity).destroy(old_database_name)
+}}}
+
+
+So, in those 3 files we have an entire DATABASE_ENGINE and we can tell
+settings.py about that now:
+
+{{{
+##! python
+MANAGERS = ADMINS
+
+DATABASE_ENGINE = 'mypg' #'postgresql_psycopg2'
+DATABASE_NAME = 'mytestproject'
+DATABASE_USER = 'nferrier'
+DATABASE_PASSWORD = 'verysecretpassword'     
+DATABASE_HOST = 'localhost'
+DATABASE_PORT = '5432'
+
+TEST_DATABASE_NAME = "mytestproject_test"
+TEST_DATABASE_TABLESPACE = "/var/cache/pgdevdbramdisk/tablespaces"
+}}}
+
+So, now we have a db engine we can implement the lifecycle support
+that Django should maybe already provide.
+
+Here's a base definition of a database lifecycle class:
+
+{{{
+##! python
+class MetaDb(object):
+    def __init__(self, settings, connection, verbosity=1, autoclobber=False):
+        self.connection = connection
+        self.settings = settings
+        self.verbosity = verbosity
+        self.autoclobber = autoclobber
+
+        if hasattr(connection.connection, "autocommit"):
+            connection.connection.autocommit(True)
+        elif hasattr(connection.connection, "set_isolation_level"):
+            connection.connection.set_isolation_level(0)
+
+    def create_suffix(self):
+        """This method needs work to genericize it.
+
+        This one is totally pg specific.
+        """
+
+        assert settings.TEST_DATABASE_COLLATION is None, \
+            "PostgreSQL does not support collation setting at database creation time."
+
+        return "%s%s" % (
+            " WITH ENCODING '%s'" % settings.TEST_DATABASE_CHARSET \
+                if settings.TEST_DATABASE_CHARSET \
+                else "",
+            " TABLESPACE = %s" % ("%s_tablespace" % settings.DATABASE_NAME) \
+                if settings.TEST_DATABASE_TABLESPACE \
+                else ""
+            )
+
+    def create(self):
+        qn = self.connection.ops.quote_name
+        try:
+            cursor = self.connection.cursor()
+            if self.autoclobber:
+                try:
+                    cursor.execute(
+                        "DROP DATABASE %s" % qn(self.settings.DATABASE_NAME)
+                        )
+                except Exception, e:
+                    logger.error("%s when trying to drop" % e)
+            cursor.execute("CREATE DATABASE %s %s;" % (
+                    qn(self.settings.DATABASE_NAME),
+                    self.create_suffix()
+                    ))
+        except Exception, e:
+            logger.error("%s while creating the database")
+        else:
+            self.connection.close()
+            try:
+                call_command('syncdb', verbosity=self.verbosity, interactive=False)
+
+                if self.settings.CACHE_BACKEND.startswith('db://'):
+                    cache_name = self.settings.CACHE_BACKEND[len('db://'):]
+                    call_command('createcachetable', cache_name)
+            except Exception, e:
+                logger.error("%s while syncdb" % e)
+                logger.error(traceback.format_exc())
+
+    def destroy(self,old_database_name):
+        try:
+            # The flow here is important
+            to_drop = settings.DATABASE_NAME
+            self.connection.close()
+            settings.DATABASE_NAME = old_database_name
+            cursor = self.connection.cursor()
+            cursor.execute("DROP DATABASE %s" % self.connection.ops.quote_name(to_drop))
+            self.connection.close()
+        except Exception, e:
+            logger.error(e)
+}}}
+
+This is very postgresql specific, I've just ripped it straight out of
+the Django sources, but it should be pretty easy to genericize further.
+
+This lets us create "normal" databases, but because test databases are
+a special case (remember why we started this?) I'm going to add a new
+layer of abstraction for those:
+
+{{{
+##! python
+class TestMetaDb(MetaDb):
+    def __init__(self, settings, connection, verbosity=1, autoclobber=False):
+        super(TestMetaDb, self).__init__(settings,connection,verbosity,autoclobber)
+        
+    def create(self):
+        """Work out the correct DATABASE_NAME and set it.
+
+        Roll back if it doesn't work.
+        """
+
+        DATABASE_NAME = self.settings.DATABASE_NAME
+        try:
+            if settings.TEST_DATABASE_NAME:
+                TEST_DATABASE_NAME = settings.TEST_DATABASE_NAME
+            else:
+                TEST_DATABASE_NAME = TEST_DATABASE_PREFIX + settings.DATABASE_NAME
+                
+            self.settings.DATABASE_NAME = TEST_DATABASE_NAME
+
+            # Call the main create
+            super(TestMetaDb, self).create()
+        except:
+            self.settings.DATABASE_NAME = DATABASE_NAME
+        else:
+            # Get a cursor (even though we don't need one yet). This has
+            # the side effect of initializing the test database.
+            cursor = self.connection.cursor()
+            return TEST_DATABASE_NAME
+
+    def destroy(self, old_database_name):
+        """Work out the correct DATABASE_NAME and set it.
+
+        Roll back if it doesn't work.
+        """
+
+        DATABASE_NAME = self.settings.DATABASE_NAME
+        self.connection.cursor()
+        try:
+            if settings.TEST_DATABASE_NAME:
+                TEST_DATABASE_NAME = settings.TEST_DATABASE_NAME
+            else:
+                TEST_DATABASE_NAME = TEST_DATABASE_PREFIX + settings.DATABASE_NAME
+
+            self.settings.DATABASE_NAME = TEST_DATABASE_NAME
+
+            # Call the main create
+            super(TestMetaDb, self).destroy(old_database_name)
+        except:
+            self.settings.DATABASE_NAME = DATABASE_NAME
+        else:
+            self.settings.DATABASE_NAME = old_database_name
+}}}
+
+The test lifecycle layer doesn't do much, it just supports moving the
+test database somewhere other than the real one (which in Django is so
+easy thanks to settings).
+
+== Coming around ==
+
+So, now we have a framework by which we can extend Django db creation
+to do all sorts of interesting things. I can finally write code to
+create a tablespace without actually overriding the testrunner.
+
+{{{
+##! python
+import commands
+            
+class MyTestMetaDb(TestMetaDb):
+    def __init__(self, settings, connection, verbosity=1, autoclobber=False):
+        super(MyTestMetaDb, self).__init__(settings,connection,verbosity,autoclobber)
+        
+    def create(self):
+        """This is my test create.
+
+        It has a bunch of custom postgres stuff in it.
+        """
+
+        # Make a test db tablepace if necessary
+        if self.settings.TEST_DATABASE_TABLESPACE:
+            # Needs a tablespace setting
+            path = '%s/%s' % (
+                settings.TEST_DATABASE_TABLESPACE,
+                settings.TEST_DATABASE_NAME
+                )
+
+            # Create the tablespace directory
+            if not path_exists(path):
+                status = commands.getstatusoutput(
+                    "sudo chown postgres %s ; sudo sudo -u postgres mkdir %s" % (
+                        settings.TEST_DATABASE_TABLESPACE,
+                        path
+                        )
+                    )
+
+            # Now make the tablespace
+            cursor = self.connection.cursor()
+            cursor.execute("%s" % (
+                    "CREATE TABLESPACE %s_tablespace LOCATION '%s';" % (
+                        settings.TEST_DATABASE_NAME,
+                        path
+                        )  
+                    ))
+        # Now go and make the test one as normal
+        return super(MyTestMetaDb, self).create()
+
+    def destroy(self, old_database_name):
+        super(MyTestMetaDb, self).destroy(old_database_name)
+        # Make a test db tablepace if necessary
+        if self.settings.TEST_DATABASE_TABLESPACE:
+            # Now make the tablespace
+            cursor = self.connection.cursor()
+            cursor.execute("DROP TABLESPACE %s_tablespace" % (
+                    settings.TEST_DATABASE_NAME,
+                    ))
+}}}
+
+Note how this creation extension even handles the business of creating
+the per project directory in the ramdisk where the tablespace will be
+created. That's pretty nifty, it means I can run tests for a bunch of
+projects on the same machine and they won't clash even a little bit.
+
+The only thing left here is to show you how I mount my ramdisk. Here's
+my linux laptop's fstab (with some of the non-relevant stuff removed):
+
+{{{
+# <file system> <dir>      <type>    <options>          <dump> <pass>
+/dev/sda2	/	   ext3      defaults,errors=remount-ro	     0	    1
+# Nic's ramdisc
+none		/var/cache/pgdevdbramdisk   tmpfs   nodev,nosuid,noexec,nodiratime,size=1G
+none		/tmp			    tmpfs   nodev,nosuid,noexec,nodiratime,size=500M
+}}}
+
+== Ba-Dum Tish ==
+
+So that's how it's done. I'll try and package this up and shove it on
+[[http://bitbucket.org|bitbucket]] or some such.

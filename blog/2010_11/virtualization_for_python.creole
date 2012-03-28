@@ -1,0 +1,192 @@
+= Virtualization for Python projects =
+
+Virtualization has been a hot topic for a while but till now it's
+mostly been about how to get more out of hosting resources, or how to
+get cheap hosting resources because someone else is.
+
+This year, developers have started to get into the
+[[http://morethanseven.net/2010/11/04/Why-you-should-be-using-virtualisation.html|benefits]] -
+using virtualization to abstract the target environment for your
+project so you can deliver builds in a more predictable way.
+
+WooMe's new tool, {{{veh}}}, makes virtualization for Python one step
+easier still. It let's you package dependancies in a simple manageble
+way and control the distribution of them.
+
+But first... a step back into what virtualization means.
+
+== Lighter, Faster, Cheaper: pick all three ==
+
+The idea is you build a virtual machine image of some developer
+friendly operating system and have developers build their software on
+that. You can then deploy the VM to your live servers. Dealing with
+dependancy issues like a new version of Python or Ruby, a particular C
+library or a particular verion of Tomcat is much easier on a virtual
+machine and the sysadmins get to manage the hardware operating system
+independantly.
+
+While virtual machine image virtualization is a massive step forward
+the biggest difficulty is the size of the files you end up
+with. moving VM images around is tough, they're big. This is ok for
+live, you can even go to the lengths twitter.com go to and deploy with
+bittorrent.  But here at WooMe even our dev servers are very remote so
+pulling down a new VM to work on or pushing one up when it's complete
+is a real problem.
+
+What we need is some sort of differential virtualized environment
+where you can start with a base and then capture the changes you make
+and just move those around.
+
+Well. Python has a great tool called [[http://virtualenv.openplans.org/|virtualenv]]
+which abstracts Python dependancies into a local directory system. It
+means to run any program you can totally specify the Python
+environment, completly seperately from the hosts environment. Specific
+versions of packages that clash with the systems' packages that the
+system doesn't need at all and avoiding some packages that the system
+does need, all these are easily doable.
+
+Modern Python build tools even have built in support for
+virtualenvs. So [[http://pip.openplans.org/|pip]], for example,
+can do this:
+
+{{{
+pip install -E some_virtual_env lxml=2.2.3
+}}}
+
+and that will install version 2.2.3 of {{{lxml}}} into the virtual env
+called {{{some_virtual_env}}}.
+
+== Making it easy ==
+
+So virtualenvs are great. They don't by themselves resolve our
+mobility problem. If we get our developers to use them we still have
+to move the virtualenvs around; to production and to other developers.
+
+Here's where our new tool called [[http://github.com/nicferrier/veh/|veh]]
+comes in. {{{veh}}} let's you specify the list of packages you want to
+be in your virtualenv in a version controlled file in your project and
+then use the program to control access to your program via the
+virtualenv.
+
+For example, here's myproject/mypython.py:
+
+{{{
+##! python
+print 'hello developers!'
+}}}
+
+first, make a new hg project and commit our python file to it:
+
+{{{
+##! shell-script
+cd myproject
+hg  init
+hg add mypython.py
+hg ci -m "first python file" mypython.py
+}}}
+
+then install {{{veh}}} into the project and add {{{lxml}}} as a dependancy:
+
+{{{
+##! shell-script
+veh install
+echo "lxml-frompypi = lxml" >> .veh.conf
+}}}
+
+The text on the left of the {{{=}}} is just a label and could be
+anything unique for the package. The text on the right is the package
+name as installable with {{{pip}}}.
+
+Now, from any other directory, use veh to make a virtualenv and create
+an interactive shell inside it:
+ 
+{{{
+##! shell-script
+cd ~
+veh -R myproject shell 
+}}}
+
+Until we exit from that shell we'll be using the virtualenv
+Python, totally protected from the base machine Python environment or
+any other Python environment.
+
+So now we have a solution to the dependancy problem because now, when
+the developer is happy with the dependancies he has he can:
+
+{{{
+##! shell-script
+cd myproject
+hg ci -m "set dependancies for this project" .veh.conf
+hg push deploymentserver
+}}}
+
+The live system can use veh to guard access to the program with the
+virtualenv. Perhaps the django startup script would look like this:
+
+{{{
+##! shell-script
+veh -R nicproject shell -- ./manage.py run-spawning -p 8080 -T 10 -P 5
+}}}
+
+That runs the django {{{manage.py}}} command and presumably runs
+[[https://github.com/rtyler/Spawning/|Spawning]] on port 8080 with 10
+threads in 5 processes. Before django is run the virtualenv is created
+and the dependancies pulled down, so Spawning runs inside whatever
+environment the developers specified.
+
+You can rebuild and refresh the virtualenv as well:
+
+{{{
+##! shell-script
+veh -R nicproject refresh
+}}}
+
+refresh pulls in any new changes you've made to the virtualenv config.
+
+{{{
+##! shell-script
+veh -R nicproject rebuild
+}}}
+
+trashes the virtualenv and builds a new one.
+
+== Distributing packages and not losing flexibility ==
+
+There's been much debate in the devops community of late about whether
+to try and build packages for deployment. Packaging is a great
+discipline but the cost is high. With virtualenv and veh however, you
+can get the benefits of separated packaged development without having
+to build a copy of an apt repository or something.
+
+We can Python package stuff and use {{{veh}}} to help distribute
+them. There's no need to build a complex infrastructure either because
+{{{pip}}} can install from a repository url.
+
+Consider this {{{veh.conf}}}:
+
+{{{
+##! conf
+[packages]
+lxml = lxml
+biglib = hg+http://devserver/hg/mydependancy_project
+smalllib = hg+http://devserver/hg/another_depend
+# End
+}}}
+
+this will allow {{{veh}}} to build a virtualenv with lxml from pypi
+and {{{mydependancy_project}}} and {{{another_depend}}} both pulled
+from a site local mercurial web server.
+
+== Stuff to do ==
+
+{{{veh}}} isn't finished yet, but there isn't much more to do. Here's
+my top 5:
+
+ * veh should be able to check automatically when a dependancy has a newer upstream
+ * veh should work with shells other than bash
+ * veh should work with DVCS other than mercurial
+ * veh should be more configurable, specify different options for virtualenv AND pip would be good
+ * veh should check DVCS package targets on refresh to see if they really have been updated
+
+If you like the idea of {{{veh}}} or you have suggestions to make it
+more usable then do please hit me up on twitter or [[http://github.com/nicferrier/veh/|github]].

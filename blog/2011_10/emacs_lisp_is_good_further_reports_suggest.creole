@@ -1,0 +1,189 @@
+= EmacsLISP: More goodness =
+
+In my [[/blog/2010_10/elnode|Elnode article]] I talked about EmacsLISP
+getting lexical scoping
+facilities. [[http://www.emacswiki.org/emacs/Elnode|Elnode]] couldn't
+be written without lexical scope but I'm still finding other useful
+things about it. This is an article about programming async processing
+easier with EmacsLISP but also about LISP macros and about how great
+they are.
+
+== Processes are better than sockets ==
+
+I've been working on a [[https://github.com/nicferrier/md|mail client]]
+in EmacsLISP, it's based on a command line tool I've written for
+accessing maildirs.
+
+In fact, I wrote the command line tool specifically to make a good
+Emacs mail tool easy to write. Emacs doesn't have threads but it has
+good support for asynchronous processes. Lack of threads makes IMAP
+and other network protocols more difficult. Calling unix processes to
+do stuff is much easier to do well in Emacs than talking to an IMAP
+server (though of course [[http://www.google.com/cse?cx=004774160799092323420%3A6-ff2s0o6yi&q=IMAP&sa=Search&siteurl=www.emacswiki.org%2F|that is very possible]]).
+
+[[https://github.com/nicferrier/md|md]] has commands like this:
+
+{{{
+$ md ls
+INBOX#1314831869.V801Iaa4034M229926  2011-09-01 00:25:03 
+  "Tech Support" <tech@somecompany.com>  []  Maintenance Notification
+INBOX#1314833168.V801Iaa403aM157665  2011-09-01 00:47:05      
+  root@somedomain.com (Cron Daemon)      []  Cron <root@host> /root/zip-dblogs.sh
+}}}
+
+My
+[[https://github.com/nicferrier/md/blob/master/useragents/emacs/mdmua.el|md user agent EmacsLISP code]] 
+is full of asynchronous processing, calling
+[[https://github.com/nicferrier/md|md]] commands and then handling
+their output.
+
+== Sentinels ==
+
+Emacs provides things called //sentinels// for this. A sentinel is a
+function that you register against a process and it's called when
+something happens to the process and Emacs isn't doing anything else,
+for example, when the process finishes. Here's a slightly cut down
+example from [[https://github.com/nicferrier/md|md]]:
+
+{{{
+##! emacs-lisp
+;; First define the sentinel function...
+(defun mdmua--sentinel-gettext (process signal)
+  (cond
+   ((equal signal "finished\n")
+    (mdmua-message-display 
+     (with-current-buffer (process-buffer process)
+       (buffer-substring (point-min) (point-max))))
+    (kill-buffer (process-buffer process))
+    )
+   ;; else
+   ('t
+    (message "mdmua open message got signal %s" signal)
+    (display-buffer (process-buffer process))
+   )
+  ))
+
+;; Now the command a user will call to initiate the md process
+(defun mdmua-open-message (key)
+  "Open the message with key."
+  (interactive (list 
+		(plist-get (text-properties-at (point)) 'key)))
+  (let* ((buf (get-buffer-create "mdmua-message-channel"))
+         (proc (start-process-shell-command "getmessage" buf (format "text %s" key))))
+    (set-process-sentinel proc 'mdmua--sentinel-gettext)
+    ))
+}}}
+
+Right now my mail client is just about usable by me. But I want to
+take it to the next level and have it generally available. To do that
+it will need to get a little more sophisticated and I will need to use
+more commands, linking them with more sentinels.
+
+I started to think what a pain in the neck that was going to be. There
+must be a better solution.
+
+There was. Here it is:
+
+{{{
+##! emacs-lisp
+(defmacro with-process-shell-command (name buffer command &rest sentinel-forms)
+  `(let ((proc (start-process-shell-command ,name ,buffer ,command)))
+     (let ((sentinel-cb (lambda (process signal)
+                          ,@sentinel-forms)))
+       (set-process-sentinel proc sentinel-cb)
+       )))
+}}}
+
+This macro can make the above code look something like this:
+
+{{{
+##! emacs-lisp
+(defun mdmua-open-message (key)
+  "Open the message with key."
+  (interactive (list 
+		(plist-get (text-properties-at (point)) 'key)))
+  (let* ((buf (get-buffer-create "mdmua-message-channel")))
+    (with-process-shell-command
+      "getmessage" buf (format "md text %s" key)
+      (cond
+        ((equal signal "finished\n")
+         (mdmua-message-display 
+          (with-current-buffer (process-buffer process)
+            (plist-put 
+             struct
+             :text (buffer-substring (point-min) (point-max)))))
+         (kill-buffer (process-buffer process))
+         )
+        ;; else
+        ('t
+         (message "mdmua open message got signal %s" signal)
+         (display-buffer (process-buffer process))
+        )
+       )
+      )
+    ))
+}}}
+
+So now, the sentinel doesn't have it's own function, not that I have
+to look at while I code anyway (the function is there of course,
+hidden by LISP).
+
+== And macros rock ==
+
+You may be wondering at my slight of hand. I made a macro and the
+lexical scope just fixed the problem? Let's look at the code the macro
+spits out:
+
+{{{
+##! emacs-lisp
+(defun mdmua-open-message (key) 
+  "Open the message with key." 
+  (interactive (list 
+                 (plist-get (text-properties-at (point)) (quote key))))
+  (let* ((buf (get-buffer-create "mdmua-message-channel")))
+    (let ((proc (start-process-shell-command "getmessage" buf (format "md text %s" key))))
+      (let ((sentinel-cb 
+             (function 
+              (lambda (process signal) 
+                (cond 
+                 ((equal signal "finished") 
+                  (mdmua-message-display 
+                   (save-current-buffer 
+                     (set-buffer (process-buffer process)) 
+                     (plist-put struct :text (buffer-substring (point-min) (point-max)))))
+                  (kill-buffer (process-buffer process)))
+                 ((quote t) 
+                  (message "mdmua open message got signal %s" signal)
+                  (display-buffer (process-buffer process)))))))) 
+        (set-process-sentinel proc sentinel-cb)))))
+}}}
+
+The {{{with-process-shell-command}}} code is turned into an anonymous
+function which is then used as the sentinel. Because of lexical scope
+the anonymous function captures the state in which it was declared
+thus making our task of coding asynchronous callbacks much, much,
+easier.
+
+This is the really great thing about LISP that all LISP programmers
+talk about, the ability to alter the language like this, add new forms
+that behave, not like functions, but as new syntax. Often, I find that
+the examples for such things are contrived and perhaps the utility is
+overblown. A program full of layers of macros can be difficult to deal
+with. But there's no doubt that it is a powerful way of abstracting
+more and more from your program and clarifying meaning. Certainly I
+think this example shows that the addition of a macro makes a complex
+thing to do simpler to say.
+
+== Caveat ==
+All examples in this article require lexical scope in EmacsLISP to be turned on.
+
+{{{
+##! emacs-lisp
+;;; -*- lexical-binding: t -*-
+}}}
+
+Lexical scope is not a trademark of Emacs, Nic Ferrier or any other
+party solely or not soully connected with LISP, Emacs, Richard
+Stallman or any member of the Ferrier family.
+
+Nic Ferrier is not a lawyer.

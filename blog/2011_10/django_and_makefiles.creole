@@ -1,0 +1,111 @@
+= Django and ... err.... Makefiles??? =
+
+Something has gone very wrong in the world when I am using a Makefile
+to help me develop a Django app.
+
+Now. I'm all for using good tools no matter how old they are. And I
+think that a lot of the time the web 2.0/devops crowd tend to throw
+stuff away and make new stuff before it's really necessary... but
+ {{{make}}}??
+
+{{{make}}} is a good tool, but in a dynamic environment you just don't
+want to see it because it means you are having to take that deliberate
+step of //building//.
+
+
+== When Makefiles attack ==
+
+Django has introduced this idea of distributing static files
+throughout the project and having a {{{collectstatic}}} command as a
+build step concentrate them in the static directory.
+
+But that means I need a Makefile like this:
+
+{{{
+##! make
+# A Makefile to automate the creation of the dev db environment
+
+all: recreate-static
+
+# Static stuff
+
+recreate-static: clean-static create-static
+
+create-static:
+	./manage.py collectstatic --noinput
+
+clean-static:
+	echo rm -rf $(dirname $(shell ./manage.py findstatic site.js)) 
+}}}
+
+There are so many problems with this it's untrue. 
+
+I have to run it whenever I change my static files. That's stupid
+because if the django webserver knew where the files were it would be
+able to do that for me. And if I want to serve the same files with
+{{{Nginx}}} or {{{Apache}}} or whatever then I'm pretty sure I could
+just as easily as the Django webserver can.
+
+If I want to change the name of the static directory where I keep my
+files I have to edit the Makefile - because Django //still// doesn't
+have a report your {{{setting}}} variable command. Django does have a find your static file command:
+
+{{{
+./manage.py findstatic site.js
+}}}
+
+Let's see what the output is shall we??
+
+{{{
+Found 'site.js' here:
+  /home/nferrier/mercapp/mercy/src-static/site.js
+}}}
+
+Oh Yes. Very easily scriptable. Thank you Django. //Nb. This is sarcasm//.
+
+This last point about needing to change the static file location in
+the Makefile is possibly the most important. It's something you will
+do very rarely... and therefore it's something you will //always//
+forget to do. That's not helpful. That's not good. I thought Django
+was trying to be good //and// helpful?
+
+
+== When Makefiles fall out of cupboards ==
+
+Of course, I do already build a {{{Makefile}}} something like this:
+
+{{{
+##! make
+# Database rules
+
+recreate-db: drop-db create-db
+
+drop-db:
+	rm dev.db
+
+create-db:
+	./manage.py syncdb --noinput	
+	./manage.py makeuser blahdeeblah
+
+
+# End Makefile
+}}}
+
+and {{{make}}} is fine for that, in fact it's great because it's
+somewhere to store that information, it's just documentation
+really. But I'll be unlucky if I have to run that more than once every
+couple of days.
+
+
+== Grrr ==
+
+Anyway. Grrr. If you find yourself building a system where you are
+requiring a developer to compile something when they change a CSS file
+you should be thinking again.
+
+I //know// there are other solutions to this (keep the static in
+version control, update the non-source version and then splash over
+the source version with the non-source version before deploy, update
+the VC) but none of them are nice.
+
+{{{make}}} is normally bad. It's the law.

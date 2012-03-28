@@ -1,0 +1,179 @@
+= Elnode - an Emacs version of node.js =
+
+[[https://github.com/nicferrier/elnode|Elnode]] is an asynchronous web server written in Emacs LISP.
+
+Emacs has had asynchronous socket programming facilities for some time
+and a few years ago asynchronous TCP server sockets were introduced. I
+couldn't quite believe that no one had written an asynchronous
+webserver with EmacsLISP before. So now I have.
+
+When I started looking at actually doing this I intended to knock up
+just a silly demo. But the more I got into it the more it seemed to me
+that this could be an important addition to Emacs and that, sometimes,
+an Emacs LISP async web server could actually be useful.
+
+
+== elnode as personal web server ==
+
+As soon as I wrote a web server (specifically, something that serves
+files) I realized that this was quite useful as a hackable local
+webserver. I can change it very quickly. I can override certain paths
+to do certain things (even returning just a string for a tiny bit of
+HTML or something).
+
+{{{
+(defun nicserver (httpcon)
+  "My local webserver"
+  (elnode-dispatcher httpcon
+    '(("/$" . (elnode-webserver-handler-maker "~/public_html"))
+      ("isnicworking/$" . 'nic-elnode-typing-check-handler))))
+(elnode-start 'nicserver 7000)
+}}}
+
+= sidebar Why Node? =
+
+Why do we want something that scales up quickly in a RAD tool?
+
+These days, when you're building something for the Internet, you can
+go from a few hits a day to 5k in a day. You just need to be
+slash-dotted, twitter-stormed, reddit-raped. Whatever. It's important
+to be ready to cope with Internet load in just about any app.
+
+This doesn't stop node-like apps from having to be re-written to cope
+with a long term future. There's no way an app limited to scaling
+inside a single process on a single box could ever work for load like
+WooMe gets, for example. But it ///will/// scale to more than a thread
+equivalent and potentially keep you alive through a first sudden
+interest event like a slash-dotting.
+
+The point is it let's you test that idea out without worrying about
+only a few 100 people killing it before it's really caught on.
+
+
+
+== elnode as RAD tool ==
+
+[[https://github.com/nicferrier/elnode|Elnode]] is a lot less sophisticated than node.js, but it's no different
+in concept. It's a fast way of putting an asynchronous single process
+website together. Something that you can put together quickly that
+will scale up to biggish usage.
+
+But [[https://github.com/nicferrier/elnode|Elnode]] has potential because of the RAD environment offered by
+Emacs. Especially if you're already comfortable inside Emacs, it's
+very easy to debug [[https://github.com/nicferrier/elnode|Elnode]] code, you can just re-eval inside a handler
+function and use Emacs existing (and very cool) debugging tools.
+
+== elnode to free your data ==
+
+But possibly the most important reason for continuing to work on
+[[https://github.com/nicferrier/elnode|Elnode]] is the realization that [[https://github.com/nicferrier/elnode|Elnode]] can help free the data that's
+currently locked inside Emacs. This is a very serious problem that has
+been taxing me for a few years. I keep my diary in Emacs but it's
+difficult to access it outside Emacs (the format is proprietary and depends
+on ELisp) similarly [[http://orgmode.org/|org-mode]] is a fantastic tool but has Emacs lock
+in.
+
+There are exporters for most of this Emacs specific data but of course
+you have to manually export stuff to use them. What [[https://github.com/nicferrier/elnode|Elnode]] can do is
+make it easy to write dynamic exporters of this data in a convenient
+form for a work flow. Imagine CURLing an [[https://github.com/nicferrier/elnode|Elnode]] service for your diary
+in ICS for example
+
+Here's an example [[https://github.com/nicferrier/elnode|Elnode]] handler to provide your org-mode file in
+something that a browser can deal with semantically:
+
+{{{
+(defun orgexpose (httpcon)
+  (org-export-as-xoxo (get-buffer "todo.org"))
+  (elnode-http-start httpcon 200 '(("Content-type" . "text/html")))
+  (elnode-http-return 
+   httpcon
+   (format "<html>%s</html>" 
+           (with-current-buffer (get-buffer "todo.html")
+             (buffer-substring-no-properties (point-min) (point-max))))))
+(elnode-start 'orgexpose 8002 "localhost")
+}}}
+
+
+== Some examples? ==
+
+Fancy a pastebin inside Emacs? You can SSH to a remote server, fire up
+Emacs there and then see something you want to cut and paste back to
+your host. It's bigger than your terminal window. Open up a port
+mapping back to your [[https://github.com/nicferrier/elnode|Elnode]] on your local and then use the remote
+Emacs pastebin client to paste it back to your local Emacs.
+
+{{{
+(defun elpaste-handler (httpcon)
+  (if (equal "POST" (elnode-http-method httpcon))
+      (let* ((params (elnode-http-params))
+             (buffer (generate-new-buffer (car (assoc 'paste_name params)))))
+        (with-current-buffer buffer
+          (insert (car (assoc 'paste_code params))))
+        (elnode-http-start 
+         httpcon 
+         "201" 
+         '("Location" . (format "/%s" (buffer-name buffer))))
+        (elnode-http-return 
+         httpcon 
+         (format "<a href='%s'>%s</a>" (buffer-name buffer) (buffer-name buffer))))
+    ;; GET
+    (elnode-http-start httpcon "200" '("Content-type" . "text/html"))
+    (elnode-http-return nitpicking "<p>Upload via pastern api</p>")))
+}}}
+
+Of course the main feature of node.js is comet programming which
+requires the ability to defer a request and process it when the IO
+comes in later. [[https://github.com/nicferrier/elnode|Elnode]] provides this capability too:
+
+{{{
+;; need to update this so something can 
+(defvar simple-defer-switch nil)
+
+(defun simple-defer-handler (httpcon)
+  (if simple-defer-switch 
+      (progn
+        (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
+        (elnode-http-return httpcon "<html>BING!</html>")
+        )
+    (progn 
+      (setq simple-defer-switch 't)
+      (elnode-defer-now 'simple-defer-handler))))
+
+;; Boot elpad on port 8002
+(elnode-start 'simple-defer-handler 8002 "localhost")
+}}}
+
+
+
+== Seeing into the future ==
+
+Emacs is a big programming environment. Lots of things are //coming soon// in Emacs.
+
+Emacs trunk now has lexical scope and [[https://github.com/nicferrier/elnode|Elnode]] absolutely relies on
+that now. That was always a big reason not to consider ELisp as a real
+LISP. But that reason is gone.
+
+Threads are coming to Emacs sometime after lexical scope. For [[https://github.com/nicferrier/elnode|Elnode]]
+threads are going to make it easier to write code completely inside
+Emacs. We'll be able to spawn threads instead of processes for dealing
+with code. 
+
+Working with [[https://github.com/nicferrier/elnode|Elnode]] has been quite fun. I'm working to take it
+forward. One of the main things that I think I can do is use LISP
+macros to make programming node like behaviours easier. For example,
+by hiding the implementation of defers.
+
+The thing I want most is an etherpad like app using Emacs as a
+datastore. This would let me publish my Emacs rather like a VNC for
+Emacs. I think a few people might actually find that useful. This is
+quite a complex [[https://github.com/nicferrier/elnode|Elnode]] app but I have got something just about
+working. Hopefully announcements soon.
+
+== Reaching out ==
+
+I hope you'll give [[https://github.com/nicferrier/elnode|Elnode]] a try whether you're an Emacs hacker or
+not. It's an interesting idea at
+least. [[http://twitter.com/nicferrier/|I'd]] love to hear your
+thoughts on the project.
+

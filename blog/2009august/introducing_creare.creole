@@ -1,0 +1,174 @@
+= introducing creare =
+
+//Saturday 22 August 2009 01:55//
+
+I always like to write a new blog engine when I start a new blog.
+
+It's much more fun than actually writing a blog.
+
+The last blog engine I wrote was based on semantic wiki
+concepts. There was a lot of technology and for a while it looked like
+it was gonna be a big thing - but no funding ever materialized. It was
+very much a disappointment.
+
+I've been so busy with [[http://www.woome.com|WooMe]] the last two
+years I haven't really had time to do any blogging. But things have
+really come together here the last few months so I'm feeling
+expansive.
+
+I really build things like this for a bit of a break from the rest of
+hacking. But I've felt guilty about not running a personal blog for
+some time.
+
+
+=== String and Sellotape ===
+
+For building a blog this time I decided I'd stick to the pattern I'm
+happiest with: the bits of string and cardboard known as modern unix
+development.
+
+I get worried if I find myself duplicating stuff that sits in unix
+already. For example: why does anyone ever try typing text into a web
+browser? Why not use an editor? And why do all those funny WordPress
+plugins exist when the same could be done more generically with the
+output of {{{ ls }}} or {{{ find }}}.
+
+Anyway, I still don't have //that// much time. This has been done in a
+single evening, while MrsNic was out on the lash.
+
+=== A portrait of the blogging engine as a young wiki ===
+I'm using [[http://www.wikicreole.org|wikicreole]] as a blogging
+format. I like wiki languages and Creole seems to be pretty smartly
+worked out. I simply loved learning the difference between a
+[[http://en.wikipedia.org/wiki/Creole_language|creole and a pidgin]]
+Maybe someone should make a wikipidgin.
+
+Anyway I'll happy swtich all my wiki's over to it as soon as it
+becomes available on them.
+
+HINT HINT [[http://trac.edgewall.com|Trac developers]].
+
+=== Django does mini ===
+
+I wrote a very small [[http://djangoproject.org|Django]] app to
+publish the wiki. This uses an old trick of converting the wiki to
+simplish XHTML and then pushing that through XSLT for further styling.
+
+The wiki page XHTML is titled with the name of the wiki page before it
+goes into the XSLT, like this:
+
+{{{
+    out = StringIO()
+    out.write("<html title='%s'>" % path)
+    htmlizer.creare2html(fd, out)
+    out.write("</html>")
+    transformed = _transform(out.getvalue())
+}}}
+
+So I don't need a special XSLT mapping system right away, I can do it
+trivially in XSLT:
+
+{{{
+    <xsl:template match="/">
+	<html>
+	    <body>
+		<xsl:apply-templates select="." mode="body"/>
+	    </body>
+	</html>
+    </xsl:template>
+
+    <xsl:template match="/html[@title='index']" mode="body">
+	<xsl:copy-of select="node()"/>
+    </xsl:template>
+}}}
+
+Some standard XSLT boilerplate takes care of setting up pages with CSS
+and stuff.
+
+
+Some people complain that there isn't a generic blogging engine for
+Django, or a standard Wiki. I hardly ever complain about that. The
+nice thing about Django is that there are good abstraction points. The
+actual Django app can be a part of your data but your app can still be
+portable enough. I like that.
+
+For example, rather than doing a complex "top article" thing, I can do
+a very simple hack in the Django urls file whenever I add a new entry:
+
+
+{{{
+    (r'^blog/$', 'www.views.page', {
+            "path": "2009august/introducing_creare"
+            }),
+    (r'^blog/(?P<path>.*)$', 'www.views.page'),
+}}}
+
+This lets me control stuff sensibly until better ways have been
+found. It's a nice level of configurability that Django offers.
+
+
+=== Version control of the gods ===
+
+I store the data in an [[http://mercurial.selenic.com/wiki/|hg repo]].
+I don't have any versioning or anything available yet but when I do hg
+will be right there to support it. It also affords me a nice remote
+publish mechanism, I host the repo remotely and simply push changes to
+it.
+
+This is not a new idea. http://bitbucket.org/ is at least 1 place
+using hg for this very same purpose. I hope to show, later in creare's
+development, why this is such a good idea.
+
+=== What's your favourite kind of gateway interface? ===
+
+Mine is CGI. It's simple, like me. I really don't care about the
+things persistent running with fcgi or some such gives me until I have
+a problem to solve.
+
+Here's my simple CGI server based on the groovy [[http://docs.python.org/library/wsgiref.html|wsgiref]] CGIHandler:
+
+{{{
+#!/usr/bin/python
+from wsgiref.handlers import CGIHandler
+
+import traceback
+import sys
+import os
+from os.path import join,abspath,dirname
+sys.path+=[os.environ.get("DJANGO_PATH",None) \
+               or join(abspath(dirname(__file__)),"..","..","django-hg")]
+
+from django.core.management import setup_environ
+import settings
+setup_environ(settings)
+
+import django.core.handlers.wsgi
+import django.core.management
+
+def getapp():
+    loc = abspath(join(dirname(__file__)))
+    os.chdir(loc)
+    sys.path = ["."] + sys.path
+    app = django.core.handlers.wsgi.WSGIHandler()
+    return app
+
+class MyCGI(CGIHandler):
+    def error_output(self, environ, start_response):
+        start_response(self.error_status, self.error_headers[:], sys.exc_info())
+        return [traceback.format_exc()]
+
+def main():
+    a = getapp()
+    MyCGI().run(a)
+
+if __name__ == "__main__":
+    if "test" in sys.argv:
+        os.environ["PATH_INFO"] = "/"
+        os.environ["REQUEST_METHOD"] = "GET"
+        os.environ["SERVER_NAME"] = "test"
+        os.environ["SERVER_PORT"] = "80"
+    
+    main()
+}}}
+
+As I say... bits of string and cardboard.

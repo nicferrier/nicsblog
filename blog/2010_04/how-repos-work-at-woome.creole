@@ -1,0 +1,119 @@
+= how vc works at woome =
+
+A [[http://twitter.com/markhneedham|twitter friend]] has been looking
+hard at hg and had some questions today about why you would have
+separate repos for environments (dev, staging, etc...). I am not
+entirely sure I understood the question but it's probably time to
+describe how we do things at WooMe.
+
+== dev in pieces ==
+
+WooMe is highly a distributed company. I don't think I can even think
+of a time when the development team has all been in one place, let
+alone the management, the product people and the dev team.
+
+Given this we have a distributed model of development. We have a dev
+system rather like google app engine... We operate a trunk for
+development in mercurial on a development server hosted on the net.
+Developers can make remote clones of that with a simple command:
+
+{{{
+./reponew [ticketnumber|reponame]
+}}}
+
+any repository with a ticket number is automatically served by our
+development system as a clone of trunk. So you can make a new
+repository running live to fix a problem or start working on a feature
+in seconds.
+
+Say somebody reports bug 4021 to me, I can make a new repo:
+
+{{{
+$ ssh woomedevserver reponew 4021
+4021_fix_bad_bug
+}}}
+
+It's available immediately as a running instance of our app:
+
+{{{
+$ curl -i http://4021_fix_bad_bug.woomedevserver/ | |grep HTTP
+HTTP/1.1 200 Ok
+}}}
+
+and I can clone it locally and work on it there of course:
+
+{{{
+$ hg clone ssh://woomedevserver/ticketrepos/4021_fix_bad_bug 4021_bug
+requesting all changes
+adding changesets
+adding manifests
+adding file changes
+added 18000 changesets with 406 changes to 101 files
+updating to branch default
+97 files updated, 0 files merged, 0 files removed, 0 files unresolved
+}}}
+
+and when I push back to the woomedevserver other people can see my
+changes and see the effect of the changes in the running instance.
+
+The dev server instances, by the way, are managed by a CGI version of
+our app (which is based around django) and a path name translating
+file system to make the repository names legal dns names.
+ 
+
+== making release ==
+
+Normally a few things are ready at once. We have an automated tool
+that makes a release from ticket numbers (our tickets are marked up
+with repository urls).
+
+We push the merged ticket repos to what we call "running trunk". At
+this stage running trunk is divergent from trunk by one release
+candidate.
+
+We do integration testing on running trunk. When it looks good we tag
+the repo and push the changes to staging.
+
+== staging ==
+
+Our staging environment has the usual job of modelling live. It's not
+an exact copy since it's all held on only 2 machines. But it's close.
+
+We have about 4 copies of our repository on staging. This is down to
+the way we configure our app... each instance is a repository and can
+have local changes (identified by the local directory name).
+
+For example, the bits of the app that serve https pages are in a
+separate repository so we can configure the instance there to deliver
+it's static content via https.
+
+When staging contains a release candidate we do regression testing
+there and once that's passed we push the app to live via a program
+that knows every live server that should receive a copy.
+
+== live ==
+
+We have something like 20 application servers and 10 database
+servers. The copy of our code on each of those is a repository and we
+use mercurial to push to them.
+
+
+== rationale ==
+
+It occurs to me as I write this that you may be asking 'yes,
+but //why// are there all these repos? what //purpose// do they
+serve?'
+
+And I guess here we come to it: the reason we have these is that it's
+my belief that hacking live is necessary sometimes. I do it about
+twice weekly for one reason or another; there are about 10 of us in
+the tech team and about half of them are doing the same thing. Using
+repositories everywhere on live means we can track those changes we're
+making. You can see really easily when you changed or added a
+file. When you have something to push across live and back into trunk
+you can do that the same way you make all the other changes. Some
+things have to go out as soon as you've fixed them and others can
+simply go back into trunk and go out with the next release.
+
+So that's why. We're hackers basically, and using repositories makes
+our lives easier. Why would you not want that?
