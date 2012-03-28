@@ -54,14 +54,11 @@ example from [[https://github.com/nicferrier/md|md]]:
     (mdmua-message-display 
      (with-current-buffer (process-buffer process)
        (buffer-substring (point-min) (point-max))))
-    (kill-buffer (process-buffer process))
-    )
+    (kill-buffer (process-buffer process)))
    ;; else
    ('t
     (message "mdmua open message got signal %s" signal)
-    (display-buffer (process-buffer process))
-   )
-  ))
+    (display-buffer (process-buffer process)))))
 
 ;; Now the command a user will call to initiate the md process
 (defun mdmua-open-message (key)
@@ -70,8 +67,7 @@ example from [[https://github.com/nicferrier/md|md]]:
 		(plist-get (text-properties-at (point)) 'key)))
   (let* ((buf (get-buffer-create "mdmua-message-channel"))
          (proc (start-process-shell-command "getmessage" buf (format "text %s" key))))
-    (set-process-sentinel proc 'mdmua--sentinel-gettext)
-    ))
+    (set-process-sentinel proc 'mdmua--sentinel-gettext)))
 }}}
 
 Right now my mail client is just about usable by me. But I want to
@@ -90,8 +86,7 @@ There was. Here it is:
   `(let ((proc (start-process-shell-command ,name ,buffer ,command)))
      (let ((sentinel-cb (lambda (process signal)
                           ,@sentinel-forms)))
-       (set-process-sentinel proc sentinel-cb)
-       )))
+       (set-process-sentinel proc sentinel-cb))))
 }}}
 
 This macro can make the above code look something like this:
@@ -112,16 +107,11 @@ This macro can make the above code look something like this:
             (plist-put 
              struct
              :text (buffer-substring (point-min) (point-max)))))
-         (kill-buffer (process-buffer process))
-         )
+         (kill-buffer (process-buffer process)))
         ;; else
         ('t
          (message "mdmua open message got signal %s" signal)
-         (display-buffer (process-buffer process))
-        )
-       )
-      )
-    ))
+         (display-buffer (process-buffer process)))))))
 }}}
 
 So now, the sentinel doesn't have it's own function, not that I have
