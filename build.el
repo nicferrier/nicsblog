@@ -7,7 +7,7 @@
        (file-name-directory
         (or (buffer-file-name)
             load-file-name))
-       "elpa"))
+       ".elpa"))
 
 (setq package-user-dir package-dir)
 
@@ -16,18 +16,17 @@
 
 (setq package-archives
       '(("localcache" . "/home/nferrier/elpacache")
-	;;("gnu" . "http://elpa.gnu.org/packages/")
-        ;;("marmalade" . "http://marmalade-repo.org/packages/"))
-	))
+        ("gnu" . "http://elpa.gnu.org/packages/")
+        ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 (package-initialize)
 (package-refresh-contents)
 
 (let ((nicblogmake (concat
-		    (file-name-directory
-		     (or (buffer-file-name)
-			 load-file-name))
-		    "nicblog-make.el")))
+                    (file-name-directory
+                     (or (buffer-file-name)
+                         load-file-name))
+                    "nicblog-make.el")))
   (package-install-file nicblogmake))
 
 (require 'nicblog-make)
