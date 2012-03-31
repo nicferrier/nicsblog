@@ -22,6 +22,7 @@ to do certain things (even returning just a string for a tiny bit of
 HTML or something).
 
 {{{
+##! emacs-lisp
 (defun nicserver (httpcon)
   "My local webserver"
   (elnode-dispatcher httpcon
@@ -83,6 +84,7 @@ Here's an example [[https://github.com/nicferrier/elnode|Elnode]] handler to pro
 something that a browser can deal with semantically:
 
 {{{
+##! emacs-lisp
 (defun orgexpose (httpcon)
   (org-export-as-xoxo (get-buffer "todo.org"))
   (elnode-http-start httpcon 200 '(("Content-type" . "text/html")))
@@ -104,6 +106,7 @@ mapping back to your [[https://github.com/nicferrier/elnode|Elnode]] on your loc
 Emacs pastebin client to paste it back to your local Emacs.
 
 {{{
+##! emacs-lisp
 (defun elpaste-handler (httpcon)
   (if (equal "POST" (elnode-http-method httpcon))
       (let* ((params (elnode-http-params))
@@ -127,6 +130,7 @@ requires the ability to defer a request and process it when the IO
 comes in later. [[https://github.com/nicferrier/elnode|Elnode]] provides this capability too:
 
 {{{
+##! emacs-lisp
 ;; need to update this so something can 
 (defvar simple-defer-switch nil)
 
