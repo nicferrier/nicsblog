@@ -1,0 +1,2 @@
+this is Nic's blog which is a collection of creole.el creole files and
+some EmacsLisp to build them into a static website.
