@@ -15,11 +15,14 @@
   (delete-directory package-dir t))
 
 (setq package-archives
-      '(("localcache" . "/home/nferrier/elpacache")
-        ("gnu" . "http://elpa.gnu.org/packages/")
+      '(("gnu" . "http://elpa.gnu.org/packages/")
         ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 (package-initialize)
+
+;;(setq url-automatic-caching t)
+;;(setq url-cache-directory (expand-file-name "~/.emacsurlcache"))
+
 (package-refresh-contents)
 
 (let ((nicblogmake (concat
@@ -29,7 +32,5 @@
                     "nicblog-make.el")))
   (package-install-file nicblogmake))
 
-(require 'nicblog-make)
-(nicblog-make-run (nicblog-make-root-maker "blog"))
 
 ;; End
