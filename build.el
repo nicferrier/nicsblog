@@ -32,5 +32,7 @@
                     "nicblog-make.el")))
   (package-install-file nicblogmake))
 
+(require 'nicblog-make)
+(nicblog-make-run)
 
 ;; End
