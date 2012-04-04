@@ -99,11 +99,11 @@ name as installable with {{{pip}}}.
 
 Now, from any other directory, use veh to make a virtualenv and create
 an interactive shell inside it:
- 
+
 {{{
 ##! shell-script
-cd ~
-veh -R myproject shell 
+cd /tmp
+veh -R ~/myproject shell 
 }}}
 
 Until we exit from that shell we'll be using the virtualenv
@@ -182,11 +182,11 @@ from a site local mercurial web server.
 {{{veh}}} isn't finished yet, but there isn't much more to do. Here's
 my top 5:
 
- * veh should be able to check automatically when a dependancy has a newer upstream
- * veh should work with shells other than bash
- * veh should work with DVCS other than mercurial
- * veh should be more configurable, specify different options for virtualenv AND pip would be good
- * veh should check DVCS package targets on refresh to see if they really have been updated
+* veh should be able to check automatically when a dependancy has a newer upstream
+* veh should work with shells other than bash
+* veh should work with DVCS other than mercurial
+* veh should be more configurable, specify different options for virtualenv AND pip would be good
+* veh should check DVCS package targets on refresh to see if they really have been updated
 
 If you like the idea of {{{veh}}} or you have suggestions to make it
 more usable then do please hit me up on twitter or [[http://github.com/nicferrier/veh/|github]].
