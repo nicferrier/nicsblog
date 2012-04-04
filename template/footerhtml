@@ -17,7 +17,9 @@
 	<li id='footertoc'>
 	    <h4>Emacs Lisp</h4>
             <ul>
-              <li><a href="/blog/2012_04/the_emacs_machine_provisioner">the Emacs Machine provisioner</a></li>
+              <li><a href="/blog/2012_04/the_emacs_machine_provisioner">the Emacs Machine provisioner</a> 
+               <a href="http://news.ycombinator.com/item?id=3800347"><img src="http://ycombinator.com/images/y18.gif" height="18" style="border:1px #ffffff solid;"></a>
+              </li>
               <li><a href="/blog/2011_10/emacs_lisp_is_good_further_reports_suggest">Async programming and macros</a></li>
               <li><a href="/blog/2011_09/elisp_testing">TDD with Lisp and ERT</a></li>
               <li><a href="/blog/2010_10/elnode">Introducing Elnode, an EmacsLisp web server</a></li>
