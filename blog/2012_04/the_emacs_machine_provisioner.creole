@@ -1,8 +1,32 @@
 = The Emacs Machine Provisioner =
 
-I have been working on an Emacs Machine provisioning system which is a
-way of automatically making operating systems with a freshly compiled
-Emacs running inside them.
+//Did I hear you say you want to do continuous delivery with EmacsLisp?//
+
+//Did I hear you say you want to quickly provision your EmacsLisp
+packages?//
+
+I realize the answer to those questions is unlikely to be //yes// but
+bear with me anyway because here's a crazy idea:
+
+{{{
+gem install vagrant
+git clone git://github.com/nicferrier/emacs-provisioner-vagrant.git emacs-machiner
+cd emacs-machiner
+rake emacs_git_url=git://github.com/emacsmirror/emacs.git \
+     myrepo=git://github.com/nicferrier/emacs-ci-demo.git
+}}}
+
+//you probably need ruby 1.9 to make vagrant (or rake) work//
+
+this will:
+
+* downloads the required Vagrant base box (unless you already have it)
+* make a virtual machine from the Vagrant base box
+* clone the Emacs source repo {{{emacs_git_url}}} inside the virtual machine
+* clones the my_repo you provide in {{{myrepo}}}
+* then installs the Emacs from the repo you specified
+* the runs a {{{build.el}}} file inside your repo to do any repo specific things
+
 
 == Why? ==
 
@@ -22,11 +46,6 @@ Lisp server. I want to be able to specify a base and then add extra
 packages and configuration to create an Emacs Machine for a running
 program. An Elnode server might include [[http://nginx.org|nginx]] for
 example.
-
-Emacs packages by major distros are often quite a way behind Emacs
-trunk so any serious Emacs Lisp hacker tends to have their own Emacs
-built from source. But this also means that the distro Emacs packages
-are next to useless for actually running your code.
 
 
 == Emacs batch scripting ==
@@ -97,33 +116,8 @@ it iteratively using your local Emacs instance, like this:
 emacs -Q -batch --script build.el
 }}}
 
-== Turning your build into a machine ==
-
-To turn this into a completly repeatable environment I've set up a
-project based on [[http://vagrantup.com|Vagrant]]. Vagrant is a tool
-that wraps VirtualBox to make virtual machines. It's good because it
-let's you specify how to provision the box, you can for example,
-supply a [[http://vagrantup.com/docs/provisioners/puppet.html|puppet]]
-setup which can install packages and setup config.
-
-So the Emacs Machine provisioner provides a Puppet config to install
-Emacs from a local clone of the Emacs source repository, Vagrant
-handles all the magic of sharing host machine folders and calling into
-the virtual machine to start the provisioning.
-
-So all you have to do is run a [[http://rake.rubyforge.org/|Rake]]
-script that pulls everything together:
-
-{{{
-rake emacs_git_url=~/emacs.git myrepo=~/some-repo-with-build-el
-}}}
-
-* it downloads the required Vagrant base box (unless you already have it)
-* it make a virtual machine from my Vagrant base box
-* then clones the Emacs source repo {{{emacs_git_url}}} inside the virtual machine
-* then clones whatever repo you provide in {{{myrepo}}}
-* then installs the Emacs from the repo you specified
-* the runs the {{{build.el}}} from your repo
+If I pass the repo that this file sits in to my rake command then my
+blog will be built in the Emacs Machine.
 
 == What's next? ==
 
