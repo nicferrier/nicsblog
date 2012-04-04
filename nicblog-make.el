@@ -6,7 +6,7 @@
 ;; Maintainer: Nic Ferrier <nferrier@ferrier.me.uk>
 ;; Created: 28th March 2012
 ;; Version: 0.0.1
-;; Package-Requires: ((creole "0.8.3"))
+;; Package-Requires: ((creole "0.8.4"))
 ;; Keywords: lisp, creole, wiki
 
 ;; This file is NOT part of GNU Emacs.
