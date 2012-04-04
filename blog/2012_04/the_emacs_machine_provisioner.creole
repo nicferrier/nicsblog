@@ -118,6 +118,7 @@ script that pulls everything together:
 rake emacs_git_url=~/emacs.git myrepo=~/some-repo-with-build-el
 }}}
 
+* it downloads the required Vagrant base box (unless you already have it)
 * it make a virtual machine from my Vagrant base box
 * then clones the Emacs source repo {{{emacs_git_url}}} inside the virtual machine
 * then clones whatever repo you provide in {{{myrepo}}}
