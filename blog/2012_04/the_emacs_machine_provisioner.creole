@@ -1,0 +1,141 @@
+= The Emacs Machine Provisioner =
+
+I have been working on an Emacs Machine provisioning system which is a
+way of automatically making operating systems with a freshly compiled
+Emacs running inside them.
+
+== Why? ==
+
+There are 2 reasons I needed this, firstly I want to be able to test
+Emacs Lisp code in a clean and predictable environment, for example
+against a particular version of Emacs. Some form of continuous
+integration system would be very useful. Other people in the Emacs
+community are also talking about this, for example
+[[https://github.com/sigma|Sigma]] is the author of
+[[https://github.com/magit/magit|the Emacs git tool, magit]] and he
+wants to be able to have a repeatable build of Emacs that he can test
+against different versions of Git.
+
+The second reason I needed this is that I want a recreatably clean
+environment to run Emacs Lisp code in, particularly Elnode my Emacs
+Lisp server. I want to be able to specify a base and then add extra
+packages and configuration to create an Emacs Machine for a running
+program. An Elnode server might include [[http://nginx.org|nginx]] for
+example.
+
+Emacs packages by major distros are often quite a way behind Emacs
+trunk so any serious Emacs Lisp hacker tends to have their own Emacs
+built from source. But this also means that the distro Emacs packages
+are next to useless for actually running your code.
+
+
+== Emacs batch scripting ==
+
+The first step in building an Emacs Machine is to have a way of
+creating the Emacs Lisp environment inside Emacs. ELPA, the Emacs
+packaging system has recently made this quite nice. 
+
+Here's an example build file for this blog:
+
+{{{
+##! emacs-lisp
+(setq package-dir
+      (concat
+       (file-name-directory
+        (or (buffer-file-name)
+            load-file-name))
+       ".elpa"))
+
+(setq package-user-dir package-dir)
+
+(when (file-exists-p package-dir)
+  (delete-directory package-dir t))
+
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("marmalade" . "http://marmalade-repo.org/packages/")))
+
+(package-initialize)
+(package-refresh-contents)
+
+(let ((nicblogmake (concat
+                    (file-name-directory
+                     (or (buffer-file-name)
+                         load-file-name))
+                    "nicblog-make.el")))
+  (package-install-file nicblogmake))
+
+(require 'nicblog-make)
+(nicblog-make-run)
+}}}
+
+If you know Emacs Lisp you'll notice that it's all portable as to it's
+location in the file system. So you can add this to any local
+package. You can see that Emacs packages are used, the installation of
+the local file "nicblog-make.el" as a package causes any packages
+//it// has defined as dependancies to be collected from ELPA; here's
+the header of my blog file:
+
+{{{
+;;; nicblog-make.el --- Make nic's blog
+;;; Copyright (C) 2012 by Nic Ferrier
+;; Author: Nic Ferrier <nferrier@ferrier.me.uk>
+;; Maintainer: Nic Ferrier <nferrier@ferrier.me.uk>
+;; Created: 28th March 2012
+;; Version: 0.0.1
+;; Package-Requires: ((creole "0.8.3"))
+;; Keywords: lisp, creole, wiki
+}}}
+
+So the {{{creole}}} package will be downloaded from ELPA and deployed
+into the Emacs where the script is run.
+
+It's easy to make a {{{build.el}}} like the above because you can test
+it iteratively using your local Emacs instance, like this:
+
+{{{
+emacs -Q -batch --script build.el
+}}}
+
+== Turning your build into a machine ==
+
+To turn this into a completly repeatable environment I've set up a
+project based on [[http://vagrantup.com|Vagrant]]. Vagrant is a tool
+that wraps VirtualBox to make virtual machines. It's good because it
+let's you specify how to provision the box, you can for example,
+supply a [[http://vagrantup.com/docs/provisioners/puppet.html|puppet]]
+setup which can install packages and setup config.
+
+So the Emacs Machine provisioner provides a Puppet config to install
+Emacs from a local clone of the Emacs source repository, Vagrant
+handles all the magic of sharing host machine folders and calling into
+the virtual machine to start the provisioning.
+
+So all you have to do is run a [[http://rake.rubyforge.org/|Rake]]
+script that pulls everything together:
+
+{{{
+rake emacs_git_url=~/emacs.git myrepo=~/some-repo-with-build-el
+}}}
+
+* it make a virtual machine from my Vagrant base box
+* then clones the Emacs source repo {{{emacs_git_url}}} inside the virtual machine
+* then clones whatever repo you provide in {{{myrepo}}}
+* then installs the Emacs from the repo you specified
+* the runs the {{{build.el}}} from your repo
+
+== What's next? ==
+
+Right now it stops at the {{{build.el}}} but what's really needed is
+the ability to do more provisioning. For example, to make this blog
+run I really need to add nginx into the VM and it would be nice to do
+that repeatably. I'm working on changes that would make that possible.
+
+Another step forward would be to create a system that let people other
+than the package owner run tests for the package owner. Most of us
+Emacs hackers don't have unlimited resources, it would be great if
+people could help us with testing and this might be one way it could
+be done.
+
+Shout me on [[http://twitter.com/nicferrier|twitter]] if you have an
+idea for how to use the Emacs Machine provisioner!
