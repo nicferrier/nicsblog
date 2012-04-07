@@ -96,6 +96,7 @@ the local file "nicblog-make.el" as a package causes any packages
 the header of my blog file:
 
 {{{
+##! emacs-lisp
 ;;; nicblog-make.el --- Make nic's blog
 ;;; Copyright (C) 2012 by Nic Ferrier
 ;; Author: Nic Ferrier <nferrier@ferrier.me.uk>
