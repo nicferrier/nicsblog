@@ -3,17 +3,17 @@
 Things that are said on {{{#emacs}}} should stay on {{{#emacs}}} but this is a diamond:
 
 {{{
-10:04 <forcer> Scheme is for when you want to learn about designing
+10:04 forcer: Scheme is for when you want to learn about designing
                and writing programming languages, interpreters and
                compilers. Emacs Lisp is for when you want to write
                something you can actually use in your daily
                life. Common Lisp is for when you want to discuss
                somewhere how everyone else is doing it wrong.
 10:05 [forcer runs *fast*.]
-10:05 <aidalgol> HAHAHAHA!
-10:05 <nicferrier> clojure is for when you want to do with lisp with 
+10:05 aidalgol: HAHAHAHA!
+10:05 nicferrier: clojure is for when you want to do with lisp with 
                people who will like you.
-10:07 <forcer> tali713: Good jokes have a true core and just
+10:07 forcer: tali713: Good jokes have a true core and just
                exaggerate it too much :-]
 }}}
 
