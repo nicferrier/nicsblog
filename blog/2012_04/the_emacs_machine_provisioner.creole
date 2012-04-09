@@ -135,3 +135,8 @@ be done.
 
 Shout me on [[http://twitter.com/nicferrier|twitter]] if you have an
 idea for how to use the Emacs Machine provisioner!
+
+
+== Other approaches ==
+
+* http://hodique.info/blog/2012/04/09/a_community-based_approach_to_emacs_packages_continuous_integration
