@@ -1,0 +1,146 @@
+= Fakir - mocking bit of Emacs Lisp and showing the power of Macros =
+
+I decided that I would introduce a full stack testing framework into
+[[https://github.com/nicferrier/elnod|Elnode]], my EmacsLisp event
+driven webserver. I started by adding bits of Lisp to the Elnode
+module directly, for things like mocking Emacs process objects.  That
+soon got unwiedly and I realized that some of the things I was doing
+might benefit other people. So I made a new package just for these
+special mocking functions: [[https://github.com/nicferrier/emacs-fakir|{{{fakir}}}]].
+
+{{{fakir}} is for mocking (or faking) Emacs core functions with code
+that can be controlled more easily in tests. Right now it only support
+files and processes. It's by no means perfect but it is good
+enough.
+
+== Mocking processes ==
+
+Processes are complex objects in EmacsLisp, they're really powerful as
+well. They can be connections to child processes on your operating
+system or they can be Internet sockets. You can attach arbitary data
+to them, you can read and write from them, they have buffers and all
+sorts of other things.
+
+They're important to fake in tests if you want to be able to do
+anything with them though. So I came up with a way of mocking a
+process so that the process-functions mostly do the right thing:
+
+
+{{{
+##! emacs-lisp
+(fakir-mock-process ((attrib-1 "an attribute!"))
+    (process-get :fake 'attrib-1))
+
+ => "an attribute!"
+}}}
+
+process buffers can be mocked as well:
+
+{{{
+##! emacs-lisp
+(fakir-mock-process ((:buffer "some text in the process buffer!"))
+    (buffer-substring (process-buffer :fake) (point-min) (point-max)))
+
+ => "some text in the process buffer!"
+}}}
+
+you can send data to the process:
+
+{{{
+##! emacs-lisp
+(fakir-mock-process ((:buffer "some text in the process buffer!\n"))
+    (process-send-string :fake "some more text!")
+    (buffer-substring (process-buffer :fake) (point-min) (point-max)))
+
+ => "some text in the process buffer!
+some more text!"
+}}}
+
+and you can read data from the process:
+
+{{{
+##! emacs-lisp
+(fakir-mock-process ((:buffer "some text in the process buffer!"))
+    (process-read-string :fake))
+
+ => "some text in the process buffer!"
+}}}
+
+One problem currently is that //all// process code in the body of the
+macro will return the fake values. There is no way to distinguish
+currently. I haven't really needed to fix this yet but I will at some
+point.
+
+== Mocking files ==
+
+Files offer a similar problem to processes, you don't want to have to
+create a bunch of files to have your test code work. Just declare some
+fake files and the values they should produce. When you're tetsing low
+level things with Emacs fake files can be invaluable.
+
+Here's a fakir mock file:
+
+{{{
+##! emacs-lisp
+(fakir-mock-file (fakir-file 
+                    :filename ".bashrc" 
+                    :directory "/home/fakeuser")
+  (expand-file-name "~/.bashrc"))
+
+ => "/home/fakeuser/.bashrc"
+}}}
+
+a {{{fakir-file}}} is a sort of Common Lisp struct. Separating the
+filename and the directory let's us do certain operations simply.
+
+If you want {{{~}}} to resolve then the directory has to start with
+{{{home}}} - for example:
+
+{{{
+##! emacs-lisp
+(fakir-mock-file (fakir-file 
+                    :filename "README.md" 
+                    :directory "/home/fakeuser/somedir/anotherlevel")
+  (expand-file-name "~/somedir/anotherlevel/README.md"))
+
+ => "/home/fakeuser/somedir/anotherlevel/README.md"
+}}}
+
+It's not just the {{{expand-file-name}}}, you can also specify the
+mod time for the file:
+
+{{{
+##! emacs-lisp
+(fakir-mock-file (fakir-file
+                    :filename "somefile"
+                    :directory "/home/fake"
+                    :mtime "Mon, Feb 27 2012 22:10:21 GMT")
+   (elt (file-attributes (expand-file-name "~/somefile")) 5))
+
+ => (20299 65357)
+}}}
+
+Obviously more could be done. We could specify more attributes for
+files and allow them to be tested.
+
+It would also be really interesting to specify the contents of
+directories so you could fake those.
+
+== Using it all ==
+
+The best way of using {{{fakir}}} is to declare it as a dependancy in
+your package; here's Elnode's pelude:
+
+{{{
+;;; elnode.el --- a simple emacs async HTTP server
+;; Copyright (C) 2010  Nic Ferrier
+;; Author: Nic Ferrier <nferrier@ferrier.me.uk>
+;; Maintainer: Nic Ferrier <nferrier@ferrier.me.uk>
+;; Created: 5th October 2010
+;; Version: 0.9.3
+;; Keywords: lisp, http, hypermedia
+;; Package-Requires: ((fakir "0.0.4")(creole "0.8.4"))
+}}}
+
+If you do that and package your code then you can simply {{{require}}}
+the {{{fakir}}} feature and use it in your tests.
