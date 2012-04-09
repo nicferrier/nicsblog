@@ -8,7 +8,7 @@ soon got unwiedly and I realized that some of the things I was doing
 might benefit other people. So I made a new package just for these
 special mocking functions: [[https://github.com/nicferrier/emacs-fakir|{{{fakir}}}]].
 
-{{{fakir}} is for mocking (or faking) Emacs core functions with code
+{{{fakir}}} is for mocking (or faking) Emacs core functions with code
 that can be controlled more easily in tests. Right now it only support
 files and processes. It's by no means perfect but it is good
 enough.
@@ -129,9 +129,10 @@ directories so you could fake those.
 == Using it all ==
 
 The best way of using {{{fakir}}} is to declare it as a dependancy in
-your package; here's Elnode's pelude:
+your package; here's Elnode's prelude:
 
 {{{
+##! emacs-lisp
 ;;; elnode.el --- a simple emacs async HTTP server
 ;; Copyright (C) 2010  Nic Ferrier
 ;; Author: Nic Ferrier <nferrier@ferrier.me.uk>
@@ -144,3 +145,7 @@ your package; here's Elnode's pelude:
 
 If you do that and package your code then you can simply {{{require}}}
 the {{{fakir}}} feature and use it in your tests.
+
+
+See the [[https://github.com/nicferrier/emacs-fakir|{{{fakir}}}]]
+project on github.
