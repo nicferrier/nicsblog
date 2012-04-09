@@ -1,4 +1,4 @@
-= Fakir - mocking bit of Emacs Lisp and showing the power of Macros =
+= Fakir - mocking important bits of Emacs Lisp =
 
 I decided that I would introduce a full stack testing framework into
 [[https://github.com/nicferrier/elnod|Elnode]], my EmacsLisp event
