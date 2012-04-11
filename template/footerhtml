@@ -42,7 +42,10 @@
 
             <h4><code>shell</code> for life</h4>
             <ul>
-              <li><a href="/blog/2012_04/walking_through_a_simple_shell_app">Walking through a simple shell hack</a></li>
+              <li>
+                <a href="/blog/2012_04/walking_through_a_simple_shell_app">Walking through a simple shell hack</a>
+                <a href="http://news.ycombinator.com/item?id=3826819"><img src="http://ycombinator.com/images/y18.gif" height="18" style="border:1px #ffffff solid;"></a>
+              </li>
               <li><a href="/blog/2009september/shell_integration">Some simple shell tricks</a></li>
               <li><a href="/blog/2009august/time_management">Time management with simple Unix tools</a></li>
             </ul>
