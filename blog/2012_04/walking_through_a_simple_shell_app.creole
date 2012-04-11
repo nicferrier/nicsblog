@@ -1,0 +1,237 @@
+= Shell for fun and profit =
+
+The title of this is a bit misleading. What I'm really doing here is
+//measuring// my fun and profit with Shell, but hey.
+
+I'm a consultant and I've been having trouble doing my time sheets in
+a timely enough manner to remember what I was going on any particular
+day. I could have used a time log application (there are plenty) but
+that's frustrating because you still have to remember to do it all the
+time. I'd prefer the computer to remember what time I turn up for work
+and what time I leave. You think it would know those things, right?
+
+Well, I realized that it does. Whenever I turn up at a clients I
+connect to their WIFI and I get a DHCP address. So my DHCP log
+contains all the information about when I start and leave work.
+
+So I wrote [[https://github.com/nicferrier/timelog|this]]. 
+
+That's not the purpose of this post though, the purpose of this post
+is to walk through a very simple shell script application. Is it an
+application? Well [[http://coderwall.com/nicferrier|coderwall thinks so]] and I'm happy to go with that.
+
+So here's the script:
+
+
+{{{
+##! shell-script
+case $1 in
+    normalize_date_num)
+        sed -re '/Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Oct|Nov|Dec  /s/(Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Oct|Nov|Dec)  ([0-9]) (.*)/\1 0\2 \3/'
+        ;;
+
+    help|--help|-h|-?)
+        cat <<EOF
+Read the system log for DHCP events that tell us when we got and gave
+up a DHCP lease.
+
+This tells us when we came and went from a building which is near to
+being a timelog of where and when we started work.
+
+EOF
+        ;;
+    
+    *)
+        # The main program
+        sudo grep -h dhcpcd /var/log/daemon.log* \
+            | grep -E 'offered|releasing lease' \
+            | $0 normalize_date_num \
+            | sort -M
+        ;;
+
+esac
+}}}
+
+Now I'll walk through what it does.
+
+The //case// statement is a way of having the script perform
+multiple functions, the {{{*}}} is what happens when there's no
+sub-command, ie:
+
+{{{
+timelog
+}}}
+
+and not:
+
+{{{
+timelog help
+}}}
+
+You notice the {{{case}}} can bundle up help easily and the help is
+done with a simple
+[[http://tldp.org/LDP/abs/html/here-docs.html|HERE]] document:
+
+{{{
+##! shell-script
+    cat <<EOF
+Read the system log for DHCP events that tell us when we got and gave
+up a DHCP lease.
+
+This tells us when we came and went from a building which is near to
+being a timelog of where and when we started work.
+
+EOF
+}}}
+
+Of course, the most interesting part of the program is the {{{*}}}
+handler, so let's walk through that:
+
+{{{
+##! shell-script
+sudo grep -h dhcpcd /var/log/daemon.log* \
+    | grep -E 'offered|releasing lease' \
+    | $0 normalize_date_num \
+    | sort -M
+}}}
+
+The first command: 
+
+{{{
+##! shell-script
+sudo grep -h dhcpcd /var/log/daemon.log.* 
+}}}
+
+produces something like this:
+
+{{{
+Apr  9 00:56:42 localhost dhcpcd[17678]: wlan0: renewing lease of 172.31.1.110
+Apr  9 00:56:42 localhost dhcpcd[17678]: wlan0: acknowledged 172.31.1.110 from 172.31.1.1
+Apr  9 00:56:42 localhost dhcpcd[17678]: wlan0: leased 172.31.1.110 for 86400 seconds
+Apr  9 12:00:29 localhost dhcpcd[17678]: wlan0: renewing lease of 172.31.1.110
+Apr  9 12:00:29 localhost dhcpcd[17678]: wlan0: acknowledged 172.31.1.110 from 172.31.1.1
+Apr  9 12:00:29 localhost dhcpcd[17678]: wlan0: leased 172.31.1.110 for 86400 seconds
+Apr  9 22:40:36 localhost dhcpcd[17678]: wlan0: renewing lease of 172.31.1.110
+Apr  9 22:40:36 localhost dhcpcd[17678]: wlan0: acknowledged 172.31.1.110 from 172.31.1.1
+Apr  9 22:40:36 localhost dhcpcd[17678]: wlan0: leased 172.31.1.110 for 86400 seconds
+Apr 10 09:11:26 localhost dhcpcd[17678]: wlan0: renewing lease of 172.31.1.110
+}}}
+
+and then:
+
+{{{
+##! shell-script
+    | grep -E 'offered|releasing lease' \
+}}}
+
+filters that to something like this:
+
+{{{
+Apr  2 08:23:30 localhost dhcpcd[2178]: wlan0: releasing lease of 172.31.1.110
+Apr  2 09:13:59 localhost dhcpcd[1640]: wlan0: offered 172.16.50.34 from 192.168.70.11
+Apr  2 18:00:17 localhost dhcpcd[1680]: wlan0: releasing lease of 172.16.50.34
+Apr  2 19:53:42 localhost dhcpcd[25786]: wlan0: offered 172.31.1.110 from 172.31.1.1
+Apr  3 07:28:21 localhost dhcpcd[1151]: wlan0: releasing lease of 172.31.1.110
+Apr  3 09:14:58 localhost dhcpcd[2179]: wlan0: offered 172.16.50.75 from 192.168.70.11
+Apr  3 17:41:26 localhost dhcpcd[2224]: wlan0: releasing lease of 172.16.50.75
+Apr  3 19:32:37 localhost dhcpcd[23963]: wlan0: offered 172.31.1.110 from 172.31.1.1
+Mar 26 17:35:40 localhost dhcpcd[1896]: wlan0: offered 10.25.211.106 from 10.25.210.1
+Mar 26 17:38:03 localhost dhcpcd[1926]: wlan0: releasing lease of 10.25.211.106
+}}}
+
+which is just the bits where we are connecting and disconnecting from a
+network (which for me is most often when I am arriving and leaving a
+building).
+
+then this bit:
+
+{{{
+##! shell-script
+    | $0 normalize_date_num \
+}}}
+
+uses the {{{case}}} trick; $0 means //the name of this program// so this call really looks like this:
+
+
+{{{
+##! shell-script
+    | timelog normalize_date_num
+}}}
+
+so we're piping data from our script back into another instance of the
+same script. 
+
+The new script instance is running this command:
+
+{{{
+##! shell-script
+sed -re '/Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Oct|Nov|Dec  /s/(Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Oct|Nov|Dec)  ([0-9]) (.*)/\1 0\2 \3/'
+}}}
+
+which is a [[http://www.grymoire.com/Unix/Sed.html|sed]] program to change dates like:
+
+{{{
+Jan 9
+}}}
+
+into
+
+{{{
+Jan 09
+}}}
+
+Because that's easier to sort.
+
+So what comes out of that is a stream like this:
+
+{{{
+Apr 02 08:23:30 localhost dhcpcd[2178]: wlan0: releasing lease of 172.31.1.110
+Apr 02 09:13:59 localhost dhcpcd[1640]: wlan0: offered 172.16.50.34 from 192.168.70.11
+Apr 02 18:00:17 localhost dhcpcd[1680]: wlan0: releasing lease of 172.16.50.34
+Apr 02 19:53:42 localhost dhcpcd[25786]: wlan0: offered 172.31.1.110 from 172.31.1.1
+Apr 03 07:28:21 localhost dhcpcd[1151]: wlan0: releasing lease of 172.31.1.110
+Apr 03 09:14:58 localhost dhcpcd[2179]: wlan0: offered 172.16.50.75 from 192.168.70.11
+Apr 03 17:41:26 localhost dhcpcd[2224]: wlan0: releasing lease of 172.16.50.75
+Apr 03 19:32:37 localhost dhcpcd[23963]: wlan0: offered 172.31.1.110 from 172.31.1.1
+Mar 26 17:35:40 localhost dhcpcd[1896]: wlan0: offered 10.25.211.106 from 10.25.210.1
+Mar 26 17:38:03 localhost dhcpcd[1926]: wlan0: releasing lease of 10.25.211.106
+}}}
+
+you'll notice the dates at the start have been "normalized" so they are
+all the same;
+
+And finally, now the dates are all the same, we can sort the whole pipeline by date:
+
+{{{
+##! shell-script
+    | sort -M
+}}}
+
+and that makes a nice ordered list by date:
+
+{{{
+Mar 12 07:23:11 localhost dhcpcd[1150]: wlan0: releasing lease of 172.31.1.110
+Mar 12 14:01:11 localhost dhcpcd[1062]: wlan0: offered 10.90.129.25 from 1.1.1.1
+Mar 12 14:17:00 localhost dhcpcd[2514]: wlan0: offered 10.90.129.25 from 1.1.1.1
+Mar 12 16:08:39 localhost dhcpcd[5369]: wlan0: releasing lease of 10.90.129.25
+Mar 12 16:55:43 localhost dhcpcd[27960]: wlan0: offered 10.26.12.75 from 10.26.0.254
+Mar 12 19:13:08 localhost dhcpcd[27984]: wlan0: releasing lease of 10.26.12.75
+Mar 12 21:24:11 localhost dhcpcd[30852]: wlan0: offered 10.0.7.47 from 10.0.0.1
+Mar 13 06:49:02 localhost dhcpcd[30878]: wlan0: releasing lease of 10.0.7.47
+Mar 13 07:29:30 localhost dhcpcd[15195]: wlan0: offered 10.90.130.58 from 1.1.1.1
+Mar 13 07:50:56 localhost dhcpcd[15232]: wlan0: releasing lease of 10.90.130.58
+}}}
+
+== Portability ==
+
+It's very difficult to make this program portable across operating
+systems because log formats and tools vary so much. That's not really
+the point though; the point is if you know how to script your
+environment it's a very powerful technique for doing lots of quick
+hacks with your business.
+
+If you're interested then
+[[http://shop.oreilly.com/product/9780596003302.do|this book]] from
+O'Reilly is a really great book on the subject of scripting. I
+recomend buying it and dipping into it.
+
