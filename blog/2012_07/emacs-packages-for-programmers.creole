@@ -1,0 +1,253 @@
+= Packages for Programmers =
+
+So Emacs 24 has been released.  It's a major step forward for Emacs
+because 24 includes a packaging system.  The packaging system is
+variously known as {{{package.el}}} or //elpa// but here we will
+call it just //package//.
+
+
+== Why you should care about package ==
+
+package is important because it's a standard way for people to build
+Emacs extensions that can be incorporated by other Emacs users quickly
+and easily.  We no longer need to have a 3 or 4 year wait for a new
+piece of code to //get into Emacs//.  
+
+By default Emacs pulls packages from a GNU package repository called
+ELPA.  ELPA has strict submission requirements, the ownership of the
+code must still be assigned to the FSF.  But it's easy to add usage of
+other repositories to your Emacs, rather like you can with {{{yum}}},
+or {{{apt}}} or //macports//.
+
+A couple of other Emacs package repositories have sprung up,
+[[http://marmalade-repo.org|marmalade-repo]] by
+[[http://twitter.com/nex3|Nathan Weizenbaum]] and now maintained by me
+is a repository for Emacs packages that does not require code
+ownership to be assigned to the FSF; indeed, it does not even require
+a free licence (though that may change if I feel it's becomming an
+issue).  It's really easy to get your code into marmalade.  You just
+register with maramalade, build your package and upload it.
+
+Another repository, called [[http://melpa.milkbox.net/|Melpa]] is
+rather clever in that it creates a repository automatically out of
+code on GitHub.  There's no need to upload your code to Melpa, you
+just mark your repository in a particular way for Melpa to pull it and
+build it for you.
+
+== Testing with clean ==
+
+So package is a great boon for Emacs developers because it means you
+can share your code more effectively than ever.  Not just that
+though.  It's actually easier to develop with packages, they make
+testing much easier.
+
+This first dev's trick is actually useful for users too; it's the
+ability to build a clean Emacs, with no packages in it, that you can
+install stuff in without affecting your personal copy:
+
+{{{
+##! emacs-lisp
+(setq package-user-dir
+      (concat
+       default-directory
+       "elpa"))
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("marmalade" . "http://marmalade-repo.org/packages/")))
+(package-initialize)
+(package-refresh-contents)
+}}}
+
+I call this {{{emacs-clean.el}}} and I keep it in {{{~/}}}.  I can
+therefore get a clean Emacs to play around in anytime I want like
+this:
+
+{{{
+$ mkdir myclean ; cd myclean ; emacs -Q -nw -l ~/emacs-clean.el
+}}}
+
+this will start Emacs with no init file but with it's own {{{elpa}}}
+directory (the name of the package store).
+
+You can install packages to your hearts content here without affecting
+your own Emacs.  This means it's easy to test in a fresh Emacs.
+
+== Automated installation into clean ==
+
+When you're developing a package you probably want to install it in a
+clean emacs over and over again.  So here's an extension of the above
+script that let's you do just that.  This one is a bit interesting
+because it's an Emacs [[http://emacswiki.org/emacs/EmacsScripts|//shell script//]]:
+
+{{{
+##! emacs-lisp
+:;exec emacs -nw -Q -l "$0" -f main "$@"
+(require 'cl)
+(toggle-debug-on-error)
+(defun main ()
+  (interactive)
+  (destructuring-bind (package &optional elpa-parent) command-line-args-left
+    ;; Make the elpa dir for this if we need to.
+    (when (and elpa-parent
+               (not (file-exists-p elpa-parent)))
+      (make-directory elpa-parent t))
+    ;; Package stuff
+    (setq package-user-dir
+          (concat
+           (or (concat elpa-parent "/")
+               user-emacs-directory)
+           ".elpa"))
+    (setq package-archives
+          '(("gnu" . "http://elpa.gnu.org/packages/")
+            ("marmalade" . "http://marmalade-repo.org/packages/")))
+    (package-initialize)
+    (package-refresh-contents)
+    (if (and (file-exists-p (expand-file-name package))
+             (not (file-directory-p (expand-file-name package))))
+        (package-install-file (expand-file-name package))
+        ;; Else must just be a package
+        (package-install (intern package)))))
+
+;; End
+}}}
+
+I call this {{{emacs-install-clean.el}}}, you can use it like this:
+
+{{{
+$ bash ~/emacs-install-clean.el keywiz ~/mycleantest
+}}}
+
+that will install the {{{keywiz}}} package into the new directory
+{{{mycleantest}}}.
+
+If you want to test a package of your own then you can do this:
+
+{{{
+$ bash ~/emacs-install-clean.el ~/work/myproject/mypackage.el ~/mycleandir
+}}}
+
+It will, of course, handle any type of package.
+
+== Automated testing and packages ==
+
+The next important tool for developers is how you can apply these
+tricks to a regular build so you can do automated, clean, testing with
+your Emacs project.
+
+To automatically test a package you need to:
+
+ * install the package in a clean emacs
+  * which causes it's dependancies to be downloaded as well
+ * run some ert tests (or whatever your flavour or emacs tests is)
+
+I have 2 files which I use for this, the first is the build file which
+I call {{{build.el}}}:
+
+{{{
+##! emacs-lisp
+(package-initialize)
+(package-refresh-contents)
+(let ((package
+       (concat
+        (file-name-directory
+         (or (buffer-file-name)
+             load-file-name))
+        (car (reverse command-line-args)))))
+  (message "the package is: %s" package)
+  (package-install-file package))
+;; End
+}}}
+
+This let's you go like this:
+
+{{{
+$ emacs --batch -l ./build.el -- package-file-name
+}}}
+
+with your local package and it will batch run an Emacs to install the
+package.
+
+That's not much use (though it does cause byte-compilation which is a
+useful testing step in itself) so you also need {{{packagedir.el}}}
+which sets the target package directory, just like
+{{{emacs-clean.el}}} did above, and then runs the tests.  Here's
+[[http://elnode.org|elnode's]] example:
+
+{{{
+##! emacs-lisp
+(setq package-user-dir
+      (concat
+       (file-name-directory
+        (or (buffer-file-name)
+            load-file-name
+            default-directory))
+       ".elpa"))
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("marmalade" . "http://marmalade-repo.org/packages/")))
+(load-file "build.el")
+(require 'elnode-db-tests)
+(require 'elnode-wiki)
+(require 'elnode-tests)
+(require 'elnode-client)
+(ert-run-tests-batch-and-exit)
+}}}
+
+You can then run this file like this:
+
+{{{
+emacs -Q --batch -l ./packagedir.el -- package-file-name
+}}}
+
+And it will do the installation into a clean Emacs //and// run the
+tests.  I have this setup in a Makefile so I can just go:
+
+{{{
+M-x compile [RET] clean test
+}}}
+
+Some people might be asking //why separate out the package dir
+setting from emacs-clean like that?// because we've moved the setting
+of the {{{package-user-dir}}} to a different file from {{{build.el}}}
+and the reason is because then the {{{build.el}}} can also be used to
+install, possibly from a Makefile as well.  An example of this is
+[[https://github.com/nicferrier/elnode/blob/db18a9150ea47e58b80450ce4649f3ff0c6b45e5/Makefile#L30|Elnode's Makefile]] 
+which has just such an install target.
+
+It might be that there is signifcant reuse to be had from these
+scripts, it's early days.
+
+== Offline testing ==
+
+The last thing I want to talk about is a probably a little
+specialized.  It's the ability to cache package files so they can be
+downloaded without Internet connectivity.  This is fantastically
+useful to me because I often find myself in airports, on planes or on
+trains with no WIFI and wanting to run a few tests of an Emacs package
+I'm working on.  Without a cache I'm stuck.  So I built one.
+
+To use it download the package
+[[http://marmalade-repo.org/packages/package-store|package-store]]
+from Marmalade.  This will create a package cache of everything you
+install (at least while the package is installed).  Once you've got
+everything you need cached (just running tests in your personal Emacs
+while you are online should be enough) you can then go offline in any
+Emacs with packages installed:
+
+{{{
+M-x toggle-package-store-connected
+}}}
+
+any further package installs with then come from the cache.
+
+== The Great Leap ==
+
+This is the absolutely best thing about Emacs 24 in my opnion.  It
+makes life much much better for developers because it let's them make
+better software for users.
+
+If you have developed an Emacs add on at all in the past, now might be
+the time to consider revisting, giving it a few
+[[http://www.emacswiki.org/emacs/ErtTestLibrary|tests]]
+and then adding it to [[http://maramlade-repo.org|Marmalade]] or
+[[http://melpa.milkbox.net/|Melpa]].  Go on.  Make it better.
