@@ -17,6 +17,7 @@
 	<li id='footertoc'>
 	    <h4>Emacs Lisp</h4>
             <ul>
+              <li><a href="/blog/2012_07/emacs-packages-for-programmers">tips and tricks for developers about Emacs 24 packaging</a></li>
               <li><a href="/blog/2012_04/fakir-for-faking-bits-of-emacs">the <code>fakir</code> package for mock objects in EmacsLisp</a></li>
               <li><a href="/blog/2012_04/the_differences_between_the_lisps">what are the different Lisps?</a></li>
               <li><a href="/blog/2012_04/the_emacs_machine_provisioner">the Emacs Machine provisioner</a> 
