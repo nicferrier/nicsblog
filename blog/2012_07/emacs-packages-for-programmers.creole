@@ -136,9 +136,9 @@ your Emacs project.
 
 To automatically test a package you need to:
 
- * install the package in a clean emacs
-  * which causes it's dependancies to be downloaded as well
- * run some ert tests (or whatever your flavour or emacs tests is)
+* install the package in a clean emacs
+** which causes it's dependancies to be downloaded as well
+* run some ert tests (or whatever your flavour or emacs tests is)
 
 I have 2 files which I use for this, the first is the build file which
 I call {{{build.el}}}:
