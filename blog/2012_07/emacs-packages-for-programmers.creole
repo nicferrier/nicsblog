@@ -1,4 +1,4 @@
-= Packages for Programmers =
+= Packages for Emacs Programmers =
 
 So Emacs 24 has been released.  It's a major step forward for Emacs
 because 24 includes a packaging system.  The packaging system is
