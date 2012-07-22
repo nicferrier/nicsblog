@@ -5,6 +5,10 @@ because 24 includes a packaging system.  The packaging system is
 variously known as //elpa// or {{{package.el}}} but here we will
 call it just //package//.
 
+This article is a few tips and tricks to make working with packages
+easier, particularly aimed at developers of Emacs packages.  Some tips
+are still useful for people who just want to install packages though.
+
 
 == Why you should care about package ==
 
