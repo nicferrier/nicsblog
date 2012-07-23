@@ -167,7 +167,7 @@ float: right;
 margin-right: 5em;
 float: right;
 text-align: right;
-width: 12em;
+width: 18em;
 padding-bottom: 2em;
 }
 
@@ -193,7 +193,12 @@ margin: 0;
 padding:.2em;
 }
 
-
+#pp_donate {
+font-size: .7em;
+font-weight: bold;
+padding-bottom: .5em;
+color: #ffca77;
+}
 
 #gravatar {
 float: right;
