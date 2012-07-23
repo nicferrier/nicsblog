@@ -18,7 +18,7 @@ font-style: italic;
 }
 
 #page {
-width: 70%;
+width: 60%;
 margin: 0 10%;
 padding-top: 1em;
 padding-bottom: 2em;
@@ -126,7 +126,7 @@ padding-left: 1em;
 }
 
 p,li {
-font-size: 16pt;
+font-size: 14pt;
 color: DarkSlateGray;
 }
 
