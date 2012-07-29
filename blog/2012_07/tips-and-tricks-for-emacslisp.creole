@@ -80,7 +80,7 @@ Emacs core has always suggested not requiring [[http://www.gnu.org/software/emac
 If you are writing code to go into Emacs then that's still valid, but
 for your own code? Just require {{{cl}}}, it has some many useful
 extensions, such as
-[[http://www.gnu.org/software/emacs/manual/html_mono/cl.html#Loop-Basics|{{{loop}}}]
+[[http://www.gnu.org/software/emacs/manual/html_mono/cl.html#Loop-Basics|{{{loop}}}]]
 and
 [[http://www.gnu.org/software/emacs/manual/html_mono/cl.html#Iteration|{{{dotimes}}}]]
 and 
