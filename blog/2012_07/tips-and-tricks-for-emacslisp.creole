@@ -204,7 +204,7 @@ Here's a trivial example of EmacsLisp classes and methods:
 (defclass some-userc nil
   ((id
     :initarg :id
-    :initform (lambda () (make-uuid))
+    :initform (lambda () (some-user--make-uuid))
     :documentation "The id of the person")
    (name
     :type string
@@ -213,7 +213,7 @@ Here's a trivial example of EmacsLisp classes and methods:
     :documentation "Name of the person"))
   "A user record.")
 
-(defun make-uuid () ; functions can be used by constructors
+(defun some-user--make-uuid () ; functions can be used by constructors
   "1213243")
 
 (defmethod some-user-greeting ((user some-userc) ; this is a type specifier
