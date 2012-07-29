@@ -104,7 +104,7 @@ Autoloads allow lazy loading of EmacsLisp library code.  This is basically how t
 
 * functions or variables marked as {{{;;;### autoload}}} are compiled into functions that first load the rest of the library and then call the original definition of the function
 * when Emacs starts all the autoloads from all packages are loaded; this is fast because autoloads are very small
-* when an autoloaded function is called it's autoload causes the library to load
+* when an autoloaded function is called its autoload causes the library to load
 
 == Do use CL ==
 
