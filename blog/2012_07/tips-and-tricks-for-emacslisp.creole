@@ -13,7 +13,20 @@ which you can look at and copy.
 
 == There's a wealth of code out there, use it ==
 
-There are Emacs librarys for [[https://github.com/psanford/emacs-oauth/issues/|OAuth]]
+There are Emacs librarys for
+[[https://github.com/psanford/emacs-oauth/issues/|OAuth]] (and Oauth2,
+in ELPA) and for talking to [[http://orgmode.org/org.html#Hacking|Org
+Mode]] and for writing [[http://www.emacswiki.org/emacs/ErBot|IRC
+bots]] or interfacing to
+[[http://www.online-marketwatch.com/pgel/pg.html|PostgreSQL]] or
+[[http://www.emacswiki.org/emacs/mysql.el|MySQL]] or
+[[https://github.com/m2ym/mongo-el|MongoDB]].  Talking to
+[[http://www.gnu.org/software/emacs/manual/html_node/url/Retrieving-URLs.html#Retrieving-URLs|HTTP]]
+or
+[[http://www.gnu.org/software/emacs/manual/html_node/smtpmail/Emacs-Speaks-SMTP.html#Emacs-Speaks-SMTP|SMTP]]
+is built in to Emacs.
+
+Basically, pretty much everything you could want to do as a programmer is there.
 
 == Use name based namespaces ==
 
