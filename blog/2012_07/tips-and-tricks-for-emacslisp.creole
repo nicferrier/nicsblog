@@ -288,8 +288,8 @@ The [[http://emacswiki.org/emacs/ElispCookbook|Elisp Cookbook]] on the EmacsWiki
 
 == Do ask questions ==
 
-On [[http://stackoverflow.com/questions/tagged/elispA|StackOverflow]],
-[[http://www.reddit.com/r/emacs/|redit]] or
+On [[http://stackoverflow.com/questions/tagged/elisp|StackOverflow]],
+[[http://www.reddit.com/r/emacs/|reddit]] or
 [[http://www.emacswiki.org/emacs/EmacsChannel|on]] [[irc://irc.freenode.net/%23emacs|IRC]].
 
 == So that's it ==
