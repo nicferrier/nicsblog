@@ -7,7 +7,7 @@ editor.  A number of people seem to agree and are trying it out.
 Here's some tips and tricks distilled from my 15 years of using
 EmacsLisp to help budding Lisp hackers in Emacs.
 
-== The cut and paste pattern isn't bad ==
+== Cut. And also paste ==
 
 You don't have to have a reusable module for everything, it's ok to cut and
 paste code sometimes.  
