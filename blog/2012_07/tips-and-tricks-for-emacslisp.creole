@@ -198,7 +198,7 @@ in shell.
 
 More on scripts in the [[http://emacswiki.org/emacs/EmacsScripts|EmacsWiki]].
 
-== It's not wierd to use Object Orientation in EmacsLisp ==
+== It's not weird to use Object Orientation in EmacsLisp ==
 
 Object Oriented coding is [[http://news.ycombinator.com/item?id=3717715|suffering a bit of a backlash in some circles]]
 but it's still very useful in lots of cicrumstances, where you are
