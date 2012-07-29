@@ -1,0 +1,148 @@
+= Tips on Emacs Lisp programming =
+
+Here's some tips and tricks distilled from my 15 years of using EmacsLisp.
+
+== The cut and paste pattern isn't bad ==
+
+You don't have to have a reusable module for everything, it's ok to cut and
+paste code sometimes.  
+
+There is a massive load of
+[[https://github.com/languages/Emacs%20Lisp|EmacsLisp]] on github
+which you can look at and copy.
+
+== Use name based namespaces ==
+
+EmacsLisp does not have a module system.  This is a serious weakness
+but it's easy to work around it.
+
+There is a heirarchy you should follow:
+
+* a package is a file or list of files that may be installed as a package
+** hopefully defined as a package using [[http://emacswiki.org/wiki/ELPA|ELPA standards]]
+** this is important so you can write code that is portable and has declared dependancies
+* a module is a file in a package that is {{{provided}}} so it can be {{{required}}}
+** there may be one or many modules in a package
+* functions, classes, variables, constants, structs and other top level definitions all exist in a module.
+
+Given this heirarchy we can adopt some simple but consistent rules:
+
+* Name classes with a suffix {{{c}}} or {{{C}}}.
+* Name important constants in UPPERCASE.
+* Use the package name in your module names.
+* If you have more then one module in your package, then have one //top-level// module that is the main module of your package, if your package is called {{{somepackage}}} then have a {{{somepackage.el}}}
+* Use the module name in the names of your functions, variables, methods, classes.
+
+{{{
+(defun packagename-module-function (args)
+  ...)
+}}}
+
+** or in your top-level module:
+
+{{{
+(defun packagename-function (args)
+  ...)
+}}}
+
+* Use {{{--}}} to indicate private variables or functions, like:
+
+{{{
+(defun packagename--function (args)
+  ...)
+}}}
+
+* macros often need different names, try and use your package and module still, eg this is ok:
+
+{{{
+(defmacro with-package-module-thing (...)
+  )
+}}}
+
+
+== Understand packages and autoloads ==
+
+Autoloads allow lazy loading of EmacsLisp library code.  This is basically how they work:
+
+* functions or variables marked as {{{;;;### autoload}}} are compiled into functions that first load the rest of the library and then call the original definition of the function
+* when Emacs all the autoloads from all packages are loaded; this is fast because autoloads are very small
+* when an autoloaded function is called it's autoload causes the library to load
+
+== It's not wierd to use Object Orientation in EmacsLisp ==
+
+Object Oriented code is suffering a bit of a backlash in some circles
+but it's still very useful in lots of cicrumstances, where you are
+trying to declare a category of things that are quite complex for
+example.
+
+CommonLisp has CLOS, a very comprehensive Object Orientation
+programming API and EmacsLisp has EIEIO, an implementation of CLOS.
+
+Here's a trivial example of EmacsLisp classes and methods:
+
+{{{
+(defclass some-userc nil
+  ((id
+    :initarg :id
+    :initform (lambda () (make-uuid))
+    :documentation "The id of the person")
+   (name
+    :type string
+    :initarg :name
+    :initform ""
+    :documentation "Name of the person"))
+  "A user record.")
+
+(defun make-uuid () ; functions can be used by constructors
+  "1213243")
+
+(defmethod some-user-greeting ((user some-userc) ; this is a type specifier
+                               &optional daytime)
+  "Methods are functions and have docstrings."
+  (if daytime
+    (message "good morning %s" (oref user name))))
+
+(let ((user (some-userc "nic" :name "nic ferrier"))) ; make a user
+  (some-user-greeting user t)) ; call the method
+}}}
+
+
+
+== Macro writing needs settings ==
+
+{{{eval-expression-print-level}}} needs to be set to {{{0}}} (turned
+off) so that you can always see what's happening.
+
+
+== Don't write too many macros ==
+
+Macro use cases are:
+
+* hiding access to resources
+* building DSLs
+* and abstracting control flow
+
+Of these only the first is common in most programming, the second is
+obvious when you need it and the last you should think quite carefully
+before doing, it's normally for Lisp language hackers, not hackers in
+Lisp language.
+
+//PS That doesn't mean you should never write control flow macros, just think **hard** before doing it.//
+
+== Closures are cool but harder to debug ==
+
+If you need anything more than a tiny callback function then make a
+tiny callback that calls an external function with the right data:
+
+{{{
+##! emacs-lisp
+(let ((x somecapturedthing))
+   (lambda (httpcon)
+     (real--implementation httpcon x)))
+}}}
+
+The full function is nearly always private but it can be more easily
+instrumented for debugging so you can easily see what's going on in
+that code.  It's also useful sometimes to separate stuff out like this
+temporarily.  It's pretty easy to do quickly, it's probably easy
+enough that you could write some EmacsLisp to do it automatically.
