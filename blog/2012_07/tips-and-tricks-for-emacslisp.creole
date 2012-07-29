@@ -19,7 +19,7 @@ which you can look at and copy.
 == There's a wealth of code out there, use it ==
 
 There are Emacs librarys for
-[[https://github.com/psanford/emacs-oauth/issues/|OAuth]] (and Oauth2,
+[[https://github.com/psanford/emacs-oauth|OAuth]] (and Oauth2,
 in ELPA) and for talking to [[http://orgmode.org/org.html#Hacking|Org
 Mode]] and for writing [[http://www.emacswiki.org/emacs/ErBot|IRC
 bots]] or interfacing to
@@ -27,11 +27,12 @@ bots]] or interfacing to
 [[http://www.emacswiki.org/emacs/mysql.el|MySQL]] or
 [[https://github.com/m2ym/mongo-el|MongoDB]].  Talking to
 [[http://www.gnu.org/software/emacs/manual/html_node/url/Retrieving-URLs.html#Retrieving-URLs|HTTP]]
-or
+and
 [[http://www.gnu.org/software/emacs/manual/html_node/smtpmail/Emacs-Speaks-SMTP.html#Emacs-Speaks-SMTP|SMTP]]
 is built in to Emacs.
 
-Basically, pretty much everything you could want to do as a programmer is there.
+Basically, pretty much everything you could want to do as a programmer
+is there.  Sometimes it's not packaged very well, but that's coming.
 
 == Use name based namespaces ==
 
@@ -119,9 +120,56 @@ You can even use my
 [[http://nic.ferrier.me.uk/blog/2012_04/fakir-for-faking-bits-of-emacs|fakir]]
 library to mock tricky bits of Emacs like processes or files.
 
-== Write shell scripts with EmacsLisp ==
+== Write command scripts with EmacsLisp ==
 
+Shell scripts are always quick and easy but sometimes you want a program to do a little more, shell becomes unwieldy fast and you want to switch to a //proper// programming language.  EmacsLisp can do this pretty well, here's an example I've used in [[http://nic.ferrier.me.uk/blog/2012_07/emacs-packages-for-programmers|my blog before]]:
 
+{{{
+##! emacs-lisp
+:;exec emacs -batch -Q -l "$0" -f main "$@"
+(require 'cl)
+(toggle-debug-on-error)
+(defun main ()
+  (interactive)
+  (destructuring-bind (package &optional elpa-parent) command-line-args-left
+    ;; Make the elpa dir for this if we need to.
+    (when (and elpa-parent
+               (not (file-exists-p elpa-parent)))
+      (make-directory elpa-parent t))
+    ;; Package stuff
+    (setq package-user-dir
+          (concat
+           (or (concat elpa-parent "/")
+               user-emacs-directory)
+           ".elpa"))
+    (setq package-archives
+          '(("gnu" . "http://elpa.gnu.org/packages/")
+            ("marmalade" . "http://marmalade-repo.org/packages/")))
+    (package-initialize)
+    (package-refresh-contents)
+    (if (and (file-exists-p (expand-file-name package))
+             (not (file-directory-p (expand-file-name package))))
+        (package-install-file (expand-file-name package))
+        ;; Else must just be a package
+        (package-install (intern package)))))
+
+;; End
+}}}
+
+The first line is what does the magic of making Emacs run the script
+in batch mode (no windows).  Note that what you want to do with the script in that bang line is pretty flexible:
+
+{{{
+:;exec emacs -batch -Q -l "$0" -f main "$@"
+}}}
+
+{{{main}}} is the function to call and the {{{$@}}} is of course shell for //the arguments//.
+
+Emacs is very powerful at file manipulation, it's buffer mechanism is
+very useful for certain programming tasks that may be very difficult
+in shell.
+
+More on scripts in the [[http://emacswiki.org/emacs/EmacsScripts|EmacsWiki]].
 
 == It's not wierd to use Object Orientation in EmacsLisp ==
 
