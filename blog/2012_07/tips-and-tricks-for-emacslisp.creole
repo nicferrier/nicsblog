@@ -11,6 +11,10 @@ There is a massive load of
 [[https://github.com/languages/Emacs%20Lisp|EmacsLisp]] on github
 which you can look at and copy.
 
+== There's a wealth of code out there, use it ==
+
+There are Emacs librarys for [[https://github.com/psanford/emacs-oauth/issues/|OAuth]]
+
 == Use name based namespaces ==
 
 EmacsLisp does not have a module system.  Many people call this a
@@ -178,3 +182,10 @@ instrumented for debugging so you can easily see what's going on in
 that code.  It's also useful sometimes to separate stuff out like this
 temporarily.  It's pretty easy to do quickly, it's probably easy
 enough that you could write some EmacsLisp to do it automatically.
+
+== So that's it ==
+
+These are the things I can think of that people don't know.  If you're
+thinking of looking at a Lisp for your next programming project then I
+really recommend EmacsLisp, it's a very practical language with lots
+to recommend it.
