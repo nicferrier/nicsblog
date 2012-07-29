@@ -9,7 +9,7 @@ EmacsLisp to help budding Lisp hackers in Emacs.
 
 == Do use a modern Emacs ==
 
-The latest version of Emacs is 24.  It's not added to a whole lot of operating system repositories yet but for Debian and Ubuntu it's in [[http://emacs.naquadah.org/|http://emacs.naquadah.org/]].
+The latest version of Emacs is 24.  It's not added to a whole lot of operating system repositories yet but for Debian and Ubuntu you can get it easily by using this repository or PPA at [[http://emacs.naquadah.org/|http://emacs.naquadah.org/]].
 
 Using the latest version will give you access to lexical scope, built in packaging and lots more goodness.
 
