@@ -95,7 +95,7 @@ Given this heirarchy we can adopt some simple but consistent rules:
 Autoloads allow lazy loading of EmacsLisp library code.  This is basically how they work:
 
 * functions or variables marked as {{{;;;### autoload}}} are compiled into functions that first load the rest of the library and then call the original definition of the function
-* when Emacs all the autoloads from all packages are loaded; this is fast because autoloads are very small
+* when Emacs starts all the autoloads from all packages are loaded; this is fast because autoloads are very small
 * when an autoloaded function is called it's autoload causes the library to load
 
 == Do use CL ==
@@ -126,6 +126,13 @@ and lots, lots more.
 You can even use my
 [[http://nic.ferrier.me.uk/blog/2012_04/fakir-for-faking-bits-of-emacs|fakir]]
 library to mock tricky bits of Emacs like processes or files.
+
+== Do write function docs ==
+
+[[http://emacswiki.org/emacs/ElDoc|ElDoc]] is really useful when you're writing EmacsLisp but it only works when you have documentation.  
+Try and write [[http://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Basics.html|good documentation]].
+
+You can use my [[http://www.emacswiki.org/emacs/WikiDoc|wikidoc]] program to make HTML documentation from function and variable doc.
 
 == Write command scripts with EmacsLisp ==
 
@@ -268,6 +275,8 @@ documentation]] including about
 [[http://www.gnu.org/software/emacs/manual/html_node/cl/index.html|CL]]
 and
 [[http://www.gnu.org/software/emacs/manual/html_node/eieio/index.html|EIEIO]].
+
+The [[http://emacswiki.org/emacs/ElispCookbook|Elisp Cookbook]] on the EmacsWiki is also a great resource.
 
 == Do ask questions ==
 
