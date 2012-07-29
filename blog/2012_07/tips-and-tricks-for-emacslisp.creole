@@ -187,7 +187,7 @@ More on scripts in the [[http://emacswiki.org/emacs/EmacsScripts|EmacsWiki]].
 
 == It's not wierd to use Object Orientation in EmacsLisp ==
 
-Object Oriented code is suffering a bit of a backlash in some circles
+Object Oriented coding is [[http://news.ycombinator.com/item?id=3717715|suffering a bit of a backlash in some circles]]
 but it's still very useful in lots of cicrumstances, where you are
 trying to declare a category of things that are quite complex for
 example.
