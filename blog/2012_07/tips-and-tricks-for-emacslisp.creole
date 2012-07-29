@@ -68,6 +68,33 @@ Autoloads allow lazy loading of EmacsLisp library code.  This is basically how t
 * when Emacs all the autoloads from all packages are loaded; this is fast because autoloads are very small
 * when an autoloaded function is called it's autoload causes the library to load
 
+== Do you CL ==
+
+Emacs core has always suggested not requiring [[http://www.gnu.org/software/emacs/manual/html_mono/cl.html|{{{cl}}}]] or using:
+
+{{{
+##! emacs-lisp
+(eval-when-compile (require 'cl))
+}}}
+
+If you are writing code to go into Emacs then that's still valid, but
+for your own code? Just require {{{cl}}}, it has some many useful
+extensions, such as
+[[http://www.gnu.org/software/emacs/manual/html_mono/cl.html#Loop-Basics|{{{loop}}}]
+and
+[[http://www.gnu.org/software/emacs/manual/html_mono/cl.html#Iteration|{{{dotimes}}}]]
+and 
+[[http://www.gnu.org/software/emacs/manual/html_mono/cl.html#Sequence-Functions|{{{merge}}}]] and lots, lots more.
+
+
+== Do write tests ==
+
+[[http://www.gnu.org/software/emacs/manual/html_node/ert/index.html|ERT]] is included in Emacs 24 and provides a good way of writing tests.
+
+You can even use my
+[[http://nic.ferrier.me.uk/blog/2012_04/fakir-for-faking-bits-of-emacs|fakir]]
+library to mock tricky bits of Emacs like processes or files.
+
 == It's not wierd to use Object Orientation in EmacsLisp ==
 
 Object Oriented code is suffering a bit of a backlash in some circles
