@@ -1,6 +1,11 @@
 = Tips on Emacs Lisp programming =
 
-Here's some tips and tricks distilled from my 15 years of using EmacsLisp.
+I think EmacsLisp is getting to be a great application base, a really
+good language and environment to write programs in, not just a fancy
+editor.  A number of people seem to agree and are trying it out.
+
+Here's some tips and tricks distilled from my 15 years of using
+EmacsLisp to help budding Lisp hackers in Emacs.
 
 == The cut and paste pattern isn't bad ==
 
@@ -113,6 +118,10 @@ and lots, lots more.
 You can even use my
 [[http://nic.ferrier.me.uk/blog/2012_04/fakir-for-faking-bits-of-emacs|fakir]]
 library to mock tricky bits of Emacs like processes or files.
+
+== Write shell scripts with EmacsLisp ==
+
+
 
 == It's not wierd to use Object Orientation in EmacsLisp ==
 
