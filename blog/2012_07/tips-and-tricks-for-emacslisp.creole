@@ -135,6 +135,11 @@ You can even use my
 [[http://nic.ferrier.me.uk/blog/2012_04/fakir-for-faking-bits-of-emacs|fakir]]
 library to mock tricky bits of Emacs like processes or files.
 
+It's best to write one module of tests for each module of code.  A
+project with a lot of tests is
+[[https://github.com/nicferrier/elnode|Elnode]].  Each test module is
+named after the module that it tests which seems like more good advice.
+
 == Do write function docs ==
 
 [[http://emacswiki.org/emacs/ElDoc|ElDoc]] is really useful when you're writing EmacsLisp but it only works when you have documentation.  
