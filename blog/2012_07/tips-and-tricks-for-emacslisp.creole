@@ -13,8 +13,8 @@ which you can look at and copy.
 
 == Use name based namespaces ==
 
-EmacsLisp does not have a module system.  This is a serious weakness
-but it's easy to work around it.
+EmacsLisp does not have a module system.  Many people call this a
+serious weakness but in my experience it's easy to work around it.
 
 There is a heirarchy you should follow:
 
@@ -75,12 +75,15 @@ but it's still very useful in lots of cicrumstances, where you are
 trying to declare a category of things that are quite complex for
 example.
 
-CommonLisp has CLOS, a very comprehensive Object Orientation
-programming API and EmacsLisp has EIEIO, an implementation of CLOS.
+CommonLisp has
+[[http://en.wikipedia.org/wiki/Common_Lisp_Object_System|CLOS]], a
+very comprehensive Object Orientation programming API and EmacsLisp
+has EIEIO, an implementation of CLOS.
 
 Here's a trivial example of EmacsLisp classes and methods:
 
 {{{
+##! emacs-lisp
 (defclass some-userc nil
   ((id
     :initarg :id
