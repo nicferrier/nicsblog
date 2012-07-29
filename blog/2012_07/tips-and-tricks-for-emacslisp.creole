@@ -13,6 +13,8 @@ The latest version of Emacs is 24.  It's not added to a whole lot of operating s
 
 Using the latest version will give you access to lexical scope, built in packaging and lots more goodness.
 
+I am working on a yum equivalent of that APT repository.  [[#donate|Donating]] might make that quicker.
+
 == Cut. And also paste ==
 
 You don't have to have a reusable module for everything, it's ok to cut and
