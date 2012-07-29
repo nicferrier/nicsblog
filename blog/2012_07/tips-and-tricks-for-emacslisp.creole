@@ -32,7 +32,7 @@ and
 [[http://www.gnu.org/software/emacs/manual/html_node/nxml-mode/index.html|handling]]
 and
 [[http://www.gnu.org/software/emacs/manual/html_node/elisp/Parsing-HTML_002fXML.html|parsing XML]] 
-is built into Emacs.
+is built into Emacs.  Building [[http://www.emacswiki.org/emacs/ParserCompiler|parsers]] and things that understand data definition languages [[http://www.emacswiki.org/emacs/YamlPath|in all]] [[http://www.emacswiki.org/emacs/WikiCreole|sorts of formats]] is also well covered in EmacsLisp.
 
 Basically, pretty much everything you could want to do as a programmer
 is there.  Sometimes it's not packaged very well, but that's coming.
