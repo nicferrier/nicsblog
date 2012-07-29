@@ -7,6 +7,12 @@ editor.  A number of people seem to agree and are trying it out.
 Here's some tips and tricks distilled from my 15 years of using
 EmacsLisp to help budding Lisp hackers in Emacs.
 
+== Do use a modern Emacs ==
+
+The latest version of Emacs is 24.  It's not added to a whole lot of operating system repositories yet but for Debian and Ubuntu it's in [[http://emacs.naquadah.org/|http://emacs.naquadah.org/]].
+
+Using the latest version will give you access to lexical scope, built in packaging and lots more goodness.
+
 == Cut. And also paste ==
 
 You don't have to have a reusable module for everything, it's ok to cut and
