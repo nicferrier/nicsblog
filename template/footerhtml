@@ -20,6 +20,8 @@
 	<li id='footertoc'>
 	    <h4>Emacs Lisp</h4>
             <ul>
+              <li><a href="/blog/2012_07/tips-and-tricks-for-emacslisp">EmacsLisp tips and tricks</a>
+              </li>  
               <li><a href="/blog/2012_07/emacs-packages-for-programmers">tips and tricks for developers about Emacs 24 packaging</a>
                 <a href="http://news.ycombinator.com/item?id=4275766"><img src="http://ycombinator.com/images/y18.gif" height="18" style="border:1px #ffffff solid;"></a>
               </li>
