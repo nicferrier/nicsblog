@@ -16,6 +16,7 @@
 			   alt='Donate to efforts on any of this stuff with PayPal.'/>
 		<img alt='' border='0' src='https://www.paypalobjects.com/en_GB/i/scr/pixel.gif' width='1' height='1'/>
 	    </form>
+            <script src="http://www.reddit.com/domain/nic.ferrier.me.uk/hot/.embed?limit=5&t=month&style=off" type="text/javascript"></script>
 	</li>
 	<li id='footertoc'>
 	    <h4>Emacs Lisp</h4>
