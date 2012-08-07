@@ -243,7 +243,7 @@ Here's a trivial example of EmacsLisp classes and methods:
 
 == Macro writing needs settings ==
 
-{{{eval-expression-print-level}}} needs to be set to {{{0}}} (turned
+{{{eval-expression-print-level}}} needs to be set to {{{nil}}} (turned
 off) so that you can always see what's happening.
 
 
@@ -303,3 +303,10 @@ These are the things I can think of that people don't know.  If you're
 thinking of looking at a Lisp for your next programming project then I
 really recommend EmacsLisp, it's a very practical language with lots
 to recommend it.
+
+
+== Fixes ==
+
+I got the value of {{{eval-expression-print-level}}} wrong, it should
+be {{{nil}}} to be turned off, {{{0}}} will stop any structure
+printing.  This is now fixed.
