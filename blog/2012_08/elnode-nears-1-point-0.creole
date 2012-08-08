@@ -27,6 +27,7 @@ Use marmalade to install Elnode, you //must// have Emacs 24, Elnode
 doesn't work on other Emacs:
 
 {{{
+##! emacs-lisp
 (add-to-list 
     'package-archives 
     '("marmalade" . "http://marmalade-repo.org/packages/"))
