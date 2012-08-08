@@ -145,6 +145,14 @@ font-size: 11pt;
 font-family: "droid-sans-mono-1", "droid-sans-mono-2", "Courier";
 }
 
+table {
+width: 80%;
+border: solid thin;
+}
+
+table tbody tr td {
+border: solid thin;
+}
 
 
 
