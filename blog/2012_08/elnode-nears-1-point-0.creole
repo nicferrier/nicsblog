@@ -1,4 +1,4 @@
-= Elnode version 0.9.9 =
+= Elnode - the EmacsLisp Async Webserver @ version 0.9.9 =
 
 Elnode is a webserver for Emacs 24, written in EmacsLisp.  It turns
 your Emacs into a web platform where you can write, debug and run HTTP
