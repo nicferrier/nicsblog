@@ -23,7 +23,7 @@ doing web development because it can be seriously fun.
 
 == How to get Elnode? ==
 
-Use marmalade to install Elnode, you //must// have Emacs 24, Elnode
+Use [[http://marmalade-repo.org|marmalade]] to install Elnode, you //must// have Emacs 24, Elnode
 doesn't work on other Emacs:
 
 {{{
