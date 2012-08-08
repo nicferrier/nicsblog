@@ -192,6 +192,34 @@ As you can see it's pretty small.  The output is nicely formatted
 org-files.
 
 
+== What's the performance like? ==
+
+Elnode's main focus is not performance but rapid development and
+scalability.  But obviously we all care how slow it is.
+
+So as we go along myself and other Emacers have been doing tests.  My
+latest tests are:
+
+| concurrency | time taken | total # | request / sec |
+|-------------+------------+---------+---------------|
+|           5 |     15.050 |    1000 |         66.45 |
+|          20 |      21.03 |    1000 |         47.54 |
+|          50 |      16.46 |    1000 |         60.75 |
+|        1000 |     288.71 | 100,000 |        346.36 |
+
+In terms of where we can go with performance on Emacs, there are
+limits right now.  Emacs does it's IO with {{{select}}} which is an
+obvious limiter.  It does seem that's a problem that could be solved
+by adding epoll to Emacs, that doesn't seem like a terribly difficult
+thing to do.
+
+There is already bloat and cruft in Elnode (mainly to do with
+scalability approaches that are now deprecated) and Elnode does too
+much of it's parsing of HTTP with regular expressions (which can be
+slow in Emacs).  Some of this I will address with Elnode v1.0, some
+will be addressed as and when.
+
+
 == Can this really be used for REAL web development? ==
 
 In my opinion, yes.  Here's a little more detail on some of the things
