@@ -21,6 +21,26 @@ I am hoping that people will now take a serious look at using Elnode for
 doing serious web development.
 
 
+== How to get Elnode? ==
+
+Use marmalade to install Elnode, you //must// have Emacs 24, Elnode
+doesn't work on other Emacs:
+
+{{{
+(add-to-list 
+    'package-archives 
+    '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-install 'elnode)
+}}}
+
+Paste that into a buffer and then:
+
+{{{
+M-x eval-buffer [RET]
+}}}
+
+and Elnode will be installed.
+
 == What is Elnode? ==
 
 Elnode is an asynchronous webserver in the manner of node.js.  That
@@ -98,7 +118,13 @@ start it:
 (elnode-start 'my-quickie :port 8090)
 }}}
 
-{{{eval-buffer}}} on that will make an Elnode server.
+Doing:
+
+{{{
+M-x eval-buffer [RET]
+}}} 
+
+on that will make a very simple Elnode server.
 
 
 === Emacs the web development environment ===
