@@ -18,7 +18,7 @@ and an EC2 image, a [[http://vagrantup.com/|Vagrant]] box
 and any other integrations that people would be keen on.
 
 I am hoping that people will now take a serious look at using Elnode for
-doing serious web development.
+doing web development because it can be seriously fun.
 
 
 == How to get Elnode? ==
