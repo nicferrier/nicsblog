@@ -1,0 +1,287 @@
+= Elnode version 0.9.9 =
+
+Elnode is a webserver for Emacs 24, written in EmacsLisp.  It turns
+your Emacs into a web platform where you can write, debug and run HTTP
+applications.
+
+I have been working on Elnode for 2 years, writing applications with
+it and making it as usable as I can and it is now approaching a 1.0
+release.
+
+The currently available version of Elnode will be the last major
+release before v1.0.  v1.0 will mainly be cleaning up bugs and
+finessing features.  In particular I want it to be very easy to deploy
+an Elnode application with v1.0 so I will be working on Heroku
+integration (which technomancy already did
+[[https://github.com/technomancy/commodore-night-vision|a very good job of]]) 
+and an EC2 image, a [[http://vagrantup.com/|Vagrant]] box
+and any other integrations that people would be keen on.
+
+I am hoping that people will now take a serious look at using Elnode for
+doing serious web development.
+
+
+== What is Elnode? ==
+
+Elnode is an asynchronous webserver in the manner of node.js.  That
+means the server runs in a single thread but all IO operations are
+non-blocking.  As long as you don't do computationally slow tasks
+(long maths for example) this is very scalable.
+
+Elnode includes some example applications; a file serving webserver
+and a Wiki but it's main purpose it to serve as a platform for writing
+web applications.
+
+
+== Why Elnode? ==
+
+Elnode is written in EmacsLisp and there are certain advantages to
+that, firstly it's easy to write and debug Elnode because of Emacs'
+powerful Lisp editing capabilities.  Secondly, Lisp has powerful
+extension mechanisms, macros, for example, which make the sometimes
+complex process of building webapps much easier.
+
+=== Extensible syntax in web development ===
+
+I've found several examples of this second benefit while building
+Elnode.  For example, the Elnode webserver and the Wiki engine both
+had a similar problem, they needed to serve files from a directory on
+the disc mapped to a url space.  This is a relatively complex
+problem, you need to know about the mapping of the url space, where
+the files are, whether the file is cached and then you need to do
+something with the file.
+
+I used Lisp to define a macro which allows me to implement this
+functionality in syntax:
+
+{{{
+##! emacs-lisp
+(elnode-docroot-for wikiroot
+  with target-path
+  on httpcon
+  do
+  (if (equal target-path (expand-file-name (concat wikiroot "/")))
+      (elnode-wiki-page httpcon (concat wikiroot "/index.creole"))
+      (elnode-wiki-page httpcon target-path))))
+}}}
+
+{{{elnode-docroot-for}}} is a macro that does quite a lot of work but
+makes it hidden in a reasonable way.
+
+Another, simpler example, is HTTP method selection.  Often you want to
+do different things on specific HTTP methods.  A {{{GET}}} to a
+resource is handled differently from a {{{POST}}}.  In any language we
+could simply use an {{{if}}} to code such behaviour but in Lisp we
+have the ability to define syntax to let us do it:
+
+{{{
+##! emacs-lisp
+(elnode-method httpcon
+  (GET
+     (elnode-send-redirect httpcon "/"))
+  (POST
+    (let ((username (elnode-http-param httpcon "username"))
+          (password (elnode-http-param httpcon "password")))
+     (check-password username password)
+     (elnode-send-redirect httpcon "/loggedin/"))))
+}}} 
+
+
+=== A simple extensible webserver ===
+
+Having a webserver in your editor can be useful for all sorts of
+testing reasons.  You can easily knock together an elnode handler and
+start it:
+
+{{{
+(defun my-quickie (httpcon)
+   (elnode-send-html httpcon "<h1>Hello World!</h1>"))
+(elnode-start 'my-quickie :port 8090)
+}}}
+
+{{{eval-buffer}}} on that will make an Elnode server.
+
+
+=== Emacs the web development environment ===
+
+Emacs is an environment intended for text processing.  Hence Emacs is
+not an insane tool for doing web programming.  It is also very good at
+working with other programs.  Indeed the asynchronous functionality
+that Elnode relies on is many years old.  Elnode builds on these
+asychronous processing primitives to make possible using other
+programs in your web programming.  
+
+The core of the Elnode webserver looks like this:
+
+{{{
+##! emacs-lisp
+(elnode-http-start httpcon 200 `("Content-type" . ,mimetype))
+(elnode-child-process
+  httpcon
+  "/usr/bin/cat"
+  targetfile)
+}}}
+
+which tells Elnode to use the program {{{cat}}} to send the requested
+file back to the user.  This is done asynchronously, like this:
+
+* Elnode starts the program in a new process
+* the Elnode function handling the request finishes
+* but Elnode notices that a process was started to complete the request
+* the output of the {{{cat}}} process is collected, asychronously from the rest of Emacs and sent back to the HTTP connection
+* when EOF arrives on the {{{cat}}}ed file the HTTP connection is closed
+
+If you have complex programs delivering output they could perhaps be
+easily plumbed into Elnode this way.
+
+Elnode has other ways of doing asynchronous processing as well, indeed
+this has been one of my main reasons for writing it.
+
+
+=== Emacs the data store ===
+
+There is a wealth of data and data formats in Emacs and Elnode can be
+used to unlock them.  Included in the
+[[http://github/nicferrier/elnode|repository]], but not the package,
+is an example Elnode program that can serve Emacs {{{org-mode}}} files
+and allow editing them.
+
+I think the org viewer exposes some of the power of Elnode:
+
+{{{
+(require 'elnode)
+(defun elnode-org-handler (httpcon)
+  (elnode-docroot-for "~/work/org"
+      with org-file
+      on httpcon
+      do (with-current-buffer (find-file-noselect org-file)
+           (let ((org-html
+                  ;; This might throw errors so you could condition-case it
+                  (org-export-as-html 3 nil nil 'string)))
+             (elnode-send-html httpcon org-html)))))
+}}}
+
+As you can see it's pretty small.  The output is nicely formatted
+org-files.
+
+
+== Can this really be used for REAL web development? ==
+
+In my opinion, yes.  Here's a little more detail on some of the things
+I think are important.
+
+=== Testing ===
+
+There is a comprehensive test suite in Elnode and you can use the same
+techniques and code to write tests for your own web applications.
+
+Here is an example test, for the wiki application included in Elnode:
+
+{{{
+##! emacs-lisp
+(ert-deftest elnode-wiki-page ()
+  "Full stack Wiki test."
+  (with-elnode-mock-server
+    ;; The dispatcher function
+    (lambda (httpcon)
+      (let ((elnode-wikiserver-wikiroot "/home/elnode/wiki"))
+        (elnode-hostpath-dispatcher
+         httpcon
+         '(("[^/]+//wiki/\\(.*\\)" . elnode-wikiserver)))))
+    ;; Setup the the Creole file handler mocking.
+    (flet
+        ((elnode--worker-lisp-helper (child-lisp)
+           `((progn
+               (require 'creole)
+               (require 'cl)
+               (flet ((creole--get-file (filename)
+                        (let ((buf (get-buffer-create "wikibuf")))
+                          (with-current-buffer buf
+                            (insert "= A Creole file ="))
+                          buf)))
+                 ,@child-lisp)))))
+      ;; Now the actual test
+      (fakir-mock-file (fakir-file
+                        :filename "test.creole"
+                        :directory "/home/elnode/wiki")
+        (let* ((elnode--do-error-logging nil)
+               (elnode--do-access-logging-on-dispatch nil)
+               (r (elnode-test-call "/wiki/test.creole")))
+          (elnode-error "result -> %s" r)
+          (message "elnode result data: %s" (plist-get r :result-string))
+          (should
+           (equal
+            (plist-get r :status)
+            200)))))))
+}}}
+
+This is testing the Elnode application fully, sockets are not used,
+everything is mocked, files and sockets (which are called processes in
+EmacsLisp speak).
+
+Obviously, smaller tests are possible and it's easy to abstract the
+complexity of a framework in a test into something that can be reused
+for many tests.
+
+
+=== Databases ===
+
+Elnode comes with a very simple database.  It's use is illustrated in
+the Wiki (it stores the authentication database).  The database
+interface is extensible and I am working on MongoDb and PostgreSQL
+implementations.  These should be as swapable as any JDBC or similar
+layer.
+
+Actually, the Elnode db layer is just a key/value store with some
+optional querying so it should be very easy to swap in any database
+that can operate in that mode.  Of particular interest is the ability
+to write am Elnode db access layer over another, more complex schema.
+
+{{{
+##! emacs-lisp
+(let ((db (elnode-db-make
+                '(elnode-db-hash :filename "/tmp/elnode-test-db"))))
+    (elnode-db-put 'test1 "value1" db)
+    (elnode-db-put 'test2 "value2" db)
+    (elnode-db-get 'test1 db))
+}}}
+
+
+=== Logging ===
+
+Elnode logs errors and accesses internally and can flush the logs to
+disc files.
+
+Elnode logging to processes is one of the few features that I will add
+to v1.0.
+
+
+=== Packaging and deployment ===
+
+Emacs has great packaging already, you can make packages of your
+Elnode apps, have them depend on Elnode (and anything else you need,
+mongodb interface for example?) and deploy them in interesting ways.
+They are easy to run tests against (you can batch test package
+installs).
+
+This is the area where Elnode is most deficient right now though.
+With v1.0 of Elnode you will be able to build packages and install
+them to Heroku, or one of a number of other environments.
+
+
+== What's next? ==
+
+I'm working towards v1.0 which will mostly be fixes and nuanced
+functionality.
+
+A number of other people are working on applications built with
+Elnode, a better {{{org-mode}}} presentation tool, a pastebin, chat
+servers.
+
+The very next thing will be a series of screencasts showing how Elnode
+can be used.
+
+If you are interested in Lisp for web programming I do urge you to
+give Elnode a try.  If you think it's useful please do make
+suggestions or send me patches, I'd be very grateful for
+collaborators.
