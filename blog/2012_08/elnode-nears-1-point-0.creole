@@ -94,7 +94,7 @@ start it:
 
 {{{
 (defun my-quickie (httpcon)
-   (elnode-send-html httpcon "<h1>Hello World!</h1>"))
+   (elnode-send-html httpcon "Hello World!"))
 (elnode-start 'my-quickie :port 8090)
 }}}
 
