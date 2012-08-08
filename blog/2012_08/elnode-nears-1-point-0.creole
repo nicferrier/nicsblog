@@ -42,6 +42,7 @@ M-x eval-buffer [RET]
 
 and Elnode will be installed.
 
+
 == What is Elnode? ==
 
 Elnode is an asynchronous webserver in the manner of node.js.  That
@@ -340,3 +341,16 @@ If you are interested in Lisp for web programming I do urge you to
 give Elnode a try.  If you think it's useful please do make
 suggestions or send me patches, I'd be very grateful for
 collaborators.
+
+
+== Useful links ==
+
+The Github repo is [[http://github.com/nicferrier/elnode|here]]
+
+The home page of the project is terribly boring until we get it
+running on Elnode on Heroku or something but is
+[[http://elnode.org|here]].
+
+There is an EmacsWiki page on Elnode
+[[http://emacswiki.org/emacs/Elnode|here]].  EmacsWiki, by the way, is
+something I'd very much like to rewrite in Elnode.
