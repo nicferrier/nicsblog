@@ -84,8 +84,7 @@ have the ability to define syntax to let us do it:
           (password (elnode-http-param httpcon "password")))
      (check-password username password)
      (elnode-send-redirect httpcon "/loggedin/"))))
-}}} 
-
+}}}
 
 === A simple extensible webserver ===
 
