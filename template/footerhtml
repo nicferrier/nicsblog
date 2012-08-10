@@ -20,6 +20,10 @@
 	<li id='footertoc'>
 	    <h4>Emacs Lisp</h4>
             <ul>
+              <li><a href="/blog/2012_08/elnode-nears-1-point-0">Elnode 0.9.9 release</a>
+                 <a href="http://news.ycombinator.com/item?id=4358371"><img src="http://ycombinator.com/images/y18.gif" height="18" style="border:1px #ffffff solid;"></a>
+                 <script type="text/javascript" src="http://www.reddit.com/buttonlite.js?i=2&url=http://www.reddit.com/r/emacs/comments/xwm8j/elnode_emacs_webserver_like_nodejs_is_nearing_a"></script>
+              </li>
               <li><a href="/blog/2012_07/tips-and-tricks-for-emacslisp">EmacsLisp tips and tricks</a>
                 <a href="http://news.ycombinator.com/item?id=4309076"><img src="http://ycombinator.com/images/y18.gif" height="18" style="border:1px #ffffff solid;"></a>
                  <script type="text/javascript" src="http://www.reddit.com/buttonlite.js?i=2&url=http://nic.ferrier.me.uk/blog/2012_07/tips-and-tricks-for-emacslisp"></script>
