@@ -20,6 +20,17 @@ and any other integrations that people would be keen on.
 I am hoping that people will now take a serious look at using Elnode for
 doing web development because it can be seriously fun.
 
+== TL;DR - Watch Elnode on TV! ==
+
+I've made a video introducing Elnode.  It shows off Elnode 0.9.9 and
+some basic Elnode hacking:
+
+<<html
+<iframe width="560" height="315"
+        src="http://www.youtube.com/embed/TR7DPvEi7Jg" frameborder="0"
+        allowfullscreen>
+</iframe>
+html>>
 
 == How to get Elnode? ==
 
