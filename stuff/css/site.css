@@ -152,6 +152,7 @@ border: solid thin;
 
 table tbody tr td {
 border: solid thin;
+text-align: right;
 }
 
 
