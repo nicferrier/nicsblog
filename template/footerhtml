@@ -16,6 +16,9 @@
 			   alt='Donate to efforts on any of this stuff with PayPal.'/>
 		<img alt='' border='0' src='https://www.paypalobjects.com/en_GB/i/scr/pixel.gif' width='1' height='1'/>
 	    </form>
+            <a href="http://uk.linkedin.com/in/nicferrier">
+              <img src="http://www.linkedin.com/img/webpromo/btn_myprofile_160x33.png" width="160" height="33" border="0" alt="View Nic Ferrier's profile on LinkedIn">
+            </a>
 	</li>
 	<li id='footertoc'>
 	    <h4>Emacs Lisp</h4>
