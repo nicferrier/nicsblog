@@ -34,5 +34,6 @@
 
 (require 'nicblog-make)
 (nicblog-make-run)
+(nicblog-make-run (nic-blog-make-root-maker "drafts"))
 
 ;; End
