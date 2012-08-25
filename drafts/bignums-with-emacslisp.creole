@@ -1,0 +1,127 @@
+= Bignums with EmacsLisp =
+
+This blog post is about how to use Emacs
+[[http://www.gnu.org/software/emacs/manual/html_mono/calc.html|{{{calc}}}]]
+from EmacsLisp to get bignum support. It's also about hacking MongoDb
+in EmacsLisp.
+
+== Marmalade and Mongo ==
+
+I've been working to convert [[http://marmalade-repo.org|marmalade]]
+to [[http://elnode.org|Elnode]]. Marmalade is based on a
+[[http://mongodb.org|MongoDb]] database so the task is mainly ensuring
+that we get Mongo working from EmacsLisp properly.
+
+There was an existing 
+[[https://github.com/m2ym/mongo-el|MongoDb adapter for EmacsLisp]] 
+and it's pretty good. I noticed there were some missing things though
+and so I've been adding them to 
+[[https://github.com/nicferrier/mongo-el|my fork]].
+
+Just recently I found that datetime's were not parsed by the existing
+module and so I had to add them.
+
+The [[http://bsonspec.org/#/specification|BSON specification]]
+specifies the MongoDb wire format so I started by doing some queries
+in the {{{mongo}}} shell tool and getting an view of what MongoDb was
+sending:
+
+{{{
+> db.fs.files.findOne()
+{
+	"_id" : ObjectId("4cfee12f74e6bf6256000004"),
+	"filename" : "haml-mode.el/3.0.14",
+	"contentType" : "text/plain",
+	"length" : 28273,
+	"chunkSize" : 262144,
+	"uploadDate" : ISODate("2010-12-08T01:36:47.168Z"),
+	"aliases" : null,
+	"metadata" : null,
+	"md5" : null
+}
+}}}
+
+Here's a partial packet trace from that:
+
+{{{
+  6e 00 00 10 63 68 75 6e    6b 53 69 7a 65 00 00 00    n...chunkSize...
+  04 00 09 75 70 6c 6f 61    64 44 61 74 65 00 40 a0    ...uploadDate.@.
+  9f c3 2c 01 00 00 0a 61    6c 69 61 73 65 73 00 0a    ..,....aliases..
+  6d 65 74 61 64 61 74 61    00 0a 6d 64 35 00 00       metadata..md5..
+}}}
+
+We can see the {{{uploadDate}}} field clearly thanks to BSON's neat
+use of plain ascii names. Following the BSON specification we can see
+that a {{{datetime}}} is a byte {{{0x09}}} followed by the field name
+followed by a 64 bit integer representing the time since epoch in
+milliseconds.
+
+That means the following are the bytes that represent the time:
+
+{{{
+40 A0 9F C3 2C 01 00 00 
+}}}
+
+Someone helpful on {{{#emacs}}} pointed out to me that network order
+is always lo first, so the actual ordered bytes for the int are:
+
+{{{
+00 00 01 2C C3 9F A0 40
+}}}
+
+
+== EmacsLisp and large ints ==
+
+I was worried at first that EmacsLisp did not have large
+integers. EmacsLisp ints are only 29 bits wide (because the top 3 bits
+are used to signify things like whether the object is a function or an
+object, or is negative).
+
+But then someone on {{{#emacs}}} pointed out to me that EmacsLisp
+//does// have bignums. They are provided by the incredible 
+[[http://www.gnu.org/software/emacs/manual/html_mono/calc.html|{{{calc}}}]]
+package. 
+
+I found it difficult to use {{{calc}}} but I got there in the end:
+
+{{{
+##! emacs-lisp
+(calc-eval
+ "rsh(and(idiv($,1000),16#ffff0000),16)"
+ 'rawnum
+ "16#0012CC39FA040")
+}}}
+
+{{{calc}}} has it's own functional language, it's all accessible
+directly from EmacsLisp as functions but it's much simpler to just use
+{{{calc-eval}}} with a string expression.
+
+
+== EmacsLisp and datetimes ==
+
+EmacsLisp time values are lists of 2 or 3 integers, the hi-integer,
+the lo-integer of the seconds since epoch and then an integer
+representing the miliseconds.
+
+The piece of code above produces just the hi-byte, let's break down
+the function:
+
+* {{{idiv($,1000)}}} - integer divide the milisecond value by 1000
+** this gives us the number of seconds
+* {{{and(x,16#ffff0000)}}} - mask out the hi 2 bytes
+* {{{rsh(x,16)}}} - shift everything 2 bytes to the right
+** this gives us the hi 2 bytes as a plain int
+
+This isn't perfect, it's the implementation I'm going with for now
+because it makes enough sense. But I'm not handling the remaining
+miliseconds at all right now.
+
+== Emacs shows it's mettle ==
+
+Once more EmacsLisp shows what a fantastic programming language it
+is. It's such a stable platform and practically everything you can
+think of has been implemented, and implemented pretty well. S'great.
+
+If you want to help with the [[http://elnode.org|Elnode]] version of
+Marmalade please come check out
+[[https://github.com/nicferrier/elmarmalade|the project]] on Github.
