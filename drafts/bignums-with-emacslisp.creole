@@ -23,7 +23,7 @@ module and so I had to add them.
 
 The [[http://bsonspec.org/#/specification|BSON specification]]
 specifies the MongoDb wire format so I started by doing some queries
-in the {{{mongo}}} shell tool and getting an view of what MongoDb was
+in the {{{mongo}}} shell tool and getting a view of what MongoDb was
 sending:
 
 {{{
@@ -53,8 +53,8 @@ Here's a partial packet trace from that:
 We can see the {{{uploadDate}}} field clearly thanks to BSON's neat
 use of plain ascii names. Following the BSON specification we can see
 that a {{{datetime}}} is a byte {{{0x09}}} followed by the field name
-followed by a 64 bit integer representing the time since epoch in
-milliseconds.
+({{{0}}} terminated) followed by a 64 bit integer representing the
+time since epoch in milliseconds.
 
 That means the following are the bytes that represent the time:
 
@@ -63,7 +63,7 @@ That means the following are the bytes that represent the time:
 }}}
 
 Someone helpful on {{{#emacs}}} pointed out to me that network order
-is always lo first, so the actual ordered bytes for the int are:
+is always low byte first, so the actual ordered bytes for the int are:
 
 {{{
 00 00 01 2C C3 9F A0 40
@@ -77,12 +77,14 @@ integers. EmacsLisp ints are only 29 bits wide (because the top 3 bits
 are used to signify things like whether the object is a function or an
 object, or is negative).
 
-But then someone on {{{#emacs}}} pointed out to me that EmacsLisp
+But then some other clever person on {{{#emacs}}} (are you seeing the
+pattern yet?) pointed out to me that EmacsLisp
 //does// have bignums. They are provided by the incredible 
 [[http://www.gnu.org/software/emacs/manual/html_mono/calc.html|{{{calc}}}]]
 package. 
 
-I found it difficult to use {{{calc}}} but I got there in the end:
+I found it difficult to find out how to use {{{calc}}} but I got there
+in the end:
 
 {{{
 ##! emacs-lisp
@@ -94,12 +96,12 @@ I found it difficult to use {{{calc}}} but I got there in the end:
 
 {{{calc}}} has it's own functional language, it's all accessible
 directly from EmacsLisp as functions but it's much simpler to just use
-{{{calc-eval}}} with a string expression.
+[[http://www.gnu.org/software/emacs/manual/html_mono/calc.html#Calling-Calc-from-Your-Programs|{{{calc-eval}}} with a string expression]].
 
 
 == EmacsLisp and datetimes ==
 
-EmacsLisp time values are lists of 2 or 3 integers, the hi-integer,
+EmacsLisp time values are lists of 2 or 3 integers, the hi-integer and
 the lo-integer of the seconds since epoch and then an integer
 representing the miliseconds.
 
@@ -107,14 +109,36 @@ The piece of code above produces just the hi-byte, let's break down
 the function:
 
 * {{{idiv($,1000)}}} - integer divide the milisecond value by 1000
-** this gives us the number of seconds
+** this gives us the number of seconds since the epoch
 * {{{and(x,16#ffff0000)}}} - mask out the hi 2 bytes
 * {{{rsh(x,16)}}} - shift everything 2 bytes to the right
 ** this gives us the hi 2 bytes as a plain int
 
-This isn't perfect, it's the implementation I'm going with for now
-because it makes enough sense. But I'm not handling the remaining
-miliseconds at all right now.
+This isn't perfect but it's the implementation I'm going with for now
+because it makes enough sense. I'm not handling the remaining
+miliseconds at all right now but when someone needs that granularity
+(maybe me) they'll add it.
+
+I have added some test cases so the code should be easy enough to
+extend:
+
+{{{
+##! emacs-lisp
+(ert-deftest bson-datetime-int64-to-time ()
+  "Test the bson datetime conversion."
+  (let ((december-10-2010
+         ;; I know this is the the mongo rep for this time because
+         ;; I've pulled it from a packet dump
+         (list #x40 #xa0 #x9f #xc3 #x2c #x01 #x00 #x00)))
+    (should
+     (equal
+      "12/08/10"
+      (format-time-string
+       "%D"
+       (bson-datetime-int64-to-time
+        (reverse december-10-2010)))))))
+}}}
+
 
 == Emacs shows it's mettle ==
 
