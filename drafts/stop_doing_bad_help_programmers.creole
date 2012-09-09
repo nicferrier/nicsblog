@@ -6,7 +6,7 @@ Making the man page come out on {{{--help}}}? **STOP THAT**
 
 It's quite simple, for a command line tool there should be 3 different types of help:
 
-== 1. the {{{--help}}} ==
+== 1. the --help ==
 
 When I type {{{yourcommand --help}}} at the command line {{{yourcommand}}} should
 spit out a relatively short description of what the command does and what it's arguments are.
