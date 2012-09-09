@@ -1,0 +1,71 @@
+= Programmers! Stop Doing BAD Help =
+
+Printing the {{{--help}}} to {{{stderr}}}? **STOP THAT**
+
+Making the man page come out on {{{--help}}}? **STOP THAT**
+
+It's quite simple, for a command line tool there should be 3 different types of help:
+
+== 1. the {{{--help}}} ==
+
+When I type {{{yourcommand --help}}} at the command line {{{yourcommand}}} should
+spit out a relatively short description of what the command does and what it's arguments are.
+
+This should not be more than 20 lines because of it is I need to
+scroll and I may not want to scroll because I am in tmux or screen or
+goodness know what else.
+
+Do //NOT// spit the {{{--help}}} out to {{{stderr}}} because you will
+surprise me and I //DO NOT LIKE UNIX TOOLS TO SURPRISE ME//.
+
+{{{
+##! shell-script-mode
+yourcommand --help | less
+}}}
+
+will obviously fail if you send your {{{--help}}} to {{{stderr}}}.
+
+Oh? But you LIKE to send it to stderr because you think it's better?
+So you're happy that to page it I now have to write:
+
+{{{
+##! shell-script-mode
+yourcommand --help 2>&1 | less
+}}}
+
+You don't have a problem with that? Then //screw you//. I'm not using
+{{{yourcommand}}} anymore.
+
+== 2. the man page ==
+
+I want a Unix man page desccribing {{{yourprogram}}} in quite a lot of
+detail.  This should be comprehensive documentation, it's where I am
+going to go to find out how {{{yourprogram}}} works and how I can get it to
+do what I want in detail.
+
+I don't want to read a tutorial, man pages are hard to read. There
+should be clear sections full of the words I need to know. Placing
+words I might search for in the natural flow of your text is
+hard. Think Search Engine Optimization because that's what I'll be
+doing, text searching your man page for what I want to know.
+
+Can't be bothered to right a man page? I'll happily settle for an
+GNU-info page; in some ways GNU info is better than man since it comes
+with a much nicer browser. I also happen to think GNU Info is easier
+to write.
+
+If you do GNU-Info you should produce an automated man page that tells
+me what the info manual is. You should also have {{{yourcommand}}}
+installation process install the Info documentation properly.
+
+
+== 3. A tutorial ==
+
+This does not need to be on my computer, I am happy to find it on the
+Internet.
+
+Anything goes here. It could be HTML or a video or anything you think
+will help me learn how to use {{{yourcommand}}} better.
+
+It better be good though or I will write another acerbic blog post and
+that'll really hurt.
