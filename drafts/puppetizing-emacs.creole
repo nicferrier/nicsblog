@@ -23,7 +23,7 @@ happily. But it's hard to deploy to. So I've written some puppet to
 make it easy:
 
 {{{
-##! conf-mode
+##! conf
 class emacs {
 
       group { "emacs":
@@ -108,7 +108,7 @@ need to be able to do to stop and start servers for example).
 Here it is:
 
 {{{
-##! shell-script-mode
+##! shell-script
 #! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          emacs
@@ -337,7 +337,7 @@ esac
 This makes it possible to package elnode, for example, like this:
 
 {{{
-##! conf-mode
+##! conf
 class elnode {
       exec { "install-elnode":
          require => Service["emacs"],
@@ -355,7 +355,7 @@ hard of course, they can just:
 
 
 {{{
-##! shell-script-mode
+##! shell-script
 case $1 in 
 
   start)   
@@ -377,7 +377,7 @@ It also seems that it might be fun to give puppet a package handler
 that supported emacs packages, so you could actually say:
 
 {{{
-##! conf-mode
+##! conf
 class some-emacs-thing {
    package { "elnode":
       provider => "emacs",
