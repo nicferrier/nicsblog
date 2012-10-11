@@ -2,12 +2,16 @@
 
 [[http://www.thoughtworks.com/consulting/continuous-delivery|ThoughtWorks]]
 employ me as a Continuous Delivery consultant, not actually as a Lisp
-hacker. I know! Isn't life unfair.
+hacker. 
 
-This means that I spend a lot of my time writing puppet scripts and
-using Vagrant virtual machines. Sometimes the two things come
-together. For example, I've been doing some stuff with Elnode and
-other Emacs servers that will benefit from being puppetized.
+I know! Isn't life unfair.
+
+Anyway, this means that I spend way too much of my time writing puppet
+scripts and using [[http://vagrantup.com|Vagrant virtual machines]].
+But sometimes the lisp hacking and the continuous delivery expertize
+come together. For example, I've been doing some stuff with Elnode and
+other Emacs servers that will benefit from being packaged in a Vagrant
+VM.
 
 Puppet is very dissatisfying, but it's better than trying to provision
 boxes in other ways. It is declarative for example. Packages like,
