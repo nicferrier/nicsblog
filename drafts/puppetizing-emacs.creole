@@ -1,22 +1,26 @@
-= Puppetizing Emacs =
+= Puppetizing and Deploying Emacs =
 
 [[http://www.thoughtworks.com/consulting/continuous-delivery|ThoughtWorks]]
 employ me as a Continuous Delivery consultant, not actually as a Lisp
-hacker. 
+hacker. Apparently Lisp hackers are in less demand than continuous
+delivery consultants.
 
-I know! Isn't life unfair.
+What sort of world do we live in? Not an optimal one I reckon.
 
-Anyway, this means that I spend way too much of my time writing puppet
-scripts and using [[http://vagrantup.com|Vagrant virtual machines]].
-But sometimes the lisp hacking and the continuous delivery expertize
-come together. For example, I've been doing some stuff with Elnode and
-other Emacs servers that will benefit from being packaged in a Vagrant
-VM.
+Anyway, this means that I spend way too much of my time writing
+[[http://docs.puppetlabs.com/|Puppet]] scripts and using
+[[http://vagrantup.com|Vagrant virtual machines]].  But sometimes the
+lisp hacking and the continuous delivery expertize come together. For
+example, I've been doing some stuff with Elnode and other Emacs
+servers that will benefit from being packaged in a Vagrant VM.
 
-Puppet is very dissatisfying, but it's better than trying to provision
-boxes in other ways. It is declarative for example. Packages like,
-{{{apt}}}, {{{yum}}} and those... are great but they're less portable
-than puppet and harder to write.
+I find Puppet very dissatisfying, but it's better than trying to
+provision boxes in other ways. It is declarative for example. That's a
+good thing. But it's requires much mundane verbosity in the form of
+repeated tedious directory structure. That's a bad thing. Package
+managers like, {{{apt}}}, {{{yum}}} and those... are great but
+packages for them are necessarily less portable than puppet and harder
+to write.
 
 Emacs can be started as a daemon, so we can host code in it quite
 happily. But it's hard to deploy to. So I've written some puppet to
@@ -42,15 +46,6 @@ class emacs {
          owner => "emacs",
          group => "emacs",
          mode => "u=rwx,g=rx,o=rx",
-      }
-
-      file { "emacs-init":
-         require => User["emacs"],
-         source => "puppet:///modules/emacs/emacs.el",
-         path => "/home/emacs/.emacs.el",
-         ensure => "present",
-         owner => "emacs",
-         group => "emacs",
       }
 
       package { "curl":
@@ -90,7 +85,7 @@ class emacs {
       }
 
       service { "emacs":
-         require => [File["initd"], File["emacs-init"]],
+         require => File["initd"],
          ensure => "running",
          enable => "true",
          hasstatus => "true",
@@ -98,243 +93,26 @@ class emacs {
 }
 }}}
 
+//NB: I wish puppet accepted the fact that install tarballs is such
+a common exercise and provided direct support for them.//
+
 This installs a usable Emacs 24 daemon and starts it with a daemon
 script that is also installed.
 
-The daemon script was mostly available already but I've had to adapt
-it a lot. My one can install packages and call commands (which you
-need to be able to do to stop and start servers for example).
+== Daemon Init ==
 
-Here it is:
+Daemon scripts for Emacs have kicked around for a while, ever since
+Emacs could be daemonized, which was a while ago. I've taken an
+existing one and adapted it a lot. My one can install packages and
+call commands (which you need to be able to do to stop and start
+servers for example). It also bootstraps itself with an Emacs init
+file.
 
-{{{
-##! shell-script
-#! /bin/sh
-### BEGIN INIT INFO
-# Provides:          emacs
-# Default-Start:     2 3 4 5
-# Default-Stop:      S 0 1 6
-# Description:       This file should be placed in /etc/init.d.
-### END INIT INFO
+The initd has it's own repository on 
+[[https://github.com/nicferrier/emacs-initd|github]].
 
-USERNAME=emacs
-DESC="Run the emacs daemon."
-NAME=emacs
-USERHOME=/home/$USERNAME
-HOMEDIR=$USERHOME/emacs
-DAEMON=$HOMEDIR/bin/$NAME
-DAEMONNAME=server
-DAEMON_ARGS="--daemon=$DAEMONNAME"
-PIDFILE=/var/run/$NAME.pid
-SCRIPTNAME=/etc/init.d/$NAME
-VERBOSE="no"
-
-EMACSUID=`awk -F: "\\$1 ~ /$USERNAME/ {print \\$3}" /etc/passwd`
-EMACSCLIENT="sudo -u $USERNAME $HOMEDIR/bin/emacsclient -s /tmp/${USERNAME}${EMACSUID}/$DAEMONNAME"
-EVALEXIT="(progn (setq kill-emacs-hook nil) (kill-emacs))"
-
-# Exit if the package is not installed
-[ -x "$DAEMON" ] || exit 0
-
-# Read configuration variable file if it is present
-[ -r /etc/default/$NAME ] && . /etc/default/$NAME
-
-# Load the VERBOSE setting and other rcS variables
-[ -f /etc/default/rcS ] && . /etc/default/rcS
-
-# Define LSB log_* functions.
-# Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
-. /lib/lsb/init-functions
-
-#
-# Function that starts the daemon/service
-#
-do_start()
-{
-	# Return
-	#   0 if daemon has been started
-	#   1 if daemon was already running
-	#   2 if daemon could not be started
-	start-stop-daemon -u $USERNAME -c $USERNAME -d $USERHOME \
-             --start --quiet \
-             --exec $DAEMON \
-             --test > /dev/null || return 1
-        # Test directly with emacs
-        $EMACSCLIENT -e '(emacs-pid)'  > /dev/null 2>&1
-        [ $? -eq 0 ] && return 1
-
-        # Start the deamon
-        #
-        # NOTE: you cannot use start-stop-daemon for this because
-        # emacs ends up with a root-owned user-init-file
-        sudo su -c "$DAEMON $DAEMON_ARGS" - $USERNAME
-        ret=$?
-        [ $ret -ne 0 ] && return 2
-        return 0
-}
-
-#
-# Function that stops the daemon/service
-#
-do_stop()
-{
-        $EMACSCLIENT --eval "$EVALEXIT"  > /dev/null 2>&1
-	# Return
-	#   0 if daemon has been stopped
-	#   1 if daemon was already stopped
-	#   2 if daemon could not be stopped
-	#   other if a failure occurred
-        [ -f $PIDFILE ] && start-stop-daemon --stop --quiet \
-            --retry=TERM/30/KILL/5 \
-            --pidfile $PIDFILE \
-            --name $NAME
-	RETVAL="$?"
-	[ "$RETVAL" = 2 ] && return 2
-	# Wait for children to finish too if this is a daemon that forks
-	# and if the daemon is only ever run from this initscript.
-	# If the above conditions are not satisfied then add some other code
-	# that waits for the process to drop all resources that could be
-	# needed by services started subsequently.  A last resort is to
-	# sleep for some time.
-	start-stop-daemon --stop --quiet --oknodo \
-            --retry=0/30/KILL/5 \
-            --exec $DAEMON
-	[ "$?" = 2 ] && return 2
-	# Many daemons don't delete their pidfiles when they exit.
-	rm -f $PIDFILE
-	return "$RETVAL"
-}
-
-#
-# Function that sends a SIGHUP to the daemon/service
-#
-do_reload() {
-	#
-	# If the daemon can reload its configuration without
-	# restarting (for example, when it is sent a SIGHUP),
-	# then implement that here.
-	#
-	start-stop-daemon --stop --signal 1 --quiet \
-            --pidfile $PIDFILE \
-            --name $NAME
-	return 0
-}
-
-do_status() {
-        # Test the daemon with emacs
-        $EMACSCLIENT -e '(emacs-pid)' > /dev/null
-        return $?
-}
-
-do_eval() {
-        # Test the daemon with emacs
-        $EMACSCLIENT -e '(emacs-pid)' > /dev/null
-        [ $? -ne 0 ] && return 1
-        $EMACSCLIENT -e "$*"
-}
-
-do_install() {
-        # Test the daemon with emacs
-        $EMACSCLIENT -e '(emacs-pid)' > /dev/null
-        [ $? -ne 0 ] && return 1
-        $EMACSCLIENT -e "(package-install (quote $1))"
-}
-
-do_command() {
-        # Test the daemon with emacs
-        $EMACSCLIENT -e '(emacs-pid)' > /dev/null
-        [ $? -ne 0 ] && return 1
-        $EMACSCLIENT -e "($*)"
-}
-
-case "$1" in
-
-  start)
-	[ "$VERBOSE" != "no" ] && log_daemon_msg "Starting $DESC" "$NAME"
-	do_start
-        ret=$?
-        [ $ret -eq 2 ] && log_end_msg 1
-        exit 0
-	;;
-
-  stop)
-	[ "$VERBOSE" != "no" ] && log_daemon_msg "Stopping $DESC" "$NAME"
-	do_stop
-	case "$?" in
-		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
-		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
-	esac
-	;;
-
-  restart|force-reload)
-	#
-	# If the "reload" option is implemented then remove the
-	# 'force-reload' alias
-	#
-	log_daemon_msg "Restarting $DESC" "$NAME"
-	do_stop
-	case "$?" in
-	  0|1)
-		do_start
-		case "$?" in
-			0) log_end_msg 0 ;;
-			1) log_end_msg 1 ;; # Old process is still running
-			*) log_end_msg 1 ;; # Failed to start
-		esac
-		;;
-	  *)
-	  	# Failed to stop
-		log_end_msg 1
-		;;
-	esac
-	;;
-
-  status)
-        do_status > /dev/null 2>&1 
-        ret=$?
-        case "$ret" in
-            0) 
-                echo "emacs is running"
-                ;;
-            *)
-                echo "no emacs"
-                ;;
-        esac
-        [ $ret -eq 0 ] || exit $ret
-        ;;
-
-  e|eval)
-        shift
-        do_eval $*
-        ret=$?
-        [ $ret -eq 0 ] || exit $ret
-        ;;
-
-  command)
-        shift
-        do_command $*
-        ret=$?
-        [ $ret -eq 0 ] || exit $ret
-        ;;
-
-  install|package-install)
-        shift
-        do_install $*
-        ret=$?
-        [ $ret -eq 0 ] || exit $ret
-        ;;
-
-  *)
-	echo "Usage: $SCRIPTNAME {start|stop|restart|status|install|eval|force-reload}" >&2
-	exit 3
-	;;
-esac
-
-# End
-
-}}}
-
-This makes it possible to package elnode, for example, like this:
+Starting Emacs like this makes it possible to package elnode, for
+example, like this:
 
 {{{
 ##! conf
@@ -346,13 +124,12 @@ class elnode {
 }
 }}}
 
-It should also make it possible to package emacs apps more like other
-apps, but I think this would require altering the init.d for emacs.
+It should also make it possible to package emacs packages more like
+other apps.
 
 For example, one could treat an elnode instance as a service, but it
 would need separate start and stop scripts in init.d. That wouldn't be
 hard of course, they can just:
-
 
 {{{
 ##! shell-script
@@ -370,7 +147,8 @@ esac
 }}}
 
 It does seem tedious to have to write this script over and
-over. Perhaps puppet could write it somehow I am not sure.
+over. Perhaps puppet could write it somehow or perhaps Emacs packages
+should provide scripts like that.
 
 
 It also seems that it might be fun to give puppet a package handler
@@ -391,3 +169,51 @@ if it wasn't already there. There is precedent for this, Ruby and
 Python both have package extensions to puppet to make this stuff work.
 
 It's something I'll investigate if people make enough noise at me.
+
+
+== Maven. The best bits. For Emacs. ==
+
+Starting Emacs as a daemon and putting packages in it is only the
+beginning of the evil things I've done in the name of Emacs
+deployment. Perhaps the epitomy is to implement maven in EmacsLisp.
+
+For those who don't know, //maven//, is the worst tool ever designed
+(ok, ok, //in my opinion//).
+
+It does have one cool thing though, the separation of packages from
+repositories. This has now been copied in a lot of packaging
+tools. Emacs' ELPA has it in theory, you can specify an HTTP archive
+such as GNU's ELPA archive or [[http://marmalade-repo.org|Marmalade]]
+or you can use a plain old directory to install packages from.
+
+In practice, file archives haven't been very useful because there
+weren't many tools to utilize them.
+
+So I have written [[https://github.com/nicferrier/elpakit|elpakit]].
+
+{{{elpakit}}} is a tool to help with packaging Emacs packages. But
+also to allow you to make a temporary archive of them.
+
+{{{
+##! emacs-lisp
+(elpakit
+ "vagrant/packages"
+ '("~/work/elnode-auth"
+   "~/work/emacs-db"
+   "~/work/shoes-off"
+   "~/work/rcirc-ssh"))
+}}}
+
+Presuming those directories contain dev trees of Emacs packages then
+{{{elpakit}}} will build the packages and make a package archive in 
+{{{vagrant/packages}}}.
+
+This is the beginnings of package based project management for
+Emacs. It seems like the list of packages you use to make a private
+archive could become your project definition, you could track drift
+from git repos across the project, manage the archive as a whole,
+pushing and pulling it to places, co-ordinate branching across the
+parts of the project.
+
+Like other stuff I'm doing what is fun about this is that we're
+inventing it. It's a brand new time for Emacs. Come and help out!
