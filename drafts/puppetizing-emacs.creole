@@ -35,13 +35,11 @@ class emacs {
       }
 
       user { "emacs":
-         require => Group["emacs"],
          gid => "emacs",
          home => "/home/emacs",
       }
 
       file { "/home/emacs":
-         require => User["emacs"],
          ensure => "directory",
          owner => "emacs",
          group => "emacs",
@@ -54,7 +52,7 @@ class emacs {
       $emacs_dist_url = "https://github.com/downloads/nicferrier/heroku-buildpack-emacs/emacs.tgz"
 
       exec { "emacs-tarball":
-         require => [Package["curl"], User["emacs"]],
+         require => Package["curl"],
          path => "/usr/bin:/bin",
          command => "curl -Ls $emacs_dist_url -o /tmp/emacs-24.tgz",
          creates => "/tmp/emacs-24.tgz",
@@ -75,7 +73,7 @@ class emacs {
          group => "emacs",
       }
 
-      file { "initd":
+      file { "emacs-initd":
          require => Exec["emacs-dist"],
          source => "puppet:///modules/emacs/initd",
          path => "/etc/init.d/emacs",
@@ -85,7 +83,7 @@ class emacs {
       }
 
       service { "emacs":
-         require => File["initd"],
+         require => File["emacs-initd"],
          ensure => "running",
          enable => "true",
          hasstatus => "true",
@@ -177,8 +175,9 @@ Starting Emacs as a daemon and putting packages in it is only the
 beginning of the evil things I've done in the name of Emacs
 deployment. Perhaps the epitomy is to implement maven in EmacsLisp.
 
-For those who don't know, //maven//, is the worst tool ever designed
-(ok, ok, //in my opinion//).
+For those who don't know, //maven//, is the worst tool ever designed.
+Ok, ok: //in my opinion//. But it's not //just//
+[[http://kent.spillner.org/blog/work/2009/11/14/java-build-tools.html|me]].
 
 It does have one cool thing though, the separation of packages from
 repositories. This has now been copied in a lot of packaging
