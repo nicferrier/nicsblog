@@ -23,6 +23,10 @@
 	<li id='footertoc'>
 	    <h4>Emacs Lisp</h4>
             <ul>
+              <li><a href="/blog/2012_10/provision-and-deploy-emacs-apps">Provisioning and deploying Emacs apps with Puppet and <code>elpakit</code></a>
+                 <script type="text/javascript" src="http://www.reddit.com/buttonlite.js?i=2&url=http://nic.ferrier.me.uk/blog/2012_10/provision-and-deploy-emacs-apps"></script>
+              </li>
+
               <li><a href="/blog/2012_08/bignums-with-emacslisp">EmacsLisp and BigNums for MongoDB</a>
                  <a href="http://news.ycombinator.com/item?id=4433228"><img src="http://ycombinator.com/images/y18.gif" height="18" style="border:1px #ffffff solid;"></a>
                  <script type="text/javascript" src="http://www.reddit.com/buttonlite.js?i=2&url=http://nic.ferrier.me.uk/blog/2012_08/bignums-with-emacslisp"></script>
