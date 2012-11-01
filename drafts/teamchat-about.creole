@@ -1,0 +1,184 @@
+= Announcing TeamChat.net =
+
+It's true, at least in my experience in software development, that
+increased communication within a team leads to increased
+effectivness. If people talk more they make better stuff. We want to
+make the best product for increasing communication in a team to the
+max.
+
+teamchat.net is a web and IRC chat application. It provides all the
+communications teams want in one single place: group chat, chatbot
+interactions, 1 to 1 chat and video and voice calling. We call
+this //scaling the conversation//.
+
+Scaling the conversation means altering the depth or width of the
+conversation. Chatter from chatbots is extremely shallow. "The build
+failed", "the app was deployed", "A new issue has been raised on
+github" is the sort of thing you might get from a chatbot in a group
+chat. Partly because of that, group chats are normally quite shallow
+conversations with the other persons. A one to one text chat is more
+focussed, more deep, but much information is still lost. If we need a
+really detailed discussion we have to scale to voice, or video.
+
+teamchat is also designed to scale in other ways. Because it uses IRC
+it scales in complexity. For very techie people it can use an IRC
+client for text chat (which is the bread and butter of what technical
+teams do all day).
+
+== Is there a market for this? ==
+
+So who are we aiming at? Who might our customers be?
+
+Well, there are a hell of a lot of software development teams out
+there. And there are only going to be more. I think that any team
+bigger than 2 people is going to be interested in this
+application. The ideal target is a team of more than 5 people but less
+than 50 who are trying to consolidate monitoring or alerting
+somewhere. teamchat.net is ideal for doing that.
+
+There isn't really a type of company that teamchat.net is best suited
+for. Startups might see the value quickly but I think corporations
+will want it to. Perhaps in a different form. That's why we plan to
+offer a boxed service so you can run it on your own infrastructure,
+inside your firewall, if you want.
+
+We're going to focus on software development teams so we'll be adding
+features specifically for them. For example, built in Etherpad-like
+text editing and chatbots for github commits, travis-ci builds and
+github, trac and all those other bug trackers.
+
+Our plan right now is to offer a web based service for reasonable
+rates (Campfire's rates are a guide, something like $1 per user) but
+also to offer a downloadable, virtual machine solution for you to run
+inside your own firewall; a vagrant or vmware image or something like
+that. Additionally we think some customers might want to buy software
+support. For example, to integrate teamchat.net with their
+authentication system.
+
+
+== Who are we up against? ==
+
+There are quite a few products in this kind of space already. None of
+them have really provided what I've wanted when I've been leading
+teams. I've talked to friends all over the software industry and no
+one else seems to have the perfect solution either, even at places
+like Etsy, where they do an excellent job of team communications.
+
+Here's an overview of what's out there:
+
+* skype
+** is the most prevalent tool and does a lot of the scaling we talk about
+** it has great group chat it can quickly do 1 to 1 and it has video as well!
+** on the other hand it is a nightmare to try and integrate other services with
+** it's really hard to add robots to skype, too hard imo.
+
+* campfire
+** is great but the closed model let's it down
+** non-web clients for campfire are available, but not many
+** voice can be done but you call the number in the chat. wut?
+
+* grove.io
+** is an IRC and web chat solution
+** does some of what we're aiming to do but crucially doesn't allow the conversation to be scale.
+
+* your own irc
+** excellent way of embedding irc in your company (Etsy do this for example)
+** no voice or video though.
+
+* google
+** hangouts work ok for video calls
+** there's no non-web client which limits it
+
+I think these services just go to validate teamchat's business
+model. Each provides a part of what teamchat does, none provides the
+whole. The chance is there for us to collect teams who are constantly
+thrashing between one or all of these products.
+
+
+== The technology of teamchat.net ==
+
+I can't talk about what teamchat.net does without talking about what
+it is because the two are linked.
+
+teamchat.net is, I think, one of the first applications of a new wave
+of Internet based technology which mashes of a lot of different data
+sources. This is the promise of async network processing. That's why
+we're using Elnode to develop this. Elnode is an asychronous web
+server for Emacs. Using Elnode means we can easily integrate IRC
+sessions (which are basically text buffers) with web sessions which
+are asynchronous processes. The HTTP push technology needed for video
+chat is easy because of this.
+
+Elnode is capable of scalable processing. We already start multiple
+processes (all the communication channels are asynchronous) and we
+will certainly do more of this.
+
+Not to say that scaling is a solved problem with Elnode. There is a
+problem: Emacs uses the {{{select}}} function for asynchronous IO so
+we are limited to about 1000 concurrent tcp sockets. But I think this
+is not such a limiting factor for teamchat.net. First, we can solve it
+if we need to by replacing {{{select}}} with {{{devpoll}}} and second
+there aren't many teams who have anything like 1000 people. A single
+Elnode server could easily handle the chatter of most software
+development teams.
+
+This highlights an important point about teamchat.net, we are being
+deliberately as lean as possible. We could solve the scaling problems
+with Elnode. We could write some C, it might take me a week. Do we
+need to solve it though? we haven't needed to yet. Where we have
+needed to solve problems, we've solved them in as lean a way as
+possible while keeping technical debt to a minimum.
+
+For example, we don't use a traditional database engine yet. The
+databasse is just some serialized hashtables. But we do have a
+database like interface to those hashtables so we can swap in Mongo-db
+or MySQL any time we need to. We will only have to do the work we have
+to do, not a load of re-writing.
+
+The whole thing is designed not to be perfect but to always trend in
+the right way.
+
+
+== Our next steps ==
+
+There are some things we need to finish but teamchat.net could be
+usable right now by a team wanting to buy a turnkey boxed solution. We
+already have teamchat working for 1 client. It does seem, though, that
+it will be difficult to sell that without the online version. So we're
+working on making that work.
+
+We're running at the moment on no money. So teamchat.net is very much
+a side project to our day jobs. Anyone out there who wants to talk
+investment with us would recieve a most warm welcome, a lovely hot cup
+of coffee and perhaps a pastry.
+
+We also are interested in people with marketing experience who think
+they could teach us something about how to sell this vision to
+corporates. It does seem that it's normally a marketing person with an
+idea trying to hire techies. So if you're a marketing person who wants
+to experience the opposite of that feeling do please get in touch.
+
+If you're an EmacsLisp programmer or you're interested in becomming
+one we'd love to hear from you. With the caveat that at the moment
+we're running on no money we'd love you to see our code base and get
+interested in what we're doing. If we do get funding our first
+priority will be to hire smart programmers. The next big product step
+for us is to integrate team basde text editing with the application so
+you can have a video call while you hack code together.
+
+
+== What's the vision? the end goal? ==
+
+Personally, I want teamchat to be something *I* can use. Whenever I
+start a team to achieve something I want teamchat to be there for
+me. I want it to integrate the process of working on source code with
+team mates, like Etherpad did, with video calling, like Skype does,
+with great chatbots, like IRC does. I want teamchat to make that a
+pleasure. So much of a pleasure that I forget it's there. Like you
+forget you're holding the phone when you're in a long call with a
+friend. I want teamchat to be awesome.
+
+What will we do if don't get any funding? well, I think we'll just
+carry on doing what we're doing now. Slowly improving the product and
+adding in everything we want to use for team communication. I'm really
+excited about adding team based text editing, that will be finished 
