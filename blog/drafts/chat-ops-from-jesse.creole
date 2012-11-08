@@ -2,6 +2,14 @@
 
 //Everyone is pairing, all of the time - Jesse Newland//
 
+<<html
+<iframe id="pairing"
+        width="560" height="315"
+        src="http://www.youtube.com/embed/DH2twW0dmrM#t=13m33s"
+        frameborder="0" allowfullscreen></iframe>
+</iframe>
+html>>
+
 In this video from Jesse Newland, GitHub ops guy, he introduces the
 subject of ChatOps as way of improving the communication flow in ops.
 
@@ -13,12 +21,5 @@ centralizing Chat brings the whole company together. I think this is
 just an extension of Jesse's line: everyone is pairing, all of the
 time.
 
-<<html
-<iframe id="pairing"
-        width="560" height="315"
-        src="http://www.youtube.com/embed/DH2twW0dmrM#t=13m33s"
-        frameborder="0" allowfullscreen></iframe>
-</iframe>
-html>>
 
 This is why we're making teamchat.net...
