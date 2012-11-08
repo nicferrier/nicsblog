@@ -1,0 +1,24 @@
+= ChatOps - Jesse Newland's talk @ puppetconf =
+
+//Everyone is pairing, all of the time - Jesse Newland//
+
+In this video from Jesse Newland, GitHub ops guy, he introduces the
+subject of ChatOps as way of improving the communication flow in ops.
+
+I didn't go to Puppet Conf, by the looks of this video I should have
+because this exactly chimes with my experience over the last few years.
+
+This is an Ops focussed talk but companies like Etsy are finding that
+centralizing Chat brings the whole company together. I think this is
+just an extension of Jesse's line: everyone is pairing, all of the
+time.
+
+<<html
+<iframe id="pairing"
+        width="560" height="315"
+        src="http://www.youtube.com/embed/DH2twW0dmrM#t=13m33s"
+        frameborder="0" allowfullscreen></iframe>
+</iframe>
+html>>
+
+This is why we're making teamchat.net...
