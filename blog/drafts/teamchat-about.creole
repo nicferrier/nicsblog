@@ -11,6 +11,8 @@ communications teams want in one single place: group chat, chatbot
 interactions, 1 to 1 chat and video and voice calling. We call
 this //scaling the conversation//.
 
+{{/stuff/img/teamchat-thoughtworks-discussing-auth-2012-11-06 22:23:21.png?size=700|a busy teamchat webpage}}
+
 Scaling the conversation means altering the depth or width of the
 conversation. Chatter from chatbots is extremely shallow. "The build
 failed", "the app was deployed", "A new issue has been raised on
@@ -30,8 +32,8 @@ teams do all day).
 So who are we aiming at? Who might our customers be?
 
 Well, there are a hell of a lot of software development teams out
-there. And there are only going to be more. I think that any team
-bigger than 2 people is going to be interested in this
+there. And there are only going to be more. I think that any software
+dev team bigger than 2 people is going to be interested in this
 application. The ideal target is a team of more than 5 people but less
 than 50 who are trying to consolidate monitoring or alerting
 somewhere. teamchat.net is ideal for doing that.
@@ -48,11 +50,11 @@ text editing and chatbots for github commits, travis-ci builds and
 github, trac and all those other bug trackers.
 
 Our plan right now is to offer a web based service for reasonable
-rates (Campfire's rates are a guide, something like $1 per user) but
-also to offer a downloadable, virtual machine solution for you to run
-inside your own firewall; a vagrant or vmware image or something like
-that. Additionally we think some customers might want to buy software
-support. For example, to integrate teamchat.net with their
+rates (Campfire's rates seem a good guide, something like $1 per user)
+but also to offer a downloadable, virtual machine solution for you to
+run inside your own firewall; a vagrant or vmware image or something
+like that. Additionally we think some customers might want to buy
+software support. For example, to integrate teamchat.net with their
 authentication system.
 
 
@@ -113,30 +115,28 @@ Elnode is capable of scalable processing. We already start multiple
 processes (all the communication channels are asynchronous) and we
 will certainly do more of this.
 
+Of course people have tried Lisp before. Redit famously tried and
+failed. I think that's because Lisp hasn't really been usable for
+projects like this till now. Over the last 4 years a lot has changed
+with the Emacs runtime to make it a usable lisp machine. So now is the
+time to build on it and gain all those advantages of Lisp.
+
 Not to say that scaling is a solved problem with Elnode. There is a
-problem: Emacs uses the {{{select}}} function for asynchronous IO so
-we are limited to about 1000 concurrent tcp sockets. But I think this
-is not such a limiting factor for teamchat.net. First, we can solve it
-if we need to by replacing {{{select}}} with {{{devpoll}}} and second
-there aren't many teams who have anything like 1000 people. A single
-Elnode server could easily handle the chatter of most software
-development teams.
+problem we have to admit to now: Emacs uses the {{{select}}} function
+for asynchronous IO so we are limited to about 1000 concurrent tcp
+sockets. But I think this is not such a limiting factor for
+teamchat.net. First, we can solve it if we need to by replacing
+{{{select}}} with {{{devpoll}}} and second there aren't many teams who
+have anything like 1000 people. A single Elnode server could easily
+handle the chatter of most software development teams.
 
 This highlights an important point about teamchat.net, we are being
 deliberately as lean as possible. We could solve the scaling problems
 with Elnode. We could write some C, it might take me a week. Do we
-need to solve it though? we haven't needed to yet. Where we have
-needed to solve problems, we've solved them in as lean a way as
-possible while keeping technical debt to a minimum.
+need to solve it though? we haven't needed to yet. Everyone involved
+has experience of doing lean startups. We're not going to make the
+mistake of prematurely optimizing anything.
 
-For example, we don't use a traditional database engine yet. The
-databasse is just some serialized hashtables. But we do have a
-database like interface to those hashtables so we can swap in Mongo-db
-or MySQL any time we need to. We will only have to do the work we have
-to do, not a load of re-writing.
-
-The whole thing is designed not to be perfect but to always trend in
-the right way.
 
 
 == Our next steps ==
@@ -149,8 +149,8 @@ working on making that work.
 
 We're running at the moment on no money. So teamchat.net is very much
 a side project to our day jobs. Anyone out there who wants to talk
-investment with us would recieve a most warm welcome, a lovely hot cup
-of coffee and perhaps a pastry.
+investment with us would recieve a warm welcome, a lovely hot cup of
+coffee and lots of chat about how Lisp can make this work.
 
 We also are interested in people with marketing experience who think
 they could teach us something about how to sell this vision to
