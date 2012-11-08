@@ -2,20 +2,21 @@
 
 //Everyone is pairing, all of the time - Jesse Newland//
 
-<<html
-<iframe id="pairing" width="560" height="315" 
-        src="http://www.youtube.com/watch?v=DH2twW0dmrM&t=13m33s"
-        frameborder="0" allowfullscreen></iframe>
-</iframe>
-html>>
-
-
 In this video from Jesse Newland, GitHub ops guy, he introduces the
 subject of ChatOps as way of improving the communication flow in ops.
 In my experience, it's not just ops where centralizing on chat leads
 to massive wins.  In software development, increased communication
 within a team leads to increased effectivness. If people talk more
 they make better stuff. 
+
+<<html
+<iframe id="pairing"
+        width="560" height="315"
+        src="http://www.youtube.com/embed/DH2twW0dmrM#t=13m33s"
+        frameborder="0" allowfullscreen></iframe>
+</iframe>
+html>>
+
 
 We want to make the best product for increasing communication in a
 dev or ops team to the max.

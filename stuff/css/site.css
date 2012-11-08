@@ -89,6 +89,7 @@ padding-right: 1em;
 #pairing {
     float: right;
     margin-right: -200px;
+    padding-left: 1em;
 }
 
 img.creole {
