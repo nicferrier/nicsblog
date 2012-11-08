@@ -1,17 +1,29 @@
-= Announcing TeamChat.net =
+= Doing ChatOps with TeamChat.net =
 
-It's true, at least in my experience in software development, that
-increased communication within a team leads to increased
-effectivness. If people talk more they make better stuff. We want to
-make the best product for increasing communication in a team to the
-max.
+//Everyone is pairing, all of the time - Jesse Newland//
+
+<<html
+<iframe id="pairing" width="560" height="315" 
+        src="http://www.youtube.com/watch?v=DH2twW0dmrM&t=13m33s"
+        frameborder="0" allowfullscreen></iframe>
+</iframe>
+html>>
+
+
+In this video from Jesse Newland, GitHub ops guy, he introduces the
+subject of ChatOps as way of improving the communication flow in ops.
+In my experience, it's not just ops where centralizing on chat leads
+to massive wins.  In software development, increased communication
+within a team leads to increased effectivness. If people talk more
+they make better stuff. 
+
+We want to make the best product for increasing communication in a
+dev or ops team to the max.
 
 teamchat.net is a web and IRC chat application. It provides all the
 communications teams want in one single place: group chat, chatbot
 interactions, 1 to 1 chat and video and voice calling. We call
 this //scaling the conversation//.
-
-{{/stuff/img/teamchat-thoughtworks-discussing-auth-2012-11-06 22:23:21.png?size=700|a busy teamchat webpage}}
 
 Scaling the conversation means altering the depth or width of the
 conversation. Chatter from chatbots is extremely shallow. "The build
@@ -37,6 +49,8 @@ dev team bigger than 2 people is going to be interested in this
 application. The ideal target is a team of more than 5 people but less
 than 50 who are trying to consolidate monitoring or alerting
 somewhere. teamchat.net is ideal for doing that.
+
+{{/stuff/img/teamchat-thoughtworks-discussing-auth-2012-11-06 22:23:21.png?size=700|a busy teamchat webpage}}
 
 There isn't really a type of company that teamchat.net is best suited
 for. Startups might see the value quickly but I think corporations
