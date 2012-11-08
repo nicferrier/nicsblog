@@ -1,44 +1,20 @@
-= Doing ChatOps with TeamChat.net =
+= Introducing TeamChat.net =
 
-//Everyone is pairing, all of the time - Jesse Newland//
+teamchat.net is an application that aims to help companies centralize
+and scale their team communications. We aim to provide all the
+communications a team needs in one single place: group chat, chatbot
+interactions, 1 to 1 chat and video and voice calling. 
 
-In this video from Jesse Newland, GitHub ops guy, he introduces the
-subject of ChatOps as way of improving the communication flow in ops.
-In my experience, it's not just ops where centralizing on chat leads
-to massive wins.  In software development, increased communication
-within a team leads to increased effectivness. If people talk more
-they make better stuff. 
+The aim of our product is to put in a service what GitHub and Etsy and
+a bunch of other smart companies are doing so that you can focus on
+communicating, not supporting IRC servers or web security systems.
 
-<<html
-<iframe id="pairing"
-        width="560" height="315"
-        src="http://www.youtube.com/embed/DH2twW0dmrM#t=13m33s"
-        frameborder="0" allowfullscreen></iframe>
-</iframe>
-html>>
+teamchat is:
 
-
-We want to make the best product for increasing communication in a
-dev or ops team to the max.
-
-teamchat.net is a web and IRC chat application. It provides all the
-communications teams want in one single place: group chat, chatbot
-interactions, 1 to 1 chat and video and voice calling. We call
-this //scaling the conversation//.
-
-Scaling the conversation means altering the depth or width of the
-conversation. Chatter from chatbots is extremely shallow. "The build
-failed", "the app was deployed", "A new issue has been raised on
-github" is the sort of thing you might get from a chatbot in a group
-chat. Partly because of that, group chats are normally quite shallow
-conversations with the other persons. A one to one text chat is more
-focussed, more deep, but much information is still lost. If we need a
-really detailed discussion we have to scale to voice, or video.
-
-teamchat is also designed to scale in other ways. Because it uses IRC
-it scales in complexity. For very techie people it can use an IRC
-client for text chat (which is the bread and butter of what technical
-teams do all day).
+* an IRC server with secure authentication and a web interface
+* multiple channels for discussion, like skype you can have different people in different channels
+* a video chat server (you can even send someone on IRC a video chat)
+* a robot framework 
 
 == Is there a market for this? ==
 
