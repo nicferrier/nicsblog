@@ -94,8 +94,9 @@ padding-right: 1em;
 
 img.creole {
     float: right;
-    margin-right: -200px;
+    margin: 1em -200px 1em 1em;
     font-size: 36pt;
+    border: solid thin PowderBlue;
 }
 
 a {

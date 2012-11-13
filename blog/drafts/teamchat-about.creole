@@ -3,12 +3,13 @@
 On Monday we launched teamchat.net on
 [[http://news.ycombinator.com|HackerNews]].  teamchat is a Web and IRC
 chat application to help teams centralize their communications. Geeks
-love IRC, for everyone else the Web works best. teamchat provides Web
-and IRC interfaces and integrates video and chat bots to give you an
-off the shelf Chat-Ops setup. The sort of thing that costs 100s of
-hours of engineer time to build at the click of a register button.
+love IRC, for everyone else the Web works best. 
+teamchat provides Web and IRC interfaces and integrates video and chat
+bots to give you an off the shelf Chat-Ops setup. {{/stuff/img/teamchat-thoughtworks-discussing-auth-2012-11-06 22:23:21.png?size=700|a busy teamchat webpage}} 
+The sort of thing that costs 100s of hours of engineer time to build
+at the click of a register button.
 
-tl;dr teamchat is:
+//tl;dr// teamchat is:
 
 * an IRC server with secure authentication and a web interface
 * multiple channels for discussion, like skype you can have different people in different channels
@@ -16,7 +17,6 @@ tl;dr teamchat is:
 * a chat-bot framework so you can make robots do work for you
 * a simple API so you can have your other tools pump data into your chat
 
-{{/stuff/img/teamchat-thoughtworks-discussing-auth-2012-11-06 22:23:21.png?size=700|a busy teamchat webpage}}
 
 == Marketing ==
 
@@ -59,13 +59,13 @@ like Etsy, where they do an excellent job of team communications.
 
 Here's an overview of what's out there:
 
-* skype
+* Skype
 ** is the most prevalent tool and does a lot of the scaling we talk about
 ** it has great group chat it can quickly do 1 to 1 and it has video as well!
 ** on the other hand it is a nightmare to try and integrate other services with
 ** it's really hard to add robots to skype, too hard imo.
 
-* campfire
+* Campfire
 ** is great but the closed model let's it down
 ** non-web clients for campfire are available, but not many
 ** voice can be done but you call the number in the chat. wut?
@@ -79,7 +79,7 @@ Here's an overview of what's out there:
 ** no voice or video though.
 ** it's actually hard to setup, even harder to do securely across the Internet
 
-* google
+* Google
 ** hangouts work ok for video calls
 ** jabber is more difficult to work with than irc which limits chat-bots.
 
