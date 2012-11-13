@@ -136,6 +136,13 @@ have hacked together bouncers out of existing free sofware
 products. We have taken the route of writing our own, in
 EmacsLisp. This means we can integrate it tightly with Elnode.
 
+We're using SSH for IRC authentication. This is unusual but it's very
+flexible. We think anyone wanting to use IRC will be happy to cope
+with SSH and it's something that can be made easier over time, by
+adding the facility to IRC clients. By using SSH for IRC
+authentication we can make an SSH based API for talking to IRC for
+robots and other tools to integrate with your chat-ops.
+
 Elnode, the bouncer we use, the video code and everything else is all
 available open source.
 
