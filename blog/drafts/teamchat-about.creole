@@ -49,7 +49,7 @@ costs and see where we get to. I do hope we can have a free element,
 for teams smaller than 5 say. Or maybe without video (video is quite
 expensive to host).
 
-== Who are we up against? ==
+== Competition ==
 
 There are quite a few products in this kind of space already. None of
 them have really provided what I've wanted when I've been leading
@@ -89,10 +89,7 @@ whole. The chance is there for us to collect teams who are thrashing
 between one or all of these products.
 
 
-== The technology of teamchat.net ==
-
-I can't talk about what teamchat.net does without talking about what
-it is because the two are linked.
+== Technology ==
 
 teamchat.net is built on Elnode and some other EmacsLisp
 technology. Elnode is an asynchronous web server written in
