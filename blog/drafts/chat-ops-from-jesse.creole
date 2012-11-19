@@ -10,8 +10,9 @@
 </iframe>
 html>>
 
-In this video from Jesse Newland, GitHub ops guy, he introduces the
-subject of ChatOps as way of improving the communication flow in ops.
+In this video from [[https://github.com/jnewland|Jesse Newland (GitHub ops guy)]]
+he introduces the subject of ChatOps as way of improving the
+communication flow in ops.
 
 I didn't go to Puppet Conf, by the looks of this video I should have
 because this exactly chimes with my experience over the last few years.
@@ -22,4 +23,42 @@ just an extension of Jesse's line: everyone is pairing, all of the
 time.
 
 
-This is why we're making teamchat.net...
+<<html
+<div style="clear: both;"></div>
+html>>
+
+//Join the LinkedIn [[http://www.linkedin.com/groups/ChatOps-4723715|ChatOps Group]]//
+
+
+== ChatOps vs DevOps ==
+
+I think we're done with //"DevOps"//. All I see is organizations
+renaming their Ops teams, or optimistic sysadmins, renaming themselves
+as DevOps. A //DevOps// team is //NOT// the point, never has been and
+never will be. But it does seem like the argument has been lost.
+
+So what next to try to get people to focus on actually changing the
+culture, instead of just changing a name?
+
+Well, ChatOps is a concrete thing. You can tick the boxes:
+
+* install a chat server
+* get everyone using a chat client
+* connect nagios and other alerting to it
+* add interactive robots
+
+There's a clear progression and you can measure your progress easily:
+
+* is everyone using chat?
+* are the developers and the sysadmins chatting together?
+* are they chatting about work?
+* are people plugging in information?
+** new commits?
+** new builds?
+** servers down?
+* are people using interactive robots?
+* are people writing interactive robots?
+* have the roles between dev and ops blurred yet?
+
+So I think having a concrete thing like ChatOps is a good thing for
+fighting the ambiguity of DevOps.
