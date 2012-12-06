@@ -1,0 +1,71 @@
+= Street Java =
+
+I was talking with a friend on [[http://www.teamchat.net|TeamChat]]
+the other day about his new gig. He was worried because he was working
+on a Java web project and he was terrified at the prospect of dealing
+with the cumbersome. You know. //Spring//.
+
+You know what he means, right?
+
+I admit I'm prone to depression but my mood sinks into despair
+everytime I come across Spring. In fairness, it's not just Spring's
+fault. Before Spring there was //Struts//. Java has some dark magic in
+it that makes people write
+{{{AbstractFactoryImplementationFactoryInterfaceMakerFactories}}}.
+
+I've often wondered why that is but it certainly //is//. Idiomatic
+Java is full of small adaptor classes with more and more ridiculous
+names. Clearly what is going wrong is that Java programmers are
+abstracting too much. But why?
+
+This is not about why.
+
+Anyway, my friend and I proceeded to insult Spring for a bit and curse
+the ground that Rod Johnson and all his satanic followers walk on.
+
+But then my friend started to come up with alternatives:
+
+{{{
+him: if I just had some controllers that called managers that did the HTML...
+
+me: well, you could map them directly... but how about just 1 controller?
+
+him: ... and just map the control inside the one class...
+
+me: ... and just use a hashtable to map them...
+
+him: ... or just an 'if'...
+
+me: ... and just use methods instead of other classes...
+}}}
+
+We went on like this and it became clear that Java could actually be a
+nice programming language if you looked at it sideways.
+
+Note that. //Programming language//. Not //Assembly Factory Composition DSL//
+
+I started thinking about this. This is real programming. It's not
+hard. In fact, it's a lot easier than reading the 400 pages of Spring
+documentation to find out how to get started. 
+
+Which you have to do every time you use it. 
+
+Because it's so boring. 
+
+This is different, this is programming. It's intellectually
+stimulating. 
+
+It's also real. Authentic.
+
+It's //street//, man.
+
+So maybe, Java programmer, next time you write some code, you could
+think about, you know, solving the problem you're dealing with instead
+of thinking about all the possible ways you might need to one day
+abstract this or have an alternative implementation of that. Get
+//aufentic//. Write some code.
+
+Of course, this is also your father's Java. Maybe. Unless your father
+was Rod Johnson. And then you're the spawn of Satan.
+
+Only joking, Rod.
