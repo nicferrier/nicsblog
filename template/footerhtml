@@ -21,6 +21,10 @@
             </a>
 	</li>
 	<li id='footertoc'>
+            <h4>TeamChat.net</h4>
+            <ul>
+              <li><a href="/blog/2012_11/teamchat_about">Introducuing TeamChat</a></li>
+            </ul>
 	    <h4>Emacs Lisp</h4>
             <ul>
               <li><a href="/blog/2012_10/provision-and-deploy-emacs-apps">Provisioning and deploying Emacs apps with Puppet and <code>elpakit</code></a>
@@ -59,6 +63,7 @@
 
 	    <h4>DevOps</h4>
             <ul>
+              <li><a href="/blog/2012_11/chat-ops-from-jesse">Github's Jesse Newland's on ChatOps</a></li>
               <li><a href="/blog/2010_11/virtualization_for_python">Dependancy management for Python with VEH</a></li>
               <li><a href="/blog/2010_04/how-repos-work-at-woome">How release management worked at WooMe</a></li>
               <li><a target="_other" href="https://github.com/nicferrier/veh">the VEH repository</a></li>
