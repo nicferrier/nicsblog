@@ -85,8 +85,19 @@ But this is not much use. I really need something with the original
       :level 3)))))
 }}}
 
-Turns out this isn't easy to do. It's also not common. I immediately
-thought of other stream parsers:
+A stream is a flat list, only one element deep with some indication of
+what the tree structure it represents is encoded within each
+element. A tree is a deep, nested list with the structure modelled by
+the list. Notice that the original structure of the {{{org-mode}}}
+text is a tree, represented by the text.
+
+The stream produced by the {{{org-map-entries}}} code above is a
+specifying stream, the structure of the resulting tree is encoded in
+specified data in the stream. Namely the {{{:level}}} properties.
+
+I need to turn that into the my desired tree structure. Turns out this
+isn't easy to do. It's also not common. I immediately thought of other
+stream parsers:
 
 * lisp has read, of course, which turns a stream of characters into lisp trees
 * HTML and XML have SAX
