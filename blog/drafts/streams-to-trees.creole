@@ -85,6 +85,8 @@ But this is not much use. I really need something with the original
       :level 3)))))
 }}}
 
+== Streams and lists and lists and trees ==
+
 A stream is a flat list, only one element deep with some indication of
 what the tree structure it represents is encoded within each
 element. A tree is a deep, nested list with the structure modelled by
