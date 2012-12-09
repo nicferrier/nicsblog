@@ -1,0 +1,295 @@
+= Streams and Trees =
+
+I've been trying to build an index for
+[[http://github.com/nicferrier/skinny|Skinny]] recently. This is
+important to me, I need people to be able to subscribe to my blog and
+for that I need a feed and for that I need a sensible index. Currently
+I'm hand making the index and it's not easy to turn into something
+else. I really don't want to get into XSLT management of this stuff
+again.
+
+So if the index needs to be easier to maintain the best thing would be
+Emacs {{{org-mode}}}. I came up with an outline fairly quickly:
+
+{{{
+* index
+** Provisioning Emacs apps
+*** [[/blog/2012_10/provision-and-deploy-emacs-apps.creole]]
+** EmacsLisp and BigNums for MongoDB
+*** [[/blog/2012_08/bignums-with-emacslisp.creole]]
+*** http://news.ycombinator.com/item?id=4433228
+}}}
+
+There is other stuff I'd like to be able to keep in there... but
+that's the basics.
+
+Org-mode has some hacking tools. But they're not extensive. Most
+interesting is {{{org-map-entries}}} which let's you map over the
+entries in an {{{org}}} file.
+
+That let's us spit out a stream fairly quickly using this code:
+
+{{{
+##! emacs-lisp
+(org-map-entries
+  (lambda ()
+    (let* ((level1 (get-text-property (point) 'org-level-1))
+           (item (buffer-substring-no-properties
+                  (line-beginning-position)
+                  (line-end-position)))
+           (props (org-entry-properties (line-end-position)))
+           (data (progn
+                   (string-match
+                    ;; If we have tags it's a different regex
+                    (if (aget props "TAGS")
+                        "\\*+ \\(.*[^ ]\\) +:\\(.*\\):"
+                        "\\*+ \\(.*[^ ]\\) *")
+                    item)
+                   (match-string 1 item))))
+      (list data
+            :level level
+            :props props))) nil 'file)
+}}}
+
+It produces a stream like this:
+
+{{{
+##! emacs-lisp
+("index" :level 1)
+("Provisioning Emacs apps" :level 2)
+("[[/blog/2012_10/provision-and-deploy-emacs-apps.creole]]" :level 3)
+("EmacsLisp and BigNums for MongoDB" :level 2)
+("[[/blog/2012_08/bignums-with-emacslisp.creole]]" :level 3)
+("http://news.ycombinator.com/item?id=4433228" :level 3)
+}}}
+
+But this is not much use. I really need something with the original
+{{{org-mode}}} structure but in Lisp. This is what I'm aiming for:
+
+{{{
+##! emacs-lisp
+("index"
+ :level 1 
+ :content
+ (("Provisioning Emacs apps" 
+    :level 2 
+    :content
+    (("[[/blog/2012_10/provision-and-deploy-emacs-apps.creole]]" 
+      :level 3)))
+  ("EmacsLisp and BigNums for MongoDB"
+    :level 2 
+    :content
+    (("[[/blog/2012_08/bignums-with-emacslisp.creole]]"
+      :level 3)
+     ("http:://news.ycombinator.com/item?id=4433228"
+      :level 3)))))
+}}}
+
+Turns out this isn't easy to do. It's also not common. I immediately
+thought of other stream parsers:
+
+* lisp has read, of course, which turns a stream of characters into lisp trees
+* HTML and XML have SAX
+
+But in both those cases the structure of the tree is defined by stream
+events marking the beginning and end of the structure, so this XML:
+
+{{{
+&lt;a&gt;
+  &lt;b&gt;
+    &lt;c&gt;test 1&lt;/c&gt;
+  &lt;/b&gt;
+&lt;/a&gt;
+}}}
+
+is represented by this stream:
+
+{{{
+START "a"
+START "b"
+START "c"
+TEXT "test 1"
+END "c"
+END "b"
+END "a"
+}}}
+
+== Parsing event streams ==
+
+The way you deal with this is to have a parser that pushes creates and
+closes the structure with those events, they're like instructions on a
+tape:
+
+{{{
+##! emacs-lisp
+(let (stack result)
+  (loop for (operator operand) in stream
+    do (case operator
+         ('START
+          (let ((element (list operand)))
+            (if stack
+                (progn
+                  (setcdr (elt stack 0) (list element))
+                  (push element stack))
+                (setq stack (list element))
+                (setq result stack))))
+         ('TEXT
+          (setcdr (elt stack 0) (list operand)))
+         ('END
+          (pop stack)))) result)
+}}}
+
+//Note: (elt stack 0) is (peek stack)//
+
+So we keep a stack to make accessing the deep structure easy, because
+we use the stack rather than traversing the structure, we also need to
+keep a pointer to the result, which is what we return.
+
+The START case:
+
+{{{
+STACK BEFORE   | ("b") | ("a" ("b")) | ...
+INSERT         ("c")
+STACK AFTER    | ("c") | ("b" ("c")) | ("a" ("b" ("c"))) | ...
+}}}
+
+The TEXT case:
+
+{{{
+STACK BEFORE   | ("c") | ("b" ("c")) | ...
+INSERT         "test 1"
+STACK AFTER    | ("c test1") | ("b" ("c test1")) | ...
+}}}
+
+[[https://gist.github.com/4246140|It works]] and you can read it,
+mostly, even though it's not very functional.
+
+== Parsing specifier streams ==
+
+In our {{{org-mode}}} example though, the structure of the list is
+defined by the level values specified in the stream so the stack
+operation is not so simple.
+
+When we find a level we must check that the stack has the appropriate
+level of element in it or it's the top of the stack.
+
+Here's a solution to the {{{org-mode}}} problem:
+
+{{{
+##! emacs-lisp
+(defun stream->tree (stream level-fn content-fn)
+  (when (and (listp stream) (car stream))
+    (let ((stack (list)) (result (list)))
+      (dolist (item stream)
+        (let* ((il (funcall level-fn item))
+               ;; the parent of the current item, by level
+               (stack-parent
+                (let ((peeked (elt stack 0)))
+                  (while (and peeked (<= il (funcall level-fn peeked)))
+                    (pop stack)
+                    (setq peeked (elt stack 0)))
+                  peeked)))
+          (let ((content (funcall content-fn stack-parent)))
+            (if content
+                (nconc content (list item))
+                ;; Else
+                (if stack-parent
+                    (setf
+                     (elt stack 0)
+                     (funcall content-fn stack-parent (list item)))
+                    ;; Else
+                    (push (list item) stack)))
+            ;; Update the stack
+            (if (> il (length stack))
+                (push item stack)
+                ;; else
+                (setf (elt stack 0) item))
+            ;; Update the result
+            (when (equal il 1) (push item result)))))
+      result)))
+}}}
+
+I've abstracted the level detection and the content detection so they
+could be anything. In my case the items are plists with an annoying
+header element, so the following functions suffice for level and
+content:
+
+{{{
+##! emacs-lisp
+(content-fn (object &optional to-set)
+  (if to-set
+      (cons
+        (car object)
+        (plist-put (cdr object) :content to-set))
+      (plist-get (cdr object) :content)))
+
+(level-fn (object)
+  (plist-get (cdr object) :level))
+}}}
+
+I really don't like this approach. It is very imperative and the
+abstractions were necessary just to make it readable.
+
+
+== Parsing specifier streams by conversion to events ==
+
+As I wrote this post it became clear that a better alternative was to
+write a stream converter from the level specifying stream to the event
+stream. This could even be lazy and non-blocking (although I haven't
+tried that yet). But here's something that would do that:
+
+{{{
+##! emacs-lisp
+(let ((stream
+       '(("index" :level 1)
+         ("Provisioning Emacs" :level 2)
+         ("[[/blog/2012_10/provision-and-deploy-emacs-apps.creole]]" :level 3)
+         ("Doing something else" :level 1)))
+      (last-level 0))
+  (loop for (head . item) in stream
+     if (> (plist-get item :level) last-level)
+     collect (list 'START head) into result
+     if (< (plist-get item :level) last-level)
+     append (append
+             (loop repeat (+ 1 (- last-level (plist-get item :level)))
+                collect (list 'END))
+             (list (list 'START head))) into result
+     finally return
+       (append result
+               (loop repeat (+ 1 (- last-level (plist-get item :level)))
+                collect (list 'END)))
+     do (setq last-level (plist-get item :level))))
+}}}
+
+So this produces a stream like this:
+
+{{{
+##! emacs-lisp
+((START "index") 
+ (START "Provisioning Emacs") 
+ (START "[[/blog/2012_10/provision-and-deploy-emacs-apps.creole]]")
+ (END) 
+ (END) 
+ (END)
+ (START "Doing something else")
+ (END))
+}}}
+
+Which could then be consumed by a less complex event/stack parser.
+
+In order to introduce lazyness I think that the {{{loop}}} needs
+replacing by something that produces stream events and passes them to
+some callback.
+
+== Summary ==
+
+It seems like the event stream is fundamentally easier to reason
+about. I expect it would be possible to find a functional solution to
+the event stream, but even the iterative one I have above is not
+//that// bad.
+
+My solution to converting other types of streams to event streams is
+also imperative but again, not so imperative that it's
+problematic. It's easy enough to see the reasoning in there. 
+
+So that's what I'll do I think.
