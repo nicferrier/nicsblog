@@ -1,0 +1,191 @@
+= The Year in Emacs =
+
+I have spent the last 3 or 4 years slowly getting a reputation for
+extending Emacs in mad ways. So much so that fsbot on #emacs will tell
+you that {{{nicferrier-fix}}} is:
+
+//most problems can be fixed by writing more elisp//
+
+I will be continuing this trend in 2013. There's a lot going on so I
+thought I'd write a summary of everything that I see happening.
+
+== Elnode released ==
+
+[[http://elnode.org|Elnode]] v1.0 will be released some time this year. Elnode is very
+stable there are just a few things missing, asynchronous logging being
+one.
+
+A release will fix the Elnode API but we'll start working on version
+2 straight away, possibly integrating websockets into Elnode.
+
+Things that will potentially go into Elnode v2 are:
+
+* a proxy
+* built in, actor like concurrency
+* stuff to make it easier and quicker to write apps
+
+== EmacsWiki reboot with ElWiki ==
+
+[[http://github.com/aidalgol/elwiki|This is a project]] I am only
+peripherally involved in but I hope to step up my involvement this
+year and help get it live. After all, it was a key reason I wrote
+Elnode.
+
+Achieving this could be a massive win for Emacs. Elwiki sits on top
+of [[http://githib.com/nicferrier/elwikicreole]] which is all written
+in EmacsLisp and designed to be extended and hacked in an Emacs-y
+way. Elwiki pages will be able to contain lisp, which I see as a big
+win for doing sophisticated things in the transformation (I hope we
+can do things like pull in bits of other pages or even SQL
+querys). Elwiki pages can also contain {{{Org mode}}} tables and
+formulas, so Elwiki pages could be spreadsheets.
+
+We'll be using the Lisp
+jail
+[[https://github.com/joelmccracken/emacs_sandbox|cloned from erbot]]
+by [[http://twitter.com/JoelMcCracken|Joel McCracken]] to make sure
+embedded Lisp can't do anything nasty.
+
+Because we have a Lisp wiki engine that will run in Emacs I also see
+us being able to deliver a fully federated EmacsWiki with it. You'll
+be able to install the EmacsWiki package and select another EmacsWiki
+//node// and the node's git repo will be cloned... we'll have more
+code, possibly based on [[https://github.com/magit/magit|magit]] to
+monitor the changes between repos so you can track where pages in your
+local copy are differing.
+
+Elwiki will also have a native creole editing mode for Emacs, so
+you'll be able to edit in simple text in an Emacs buffer.
+
+I think we'll also be able to achieve a faster wiki, by just caching
+more. Hopefully we can find some fast hosting. If you're interested in
+offering hosting for the EmacsWiki project please get in touch.
+
+I hope we can do all this without anyone doing any work on the page
+content itself. I'm pretty sure we can just pick the content up
+from [[http://github.com/emacsmirror/emacswiki.org.git|Git]] and
+provide it on Elwiki and if we can't I'll hack creole until we
+can. We'll do that in a stages of course, as soon as it's ready I'm
+hoping we'll be able to persuade Kensanata to bless the process.
+
+== Marmalade in Elisp ==
+
+I took over the [[http://marmalade-repo.org|marmalade-repo]] from
+[[http://twitter.com/nex3|Nathan Weizenbaum]] this year. So far it's
+been hard, costly work.
+
+Marmalade is written in node.js and I have to run it in a virtul
+machine which is expensive in terms of computing resourcces (and
+therefore money).
+
+I did quite a bit
+of
+[[https://github.com/m2ym/mongo-el|work]]
+[[https://github.com/nicferrier/emacs-mongo-elnode-db|last year]] on
+getting to a state where the Marmalade mongo db could be pulled
+apart. I was hoping to base the new elisp marmalade on the old mongo
+db database but now I think I will just convert it to something much
+lighter weight, files on a disc for example. It should be easier to
+get the job done that way.
+
+Elpakit includes a lot of the work needed to make a new marmalade so I
+feel like I'm nearlly there on this one.
+
+
+== TeamChat.net ==
+
+TeamChat.net will continue apace. I hope we'll be able to open the
+doors properly at the end of January. Adding database scaling has been
+much harder to do over December than I thought (although now it will
+be easy for other people).
+
+Erwin will have more brain cells this year. We might even get to the
+point where Erwin services can be offered as general services to many
+teamchat instances which could promote sharing of stuff like github
+alerters.
+
+I'll be working throughout the year to take parts of TeamChat,
+particularly shoes-off (the IRC bouncer) into a state where they can
+be used independantly.
+
+== Elpad ==
+
+Elpad is an HTTP based async editing environment. It's going to allow
+Emacs users to share editing text, live, with web users or other Emacs
+users. It will be way easier than the faff around rudel; there will be
+a simple client and the ability to switch a buffer into live editing
+mode with a particular person.
+
+Elpad will also be integrated into TeamChat and Emacs users will be
+able to naturally select bits of text and move them into an Elpad
+environment with someone from their teamchat irc.
+
+== Multi-processing ==
+
+2012 had a few attempts at multi-processing but in 2013 we'll get this
+right I think.
+
+[[https://github.com/jwiegley/emacs-async|John Wiegley]] and I,
+independently came up with the same idea, to spawn a child Emacs to do
+some work and communicate results back to the main Emacs. John and I's
+approach differed only in the intent, his was to get a functional
+result back and mine was to get a stream of output back.
+
+I think it's obvious these should be combined to give the best of both
+worlds: the child Emacs should deliver a stream of results. It looks
+to me like some sort of actor framework is needed.
+
+What was interesting is that both our approaches suffered from the
+same problem, how to create the right contextual environment in the
+child emacs. That's a problem that remains to be solved. My current
+thinking is that a number of different approaches are needed so user's
+can select which is most appropriate to them.
+
+Excitingly Tom Tromey has been working on adding threads to Emacs for
+a while and now has a branch that more or less works. Emacs 25 might
+even have threading added.
+
+== Skinny ==
+
+Is my [[http://github.com/nicferrier/skinny|blog engine]] and I'm
+going to be working on that this year to add RSS (a glaring omission
+from the current code) as well as a ton more configurability and
+extesibility.
+
+Maybe I will even offer some Skinny hosting as a buy service this
+year.
+
+I'll definitely get Caroline to stand around in her Skinny jeans so I
+can have her legs as a logo.
+
+
+== Maildir ==
+
+[[http://github.com/nicferrier/maildir|Maildir]] is my Elisp mail user
+agent. It's a completely personal tool right now, I don't think anyone
+else uses it at all. But I'll be working this year to add foldering,
+indexing, moving the heavy processing things it does into
+multi-processing and making an Elnode app to sit on the MTA for the
+purpose of sucking the mail out (I currently use rsync for that).
+
+Frankly, I don't care if anyone else wants to use this one, this one's
+just for me.
+
+== Elpakit ==
+
+[[http://github.com/nicferrier/elpakit|Elpakit]] is less than a few
+months old but already is very embedded in all my workflow. I'll be
+working to make it more and more useful through the year. Specific
+things I see are:
+
+* making it trivial to run travis builds
+** perhaps even detecting certain standard elisp test frameworks? ecukes?
+* letting package lists be stored in files or at urls, in json perhaps
+* using magit in some way to monitor repo state of elpakits
+
+== Other Emacs things ==
+
+Hopefully at some time this year someone (maybe me, but probably only
+if I can make Emacs my day job) will fix the {{{select}}} problem in
+Emacs. Replacing {{{select}}} with {{{devpoll}}} for platforms that
+have it seems the right thing to do.
