@@ -97,10 +97,10 @@ feel like I'm nearlly there on this one.
 
 == TeamChat.net ==
 
-TeamChat.net will continue apace. I hope we'll be able to open the
-doors properly at the end of January. Adding database scaling has been
-much harder to do over December than I thought (although now it will
-be easy for other people).
+Caroline and I will be continuing with TeamChat.net apace. I hope
+we'll be able to open the doors properly at the end of January. Adding
+database scaling has been much harder to do over December than I
+thought (although now it will be easy for other people).
 
 Erwin will have more brain cells this year. We might even get to the
 point where Erwin services can be offered as general services to many
@@ -159,16 +159,16 @@ even have threading added.
 
 == Skinny ==
 
-Is my [[http://github.com/nicferrier/skinny|blog engine]] and I'm
-going to be working on that this year to add RSS (a glaring omission
-from the current code) as well as a ton more configurability and
-extesibility.
+Skiiny is my [[http://github.com/nicferrier/skinny|blog engine]] and
+I'm going to be working on that this year to add RSS (a glaring
+omission from the current code) as well as a ton more configurability
+and extensibility.
 
 Maybe I will even offer some Skinny hosting as a buy service this
 year.
 
 I'll definitely get Caroline to stand around in her Skinny jeans so I
-can have her legs as a logo.
+can have a picture of her legs as a logo.
 
 
 == Maildir ==
