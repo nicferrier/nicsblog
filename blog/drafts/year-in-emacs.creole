@@ -190,6 +190,7 @@ months old but already is very embedded in all my workflow. I'll be
 working to make it more and more useful through the year. Specific
 things I see are:
 
+* building info and HTML manuals from texinfo source and perhaps from creole
 * making it trivial to run travis builds
 ** perhaps even detecting certain standard elisp test frameworks? ecukes?
 * letting package lists be stored in files or at urls, in json perhaps
