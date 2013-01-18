@@ -22,7 +22,10 @@ Things that will potentially go into Elnode v2 are:
 
 * a proxy
 * built in, actor like concurrency
-* stuff to make it easier and quicker to write apps
+* stuff to make it easier and quicker to write apps, like:
+** cleaner APIs
+** Emacs modes for investigating logs and such
+** Emacs modes for controlling lots of Elnode instances
 
 == EmacsWiki reboot with ElWiki ==
 
@@ -32,11 +35,11 @@ year and help get it live. After all, it was a key reason I wrote
 Elnode.
 
 Achieving this could be a massive win for Emacs. Elwiki sits on top
-of [[http://githib.com/nicferrier/elwikicreole]] which is all written
-in EmacsLisp and designed to be extended and hacked in an Emacs-y
-way. Elwiki pages will be able to contain lisp, which I see as a big
-win for doing sophisticated things in the transformation (I hope we
-can do things like pull in bits of other pages or even SQL
+of [[http://githib.com/nicferrier/elwikicreole|creole]] which is all
+written in EmacsLisp and designed to be extended and hacked in an
+Emacs-y way. Elwiki pages will be able to contain lisp, which I see as
+a big win for doing sophisticated things in the transformation (I hope
+we can do things like pull in bits of other pages or even SQL
 querys). Elwiki pages can also contain {{{Org mode}}} tables and
 formulas, so Elwiki pages could be spreadsheets.
 
@@ -74,7 +77,7 @@ I took over the [[http://marmalade-repo.org|marmalade-repo]] from
 [[http://twitter.com/nex3|Nathan Weizenbaum]] this year. So far it's
 been hard, costly work.
 
-Marmalade is written in node.js and I have to run it in a virtul
+Marmalade is written in node.js and I have to run it in a virtual
 machine which is expensive in terms of computing resourcces (and
 therefore money).
 
@@ -116,9 +119,18 @@ users. It will be way easier than the faff around rudel; there will be
 a simple client and the ability to switch a buffer into live editing
 mode with a particular person.
 
+I'm really excited about Elpad, it's another one of the core reasons I
+wrote Elnode. It's so annoying that, in my editor I have to
+put so much effort into sharing code with someone else. It should be
+trivial and with elpad it will be.
+
 Elpad will also be integrated into TeamChat and Emacs users will be
 able to naturally select bits of text and move them into an Elpad
 environment with someone from their teamchat irc.
+
+Elpad has the potential to be a disruptive technology. It could be
+used to promote pairing and sharing code better around the world. I
+really hope the people on #emacs will take to it.
 
 == Multi-processing ==
 
