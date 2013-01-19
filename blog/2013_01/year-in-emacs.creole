@@ -11,7 +11,7 @@ thought I'd write a summary of everything that I see happening.
 
 == Elnode released ==
 
-[[http://elnode.org|Elnode]], the EmacsLisp async webserver will have
+[[http://elnode.org|Elnode]], the EmacsLisp async webserver, will have
 a v1.0 release some time this year. Elnode is very stable there are
 just a few things missing, asynchronous logging being one.
 
