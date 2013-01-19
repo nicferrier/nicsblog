@@ -26,6 +26,7 @@ Things that will potentially go into Elnode v2 are:
 ** cleaner APIs
 ** Emacs modes for investigating logs and such
 ** Emacs modes for controlling lots of Elnode instances
+** I might deprecate the wiki in favour of Elwiki
 
 == EmacsWiki reboot with ElWiki ==
 
@@ -60,14 +61,15 @@ local copy are differing.
 Elwiki will also have a native creole editing mode for Emacs, so
 you'll be able to edit in simple text in an Emacs buffer.
 
-I think we'll also be able to achieve a faster wiki, by just caching
-more. Hopefully we can find some fast hosting. If you're interested in
-offering hosting for the EmacsWiki project please get in touch.
+I think federation could help achieve scalability for the main
+EmacsWiki because we could distribute rendering, potentially to any
+node hosting the federation. The Elwiki is also being written to be
+more cachable.
 
-I hope we can do all this without anyone doing any work on the page
-content itself. I'm pretty sure we can just pick the content up
-from [[http://github.com/emacsmirror/emacswiki.org.git|Git]] and
-provide it on Elwiki and if we can't I'll hack creole until we
+I hope we can do all this without anyone doing any transform work on
+the page content itself. I'm pretty sure we can just pick the content
+up from [[http://github.com/emacsmirror/emacswiki.org.git|Git]] and
+provide it on Elwiki and where we can't I'll hack creole until we
 can. We'll do that in a stages of course, as soon as it's ready I'm
 hoping we'll be able to persuade Kensanata to bless the process.
 
@@ -94,6 +96,17 @@ get the job done that way.
 Elpakit includes a lot of the work needed to make a new marmalade so I
 feel like I'm nearlly there on this one.
 
+I feel like there's a ton of extra stuff marmalade could help with:
+
+* signed packages
+* secured encrypted packages (for storing your config in)
+* personal application repositories
+* federated package archives
+** like mirroring but able to push and pull content around
+* integration with [[http://melpa.milkbox.net/|melpa?]]
+
+Most of these are related to elpakit in some way.
+
 
 == TeamChat.net ==
 
@@ -102,14 +115,16 @@ we'll be able to open the doors properly at the end of January. Adding
 database scaling has been much harder to do over December than I
 thought (although now it will be easy for other people).
 
-Erwin will have more brain cells this year. We might even get to the
-point where Erwin services can be offered as general services to many
-teamchat instances which could promote sharing of stuff like github
+Erwin is now in a position where his brain can expand with the
+addition of webservices. We might even get to the point where Erwin
+web services can be offered from some sort of directory to any
+teamchat instance. That would promote sharing of stuff like github
 alerters.
 
 I'll be working throughout the year to take parts of TeamChat,
-particularly shoes-off (the IRC bouncer) into a state where they can
-be used independantly.
+particularly
+[[http://github.com/nicferrier/shoes-off|shoes-off (the IRC bouncer)]]
+into a state where they can be used independently.
 
 == Elpad ==
 
@@ -122,7 +137,7 @@ mode with a particular person.
 I'm really excited about Elpad, it's another one of the core reasons I
 wrote Elnode. It's so annoying that, in my editor I have to
 put so much effort into sharing code with someone else. It should be
-trivial and with elpad it will be.
+trivial and dynamic and with Elpad it will be.
 
 Elpad will also be integrated into TeamChat and Emacs users will be
 able to naturally select bits of text and move them into an Elpad
@@ -195,6 +210,7 @@ things I see are:
 ** perhaps even detecting certain standard elisp test frameworks? ecukes?
 * letting package lists be stored in files or at urls, in json perhaps
 * using magit in some way to monitor repo state of elpakits
+* being able to clone all the repos from an elpakit to another location
 
 == Other Emacs things ==
 
