@@ -76,7 +76,7 @@ hoping we'll be able to persuade Kensanata to bless the process.
 == Marmalade in Elisp ==
 
 I took over the [[http://marmalade-repo.org|marmalade-repo]] from
-[[http://twitter.com/nex3|Nathan Weizenbaum]] this year. So far it's
+[[http://twitter.com/nex3|Nathan Weizenbaum]] last year. So far it's
 been hard, costly work.
 
 Marmalade is written in node.js and I have to run it in a virtual
