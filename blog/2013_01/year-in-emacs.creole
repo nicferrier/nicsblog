@@ -36,7 +36,7 @@ year and help get it live. After all, it was a key reason I wrote
 Elnode.
 
 Achieving this could be a massive win for Emacs. Elwiki sits on top
-of [[http://githib.com/nicferrier/elwikicreole|creole]] which is all
+of [[http://github.com/nicferrier/elwikicreole|creole]] which is all
 written in EmacsLisp and designed to be extended and hacked in an
 Emacs-y way. Elwiki pages will be able to contain lisp, which I see as
 a big win for doing sophisticated things in the transformation (I hope
