@@ -11,9 +11,9 @@ thought I'd write a summary of everything that I see happening.
 
 == Elnode released ==
 
-[[http://elnode.org|Elnode]] v1.0 will be released some time this year. Elnode is very
-stable there are just a few things missing, asynchronous logging being
-one.
+[[http://elnode.org|Elnode]], the EmacsLisp async webserver will have
+a v1.0 release some time this year. Elnode is very stable there are
+just a few things missing, asynchronous logging being one.
 
 A release will fix the Elnode API but we'll start working on version
 2 straight away, possibly integrating websockets into Elnode.
