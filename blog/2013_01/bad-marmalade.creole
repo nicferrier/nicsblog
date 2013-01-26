@@ -168,7 +168,7 @@ Marmalade, here's the feature plan as it stands:
 *** decode the package properly
 *** find a directory to put the package file in and save it there
 * make a new package downloader
-** download the file
+** download the file with cache headers so nginx can serve it out of cache
 ** output the visit as a log entry
 ** update an in-memory cache of the number of downloads
 *** this possibly has to run as a separate emacs instance (so it can scale independantly of everything else)
