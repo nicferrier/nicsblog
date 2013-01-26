@@ -96,7 +96,7 @@ be easier to mirror that way.
 
 So in summary:
 
-* TODO (understandably) crufty implementation on aging node.js
+* (understandably) crufty implementation on aging node.js
 * a bunch of specific feature bugs
 * difficult to mitigate architectural choices like SASS and Mongo-Db.
 
@@ -217,3 +217,27 @@ what calls what, and how and maybe at several depth levels, we would
 have an amazing resource for looking at Lisp code. It would make it
 easier to learn and it would make it easier to work on and it would
 make for some really interesting statistics.
+
+
+== Update - Why not something more sensible? ==
+
+Ok, if the node.js code is a bit broken and difficult to maintain, why
+not write this in something  more sensible? PHP, Django? Rails?
+
+Well there are a couple of reasons:
+
+//it's the Emacs community that is going to have to maintain this// -
+if I want to give up I'm more likely to find someone else to run it
+and take it forward from inside the Emacs community than I am
+elsewhere. And the Emacs community is normally happy with Elisp, which
+is what Elnode is written in. It works for us, it's the most sensible
+thing for us.
+
+//secondly, **I'm** doing it// - I don't have loads of time and I
+don't want to spend it thrashing around with a PHP app. Even a Django
+app. I wrote Elnode and Elnode apps are really easy for me to
+write. Much easier than anything else right now.
+
+Of course, if //you// want to contribute a PHP app that works I'd be
+happy to accept it, or to hand over the running of marmalade to you if
+you think Elnode is a risky plan.
