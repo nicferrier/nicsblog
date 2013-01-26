@@ -1,0 +1,211 @@
+= Bad Marmalade =
+
+[[http://marmalade-repo.org|Marmalade]] has had some problems this
+week and I thought I'd explain them and my plans to fix them.
+
+== What is marmalade-repo? ==
+
+[[http://marmalade-repo.org|marmalade]] is an Emacs package
+archive. Basically it's an artifact repository for Emacs packages. You
+build your package (which is often just a source file) and then upload
+it to marmalade. Users can download packages from marmalade by just
+adding it to a variable in their initialization, like this:
+
+{{{
+(add-to-list 'package-archives 
+    '("marmalade" .
+      "http://marmalade-repo.org/packages/"))
+}}}
+
+It's easy and it's a core bit of Emacs infrastructure.
+
+Marmalade isn't the only package repository. The FSF runs the ELPA
+repository, but this requires people to do copyright assignment to the
+FSF before contributing, so it's slow.
+
+There is also the very
+excellent [[http://melpa.milkbox.net|MELPA]]. This is a clever package
+repository that builds packages straight out
+of [[http://github.com|github]]. But MELPA works mostly for
+development packages right now and it only works with certain sources,
+and it's not an artifact repository.
+
+== How did it come to be? ==
+
+A guy called [[http://twitter.com/nex3|Nathan]] built marmalade
+originally (he's a smart guy, check him out). But he didn't have time
+to look after this important thing or develop it further and so I
+offered to take it on. 
+
+I think it was really excellent that Nathan did the work to hand it
+over. It was a hassle and handing over your things is hard anyway. I
+know I would have found it difficult.
+
+Nathan still owns the domain name, but I think we're all cool with
+that. I'd be happy to take the domain and maybe we can sort that out
+next year when it's up for renewal.
+
+== What are the problems? ==
+
+Marmalade was built in node.js, but I think that Nathan wrote it
+mostly to learn how node.js works, it was very early node and a lot of
+it is out of date.
+
+The immediate problem is keeping marmalade up. Something, I'm not sure
+what, is killing marmalade at least once a day. I was running node.js
+under [[https://github.com/nodejitsu/forever|forever]] which worked
+really well, but recently
+the [[https://github.com/nodejitsu/forever|forever]] depends changed
+to be incompatible with the node that marmalade runs under. Sigh.
+
+So I've been running marmalade just from the command line and when it
+breaks the server goes down.
+
+So that's not the smartest. I've now changed it to run inside a while
+loop:
+
+{{{
+while [ 1 ] ; do node marmalade ; done
+}}}
+
+So that's two problems, it's doesn't run daemonized or with any fail
+protection //and// something is crashing it.
+
+There are a bunch of parsing and other minor problems which add up to
+annoyances for users or for me the maintainer, here are a few:
+
+* there are bugs in versioning
+* it's hard to change ownership of a package
+* the security of user's is a bit weak in the datastore
+* more bugs are [[https://github.com/nicferrier/marmalade/issues|here]] but even this is not exhaustive
+
+The problem that it's kind of old node.js is considerable, it makes it
+hard to update and maintain. There is loads I would like to do with it
+but, although I like node.js, I'm no expert. And I actively dislike
+some of the other technologies; Nathan used
+his [[http://sass-lang.com/|sass]] language for the CSS
+and [[http://jade-lang.com/|jade]] for the HTML. I don't like either
+of those much so even changing the design of the site is a bit of a
+chore.
+
+Marmalade also runs on mongo-db and I think that's a
+problem. Marmalade really doesn't need much database stuff, mostly
+it's the files/artifacts. Using Mongo is really just overhead on
+that. I think they should just be on the filesystem. Certainly, they'd
+be easier to mirror that way.
+
+So in summary:
+
+* TODO (understandably) crufty implementation on aging node.js
+* a bunch of specific feature bugs
+* difficult to mitigate architectural choices like SASS and Mongo-Db.
+
+== What's to be done? ==
+
+I am working on rewriting Marmalade in EmacsLisp
+using [[http://elnode.org|Elnode]]. This seems the obvious thing to do
+to me, Elnode works quite well (you're using it right now, to read
+this blog page) and can scale (using multiple Emacs instances) and can
+do everything we need it do... and it's EmacsLisp. It seems obvious
+that a package repository for EmacsLisp should be written in
+EmacsLisp.
+
+The thing is, it's not a trivial rewrite and I don't have much time to
+do it so people are either going to have to be patient, or help fix
+the time.
+
+What can other people do?
+
+* start helping me fix Marmalade
+* OR start pressing the donate button on my blog 
+
+Asking for donations feels awful to say, but if you use Marmalade
+you're getting something that is run for free by someone (me) who
+writes a lot of EmacsLisp and provides a way for you and other people
+to get and share that EmacsLisp in the easiest possible way. So that's
+the justification for asking for a few dollars here and
+there. Alternately, there's also a gittip option. Every little helps,
+if everyone who used Marmalade donated just $2 I'd easily have enough
+to run it on it's own server for a whole year, that would help a lot.
+
+<<html
+ <form action='https://www.paypal.com/cgi-bin/webscr' method='post'>
+  <input type='hidden' name='cmd' value='_s-xclick'/>
+  <input type='hidden' name='hosted_button_id' value='4UGG7UKDFWCQ6'/>
+  <center>
+     <div id="pp_donate" style="font-size: larger;">give money to make Marmalade better!</div>
+     <input type='image'
+       src='https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif' 
+       border='0'
+	   name='submit'
+	   alt='Donate with Paypal to make Marmalade better!'/>
+  <img alt='' border='0' src='https://www.paypalobjects.com/en_GB/i/scr/pixel.gif' width='1' height='1'/>
+  </center>
+ </form>
+html>>
+
+<<html
+<center>
+<P style="color: #2A8F79">you can also give to Marmalade with gittip</P>
+<iframe style="border: 0; margin: 0; padding: 0;"
+        src="https://www.gittip.com/nicferrier/widget.html"
+        width="48pt" height="20pt"></iframe>
+</center>
+html>>
+
+=== No money! So how do I help? ===
+
+If you can code EmacsLisp you could definitely help make a better
+Marmalade, here's the feature plan as it stands:
+
+* make scripts to extract the packages from the existing mongo db
+** this has to work iteratively so we can initially mirror the current Marmalade to make sure it works
+** it's hard to give people the schema of mongo because it has important user information in it
+*** so I will probably have to do this
+* make a new package upload handler
+** in Elnode we have to:
+*** present an upload package form
+*** accept the upload
+*** decode the package properly
+*** find a directory to put the package file in and save it there
+* make a new package downloader
+** download the file
+** output the visit as a log entry
+** update an in-memory cache of the number of downloads
+*** this possibly has to run as a separate emacs instance (so it can scale independantly of everything else)
+*** also make the thing that reads the log files and reproduces the correct in-memory state
+* make a new package search
+** search the directory structure of packages and return hits
+* make a new user system
+** not storing passwords
+** choosing a database (I like [[http://github.com/nicferrier/emacs-db-pg|postgresql]])
+* put it all together
+** a few HTML pages for the front end and the login stuff
+** and we're done
+
+The repo is on [[https://github.com/nicferrier/elmarmalade|github]]
+(though it's quite out of date) but if you wanted to make issues there
+to claim ownership of a piece of work that would be fine.
+
+Alternately I hang out on {{{#emacs}}} on freednode a lot. You could
+talk to me there about getting going.
+
+
+== Other stuff I'd like to do with Marmalade ==
+
+Marmalade has lots of possibilities. Because it stores artifacts and
+it would be really interesting to make it easy to build into a
+continuous integration system, maybe with travis. I'd like to do that.
+
+Another interesting thing would be application specific package
+repositories. This is a collection of just the packages that you
+want for a paritcular application. This would make it easy to deploy
+Emacs webapps, on Heroku say, with a package archive that was //just//
+the packages you needed.
+
+The last big thing I'd like to do with Marmalade is mine the EmacsLisp
+there to make an index. If we could index all the Lisp there, marking
+what calls what, and how and maybe at several depth levels, we would
+have an amazing resource for looking at Lisp code. It would make it
+easier to learn and it would make it easier to work on and it would
+make for some really interesting statistics.
