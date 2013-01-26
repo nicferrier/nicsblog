@@ -76,7 +76,7 @@ annoyances for users or for me the maintainer, here are a few:
 
 * there are bugs in versioning
 * it's hard to change ownership of a package
-* the security of user's is a bit weak in the datastore
+* TODO the security of users is a bit weak in the datastore
 * more bugs are [[https://github.com/nicferrier/marmalade/issues|here]] but even this is not exhaustive
 
 The problem that it's kind of old node.js is considerable, it makes it
@@ -192,6 +192,15 @@ talk to me there about getting going.
 
 
 == Other stuff I'd like to do with Marmalade ==
+
+I'd really like to fix the support situation. I think it would be fine
+if Marmalade upload died without knocking out the download. We could
+achieve that with mirroring relatively easily.
+
+The reason I didn't notice that Marmalade was down was that I was away
+from the Internet. Being alerted would have meant that I could have
+fixed the problem. I really need to be alerted in future, some sort of
+SMS gateway would be useful.
 
 Marmalade has lots of possibilities. Because it stores artifacts and
 it would be really interesting to make it easy to build into a
