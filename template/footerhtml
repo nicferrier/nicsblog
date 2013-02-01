@@ -28,6 +28,8 @@
             </ul>
 	    <h4>Emacs Lisp</h4>
             <ul>
+              <li><a href="/blog/2013_02/javascript_form_queue">Queued FORM submission in Javascript</a>
+              </li>
               <li><a href="/blog/2013_01/bad-marmalade">Bad Marmalade</a>
                  <script type="text/javascript" src="http://www.reddit.com/buttonlite.js?i=2&url=http://nic.ferrier.me.uk/blog/2013_01/bad-marmalade"></script>
               </li>
