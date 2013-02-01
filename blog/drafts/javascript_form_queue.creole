@@ -22,8 +22,8 @@ processing so you can totally ajax it; that is: add a javascript event
 handler to the form and have it take over the processing of the
 form. jQuery //does// have tools to let you do some of this:
 
-* {{{$.post}}} let's you post to a target with AJAX
-* {{{$(form-selector).serialize()}}} let's you turn a FORM into a FORM post MIME string
+* {{{$.post}}} let's you [[http://docs.jquery.com/Post|post to a target]] with AJAX
+* {{{$(form-selector).serialize()}}} let's you [[http://docs.jquery.com/Ajax/serialize|turn a FORM into a FORM post MIME string]]
 
 But these are very low level parts of what I often want to do with
 FORMs, which is something like this:
