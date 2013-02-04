@@ -1,12 +1,12 @@
 = A simple analogy for actor processes =
 
-I'm becomming more and more enthusiastic about the actor model of
-distributed processng. Some people have told me they don't really get
-actors. It's not surprising, what
+I'm becoming more and more enthusiastic about the actor model of
+distributed processing. But some people have told me they don't really
+get actors. It's not surprising, what
 with
 [[http://en.wikipedia.org/wiki/Actor_model|Wikipedia computer science]]
-articles being in the state they are and the only 2 real
-implementations (in Scala and Erlang) being a little exotic.
+articles being in the state they are and the only two real
+implementations (in Scala and Erlang) being a little, errr... exotic.
 
 So here is a very simple analogy. Actors are just like pipemills. I
 suspect that this is one of those //"oh. it's just a monoid in the
@@ -15,12 +15,13 @@ what a pipemill is as well.
 
 == Pipemills ==
 
-Lot's of people don't seem to know about pipemills. In the way of
-Unix, pipemills are one of the most expressive ways to describe a
-process. Here's a fairly typical pipemill:
+Lot's of people don't seem to know about pipemills but most unix
+people understand the pattern. In the way of Unix, pipemills are one
+of the most expressive ways to describe a process. Here's a fairly
+typical pipemill:
 
 {{{
-##! shell
+##! shell-script
 mongofiles -d marmalade list | \
   while read filename size ; 
   do 
@@ -45,11 +46,11 @@ of messages meaning //handle this file//. The message has 2 parameters
 explaining the filename and the size of the relevant file.
 
 This is why pipemills are named - because they turn pipes into mills
-(like a flour mill or another industrial process) of messages.
+of messages (like a steel mill or another industrial process).
 
 What's inside the pipemill is the processing of the message, in this
 case something quite stateful, the creation of files. That's a
-traditional program there.
+traditional program there which you might often find inside an actor.
 
 == Is it actor like? ==
 
@@ -58,17 +59,28 @@ specific but the parameters are very formal, there's an alement of
 syntax checking on the parameters as well.
 
 Some people will say //no no no, this isn't actors, it's not sending
-any messages//. But it's not necessary for actos to send messages,
+any messages//. But it's not necessary for actors to send messages,
 only receive them.
 
-It is actually possible to do in Unix, through the use of named
-pipes. As long as their is a sort of pipemill on the other end of the
-named pipe.
+And of course, the pipemill above //can// send messages. Firstly
+anything coming out of the {{{while}}} loop's {{{stdout}}} is a
+potential message and secondly the code could write to named pipes or
+fds connected to other processes:
+
+{{{
+##! shell-script
+something \
+  | while read param1 param2; do ... ; done
+  | while read other ; do .... ; done
+}}}
+
+//this example shows sequential arranged actors, to have a graph of
+actors one would need to employ named pipes or some such.//
 
 == Onto actors outside of shells ==
 
 So actors in Erlang are basically a process with a piece of code in it
-that responds to specific messages. Exactly analagous to a pipemill
+that responds to specific messages. Exactly analogous to a pipemill
 then. Here's an example:
 
 {{{
