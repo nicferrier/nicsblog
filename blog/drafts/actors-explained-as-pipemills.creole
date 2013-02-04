@@ -1,0 +1,91 @@
+= A simple analogy for actor processes =
+
+I'm becomming more and more enthusiastic about the actor model of
+distributed processng. Some people have told me they don't really get
+actors. It's not surprising, what
+with
+[[http://en.wikipedia.org/wiki/Actor_model|Wikipedia computer science]]
+articles being in the state they are and the only 2 real
+implementations (in Scala and Erlang) being a little exotic.
+
+So here is a very simple analogy. Actors are just like pipemills. I
+suspect that this is one of those //"oh. it's just a monoid in the
+category of endofunctors"// things to say. So I'm going to explain
+what a pipemill is as well.
+
+== Pipemills ==
+
+Lot's of people don't seem to know about pipemills. In the way of
+Unix, pipemills are one of the most expressive ways to describe a
+process. Here's a fairly typical pipemill:
+
+{{{
+##! shell
+mongofiles -d marmalade list | \
+  while read filename size ; 
+  do 
+     mongofiles -d marmalade -l /tmp/file get $filename
+     mkdir -p marmalade/$filename
+     cp /tmp/file marmalade/$filename
+  done
+}}}
+
+//this pulls files from marmalade-repo's mongo db and splatters them
+onto a real file system//
+
+So what's going on? the {{{mongofiles -d}}} command generates a stream
+of files which is passed into a separate process running the while
+loop. That's important because it means that both the {{{mongofiles
+-d}}} and the while loop are running simultaneously with the pipe
+connecting them. But you know that.
+
+The interesting thing is that the {{{while read filename size...}}}
+turns the stream of characters from the upstream process into a stream
+of messages meaning //handle this file//. The message has 2 parameters
+explaining the filename and the size of the relevant file.
+
+This is why pipemills are named - because they turn pipes into mills
+(like a flour mill or another industrial process) of messages.
+
+What's inside the pipemill is the processing of the message, in this
+case something quite stateful, the creation of files. That's a
+traditional program there.
+
+== Is it actor like? ==
+
+I think a pipemill is essentially an actor, yes. The message isn't
+specific but the parameters are very formal, there's an alement of
+syntax checking on the parameters as well.
+
+Some people will say //no no no, this isn't actors, it's not sending
+any messages//. But it's not necessary for actos to send messages,
+only receive them.
+
+It is actually possible to do in Unix, through the use of named
+pipes. As long as their is a sort of pipemill on the other end of the
+named pipe.
+
+== Onto actors outside of shells ==
+
+So actors in Erlang are basically a process with a piece of code in it
+that responds to specific messages. Exactly analagous to a pipemill
+then. Here's an example:
+
+{{{
+##! erlang
+loop() -> receive 
+   {Filename, Size} ->
+       Sender ! Num,
+       loop()
+   end.
+
+start() -> spawn(fun loop/0).
+}}}
+
+One strong similarity is the scope. BASH does not have scope scope
+in a pipeline because each stage is a separate process, so no way to
+do it.
+
+
+So all in all I think this is a simple way to explain actors to
+people. Or at least people who understand Unix.
