@@ -1,0 +1,164 @@
+= Elnode and NGINX =
+
+This is a brief note on how to serve up [[http://elnode.org|Elnode]]
+pages with the nginx web server.
+
+Let's write a simple Elnode service and run it on port 8080:
+
+{{{
+##! emacs-lisp
+(defun my-service (httpcon)
+  (elnode-send-json httpcon '(some json in your browser)))
+(elnode-start 'my-service :port 8080)
+}}}
+
+Now let's setup nginx to serve requests from port 80 to our Elnode
+instance:
+
+{{{
+##! conf
+server {
+	listen   80;
+
+	server_name localhost;
+
+        location / {
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+            proxy_pass http://127.0.0.1:8080;
+	}
+}
+}}}
+
+this is an nginx virtual host definition. The virtual hostname to use
+is the {{{server_name}}} statement. Change that to a DNS name mapped to
+your server will mean Elnode can serve files for your website.
+
+The interesting part is the location section, it declares the reverse
+proxy for your running Elnode. So now any request for any url will be
+forwarded to Elnode.
+
+This file has to be put into nginx's configuration somehow. How to do
+that is machine dependant but here's a few suggestions:
+
+* ubuntu and debian: use the nginx package from the repositories
+** TODO put the above file in {{{/etc/nginx/sites-enabled}}}
+* centos and redhat: there is an nginx 1.1 package in official repos
+** documentation [[http://wiki.nginx.org/Install#Official_Red_Hat.2FCentOS_packages|here]].
+** install the above file in {{{/etc/nginx/conf.d}}} with an appropriate name
+
+If you have suggestions for other operating systems please shout and
+I'll add them.
+
+== Booting Elnode ==
+
+If you are really running a server you probably want to boot Elnode.
+
+Here's the boot script I use for TeamChat and other services:
+
+{{{
+##! shell-script
+#!/bin/bash
+# Start's an Elnode daemon
+
+DIR=$(cd $(dirname $0) ; cd .. ; pwd)
+DAEMON_NAME=MYELNODEDAEMON
+
+case "$1" in 
+     server|start)
+        ${DIR}/emacs-local/bin/emacs -Q \
+             --daemon=${DAEMON_NAME} \
+             -l ${DIR}/.emacs.d.${DEAEMON_NAME}/init.el
+        ;;
+
+     stop)
+        ${DIR}/emacs-local/bin/emacsclient \
+             -s /tmp/emacs${UID}/${DAEMON_NAME} \
+             -e '(save-buffers-kill-emacs)'
+        ;;
+
+     client)
+        ${DIR}/emacs-local/bin/emacsclient \
+             -s /tmp/emacs${UID}/${DAEMON_NAME} \
+             ${DIR}/.emacs.d.teamchat
+        ;;
+esac
+
+# End
+}}}
+
+Note that this will load an init file in
+{{{~/.emacs.d.MYELNODEDAEMON/init.el}}}. If you have an init file
+there you can set the {{{package-archives}}} and the
+{{{package-user-dir}}} (the variable that points to the {{{/elpa/}}}
+directory) to be local to that directory as well.
+
+Note that it also provides a client connection.
+
+== How to manage Elnode services ==
+
+There are lots of ways of managing deployment but I prefer this one:
+
+* package your elnode app as an ELPA package
+* use ELPAKIT to make a local archive of it 
+** and any of it's depends that you have local customizations for
+* make an emacs daemon specific .emacs.d directory (as discussed above)
+* install your application into that .emacs.d directory
+* make an init.el that starts your app in Elnode from that .emacs.d
+
+This gives me the control I need, I can alter any of the code in the
+chain without having to fudge anything.
+
+Elpakit can also do a lot of this work for you, it can even start the
+daemon for you if you want, making it easy to test this stuff
+repeatedly.
+
+== NGINX and caching ==
+
+The reason I use nginx in front of all my Elnode apps is because it's
+not Elnode's job to be high performance, it's for rapid development -
+it //is// nginx's job to be high performance though.
+
+One aspect of nginx that I use a lot is caching. Here's an example of
+an nginx file with caching turned on for a specific path:
+
+{{{
+##! conf
+proxy_cache_path /var/cache/my-elnode-cache levels=1:2 
+   keys_zone=my-elnode-cache:8m max_size=1000m inactive=600m;
+
+server {
+	listen   80;
+
+	server_name localhost;
+
+        location / {
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+            proxy_pass http://127.0.0.1:8080;
+	}
+
+        location /static/ {
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+            proxy_cache my-elnode-cache;
+            proxy_cache_valid  200 302  5d;
+            proxy_cache_valid  404      60m;
+        }
+}
+}}}
+
+Note that the {{{keys_zone}}} is what is used as the tie between the
+cache and the location using the cache.
+
+There's quite a lot to nginx's caching and reverse proxying. I
+recommend checking out the
+documentation [[http://wiki.nginx.org/HttpProxyModule|here]].
+
+
+== And finally... ==
+
+I'll try and port this documentation to Elnode itself, rather than
+leaving it here in a blog post. Or if you want to do that please do
+and then send me a pull request
+to [[http://github.com/nicferrier/elnode|Elnode's github]].
