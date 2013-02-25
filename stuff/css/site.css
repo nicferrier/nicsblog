@@ -222,8 +222,47 @@ padding:.2em;
 font-size: .7em;
 font-weight: bold;
 padding-bottom: .5em;
+color: HoneyDew;
+}
+
+#pp_donate em {
 color: #ffca77;
 }
+
+
+#header {
+padding-left: 1em;
+}
+
+#header * a:link {
+color: MidnightBlue;
+}
+
+#header * a:visited {
+color: MidnightBlue;
+}
+
+#header * li {
+list-style-type: none;
+color: MidnightBlue;
+}
+
+#header * h4 {
+margin-bottom: 0;
+}
+
+#header #pp_donate {
+font-size: .7em;
+font-weight: bold;
+padding-bottom: .5em;
+color: MidnightBlue;
+}
+
+#header #pp_donate em {
+color: #ff8822;
+}
+
+
 
 #gravatar {
 float: right;
