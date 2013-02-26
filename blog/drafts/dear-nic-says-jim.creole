@@ -1,0 +1,97 @@
+= Dear Nic, Should we log directly? =
+
+//I need some Unix genius advise and I thought of you...//
+
+//We have a dev guy here who is working on a tool to pipe the output
+of logs into LogStash, the logs thing.//
+
+//Here's how I've known this to work in the past: //
+
+{{{
+App > Logwriter Library > Log File on File System > \
+  Light process tailing this > \
+  Forwards on a socket to Logstash > \
+  Logstash
+}}}
+
+//Here's what he wants to do: //
+
+{{{
+App > Logs to STDERR/OUT | pipes directly to logstash.
+}}}
+
+//So when upstart starts the app it starts it piping to another process
+which forwards to logstash direct.//
+
+//Do you know what unix does to the downstream process if the upstream
+gets blocked?//
+
+//Is this even a sensible question? //
+
+//Thanks, Jim//
+
+
+== Dear Jim, ==
+
+So really you mean:
+
+{{{
+App | stasher
+}}}
+
+There is a problem with doing this which is that the unix pipe buffer
+isn't that big so if the stasher process blocks for any reason sending
+to stash then the pipe buffer can fill and that can be a problem. If
+the pipe buffer fills up then the process writing to the pipe (App)
+will be blocked. You don't really want that.
+
+It's also a surprisingly difficult thing to do and easy to get
+wrong. If the person in question is inexperienced it may be a good
+idea to dissuade them.
+
+The thing you mention first is this:
+
+{{{
+App > logfile & ( tail -f logfile | stash)
+}}}
+
+which is much safer except that can still be a problem; the lofile is
+quite hard to co-ordinate. Let me elaborate: at some point your're
+going to want to truncate logfile at which point you'll be looking to
+change it's name. The 2nd process then needs to notice and repoint the
+tail command. This is not trivial.
+
+The BEST way to do this is:
+
+{{{
+App |{}| syslog => wherever
+}}}
+
+where {{{|{}|}}} is something I just invented to show piping over
+TCP. The syslog daemon collects the logs data, assembles it according
+to some protocol and then can send the logs over the network, over a
+pipe, dump to files, all of them at the same time - whatever it
+likes. If you're on unix always use a local syslog daemon as the first
+port of call.
+
+There is a problem with this approach as well though, what happens if
+the syslog daemon is down? the app can't connect to the TCP server to
+send it's logs.
+
+There are 3 mitigations to this:
+
+1. look after the syslog server - check that we're getting logging
+from app, if we don't get any for an hour (a minute, 10seconds,
+whatever) is it broken?
+
+2. have multiple syslog servers, one local, one localish (same LAN?)
+one less localish? that the app knows how to back off to.
+
+3. have the people running the app think about what should happen when
+the app fails to find a log server, is it critical? Should the app
+stop? is there something else that could be done to alert people?
+
+I should blog post this.
+
+
+//And now I have.//
