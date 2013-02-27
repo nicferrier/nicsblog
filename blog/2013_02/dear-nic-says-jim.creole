@@ -14,7 +14,7 @@ App > Logwriter Library > Log File on File System > \
   Logstash
 }}}
 
-//Here's what he wants to do: //
+//Here's what they want to do: //
 
 {{{
 App > Logs to STDERR/OUT | pipes directly to logstash.
