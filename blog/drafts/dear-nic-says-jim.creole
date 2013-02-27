@@ -2,8 +2,8 @@
 
 //I need some Unix genius advise and I thought of you...//
 
-//We have a dev guy here who is working on a tool to pipe the output
-of logs into LogStash, the logs thing.//
+//We have a project here here working on a tool to pipe the output of
+logs into LogStash, that logs thing.//
 
 //Here's how I've known this to work in the past: //
 
@@ -46,7 +46,7 @@ the pipe buffer fills up then the process writing to the pipe (App)
 will be blocked. You don't really want that.
 
 It's also a surprisingly difficult thing to do and easy to get
-wrong. If the person in question is inexperienced it may be a good
+wrong. If the programmer in question is inexperienced it may be a good
 idea to dissuade them.
 
 The thing you mention first is this:
@@ -55,13 +55,13 @@ The thing you mention first is this:
 App > logfile & ( tail -f logfile | stash)
 }}}
 
-which is much safer except that can still be a problem; the lofile is
+which is much safer except that can still be a problem; the logfile is
 quite hard to co-ordinate. Let me elaborate: at some point your're
 going to want to truncate logfile at which point you'll be looking to
 change it's name. The 2nd process then needs to notice and repoint the
 tail command. This is not trivial.
 
-The BEST way to do this is:
+The //BEST// way to do this is:
 
 {{{
 App |{}| syslog => wherever
@@ -93,5 +93,62 @@ stop? is there something else that could be done to alert people?
 
 I should blog post this.
 
-
 //And now I have.//
+
+
+
+== Follow up ==
+
+Jim came back the next day with some more questions
+
+
+//Re: the tailing option, I heard that using tail -F rather than tail
+-f gets round the process dance issue? Add in a little log rotate and
+problem solved?//
+
+Not really. Consider this:
+
+// Process A//
+
+{{{
+##! shell-script
+( while [ 1 ] ; do echo $(date) ; sleep 2 ; done ) > /tmp/somefile
+}}}
+
+// Process B//
+{{{
+tail -F /tmp/somefile
+}}}
+
+This works great. But now emulate what logrotate does:
+
+{{{
+##! shell-script
+mv /tmp/somefile /tmp/somefile.log
+}}}
+
+{{{tail}}} notices but it doesn't matter. No more log will ever arrive
+because the open file descriptor in //process A// will never get
+repointed to output to the new file. Data effectively runs down the
+plughole.
+
+
+//What is the best way of connecting an upstart / unicorn based apps std
+out to syslog?//
+
+I'd say, don't. Alter your application to use syslog directly. You can
+get Ruby logger tools to do that for you.
+
+Having said that, obviously you want to collect data from unicorn
+itself because there might be important information there. If you can
+reduce the logging to a smallish level (less than 10s of MB for a days
+log file) then you can do this:
+
+{{{
+##! shell-script
+LOGFILE=wherever
+unicorn 2>&1 | while read line ; do echo $ line >> $LOGFILE ; done 
+}}}
+
+Of course, if unicorn provides a command line way to direct it's
+output to a file that would be ideal.
