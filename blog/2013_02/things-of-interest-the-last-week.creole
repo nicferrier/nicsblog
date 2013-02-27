@@ -50,8 +50,7 @@ s so easy to do in Emacs!
      :url "http://feeds.pinboard.in/json/u:nicferrier/?count=10")))
 }}}
 
-
-=== RT @heroku: Concurrency is not Parallelism. Rob Pike at Waza 2012 ===
+=== other stuff ... Concurrency is not Parallelism. Rob Pike at Waza 2012 ===
 [[https://blog.heroku.com/archives/2013/2/24/concurrency_is_not_parallelism/|a nice video of the Pike man talking about scaling things]]
 almost everything this guy says is interesting, he's the
 [[http://golang.org|Go language]] guy, he's one of the inventors of
