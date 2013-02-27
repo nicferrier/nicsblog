@@ -1,0 +1,96 @@
+= This weeks things - 2013 02 28 =
+
+I've decided to start doing a roundup of stuff I bump into and
+pinboard.
+
+
+=== First off - pinboard.el! ===
+I'm only doing this because getting at pinboard data i
+s so easy to do in Emacs!
+
+{{{
+##! emacs-lisp
+(require 'web)
+(require 'json)
+(require 'creole-mode)
+
+(defun pinboard/data (data)
+  "The data is a vector of alists."
+  (with-current-buffer (get-buffer-create "*pinboard-latest*")
+    (let ((buffer-read-only nil))
+      (erase-buffer)
+      (loop for al across data
+         do
+           (progn
+             (setf (car (assoc 't al)) 'tags)
+             (destructuring-bind (&key tags a dt n d u)
+                 (kvalist->plist al)
+               (insert
+                (format "=== %s ===\n[[%s|%s]]\n//%s//\n%s\n%s\n\n" 
+                        n u n dt d (mapconcat 'identity tags "|"))))))
+      (creole-mode)
+      (visual-line-mode)
+      (goto-char (point-min))
+      (view-mode)
+      (switch-to-buffer (current-buffer)))))
+
+(defun pinboard-latest ()
+  (interactive)
+  (let ((buf (get-buffer-create "*pinboard-data*")))
+    (with-current-buffer buf (erase-buffer))
+    (web-http-get
+     (lambda (htp headers data)
+       (let ((jsdata
+              (with-current-buffer buf
+                (goto-char (point-max))
+                (insert data)
+                (goto-char (point-min))
+                (json-read))))
+         (pinboard/data jsdata)))
+     :url "http://feeds.pinboard.in/json/u:nicferrier/?count=10")))
+}}}
+
+
+=== RT @heroku: Concurrency is not Parallelism. Rob Pike at Waza 2012 ===
+[[https://blog.heroku.com/archives/2013/2/24/concurrency_is_not_parallelism/|a nice video of the Pike man talking about scaling things]]
+almost everything this guy says is interesting, he's the
+[[http://golang.org|Go language]] guy, he's one of the inventors of
+Plan9 and he wrote Acme - //2013-02-24//
+
+=== Gnu version of NixOs package manager. ===
+[[http://www.gnu.org/software/guix/manual/guix.html#Features|Gnu version of NixOs package manager]]
+The GNU Guix Reference Manual; GUIX and NixOS are both //very//
+interesting - //2013-02-24//
+
+=== Infrastructure as code? Total virtual network tool. ===
+[[http://mininet.github.com/|Infrastructure as code? Total virtual network tool.]]
+An Instant Virtual Network on your Laptop (or other PC) - I'm very
+intereted in this with my [[http://thoughtworks.com|ThoughtWorks]] hat
+on, we talk a lot about infrastructure as code, this looks like that
+for networks - //2013-02-24//
+
+=== How to hire product managers. ===
+[[http://www.mironov.com/pm-hiring/|Article about hiring product managers]]
+I've been thinking a lot about this stuff lately, writing something
+soon I think - //2013-02-23//
+
+=== Bunch of JS MVC frameworks. ===
+[[http://paulhammant.com/2013/01/18/client-side-mvc-roundup/|Bunch of JS MVC frameworks.]]
+Client-Side MVC Roundup - Paul Hammant's blog - //2013-02-23//
+
+=== @andrewhyatt's EmacsCalc tutorials - amazing maths ===
+[[http://www.emacswiki.org/emacs/Calc_Tutorials_by_Andrew_Hyatt|calc tutorials on emacswiki]]
+Calc is simply an incredible tool, check it out - //2013-02-23//
+
+=== An attempt to put all unix specs in one place. ===
+[[http://www.unix.org/version3/apis.html|An attempt to put all unix specs in one place.]]
+One massive online resource on Unix is a good idea. I think that's
+probably called //The Web// though. Still Unix stuff is hard to find
+so any attempt to clear it up is positive - //2013-02-23//
+
+=== Manual links in EmacsWiki ===
+[[http://emacswiki.org/emacs/Manuals|Linking to manuals]]
+We had a discussion on #emacs about making sure we educated people on
+how to get at manuals on their own system. This would be an
+interesting and fun project for someone I think. Anyone want to build
+some Elnode to take a manual link and turn it into the flow described? //2013-02-25//
