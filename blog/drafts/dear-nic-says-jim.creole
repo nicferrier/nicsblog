@@ -2,7 +2,7 @@
 
 //I need some Unix genius advise and I thought of you...//
 
-//We have a project here here working on a tool to pipe the output of
+//We have a project here working on a tool to pipe the output of
 logs into LogStash, that logs thing.//
 
 //Here's how I've known this to work in the past: //
@@ -116,7 +116,9 @@ Not really. Consider this:
 }}}
 
 // Process B//
+
 {{{
+##! shell-script
 tail -F /tmp/somefile
 }}}
 
@@ -151,4 +153,7 @@ unicorn 2>&1 | while read line ; do echo $ line >> $LOGFILE ; done
 }}}
 
 Of course, if unicorn provides a command line way to direct it's
-output to a file that would be ideal.
+output to a file that would be ideal but see all the caveats about
+logrotateing logfiles above. Often the process will provide a SIGHUP
+to turn the logfiles over. Which is fine. Especially as you'll have
+moved most of application specific logging to syslog.
