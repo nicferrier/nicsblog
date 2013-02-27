@@ -90,6 +90,7 @@
 
 	    <h4>DevOps</h4>
             <ul>
+              <li><a href="/blog/2013_02/dear-nic-says-jim"><i>Dear Nic</i> tell me about piped logging</a></li>
               <li><a href="/blog/2012_12/street-java"><i>Street</i> Java</a></li>
               <li><a href="/blog/2012_11/chat-ops-from-jesse">Github's Jesse Newland's on ChatOps</a></li>
               <li><a href="/blog/2010_11/virtualization_for_python">Dependancy management for Python with VEH</a></li>
@@ -98,6 +99,11 @@
 	      <li><a target="_other" href="https://github.com/nicferrier/resolvconfpy">Python resolvconf program</a></li>
 	      <li><a target="_other" href="https://github.com/nicferrier/multiserver">Django multiple-instance server</a></li>
 	    </ul>
+
+	    <h4>Roundup</h4>
+            <ul>
+              <li><a href="/blog/2013_02/things-of-interest-in-the-week">Interesting things from the end of February</a></li>
+            </ul>
 
             <h4><code>shell</code> for life</h4>
             <ul>
