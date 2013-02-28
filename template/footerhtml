@@ -49,6 +49,7 @@
             </ul>
 	    <h4>Emacs Lisp</h4>
             <ul>
+              <li><a href="/blog/2013_01/elnode-and-nginx">Using Nginx to serve Elnode</a></li>
               <li><a href="/blog/2013_02/javascript_form_queue">Queued FORM submission in Javascript</a>
               </li>
               <li><a href="/blog/2013_01/bad-marmalade">Bad Marmalade</a>
