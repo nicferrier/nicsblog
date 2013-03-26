@@ -1,0 +1,74 @@
+= Using Polymorphism as a Lisp refactoring tool =
+
+Sometimes I get stuck with a function that I want to change the
+contract of and I can't because Lisp doesn't have an expressive enough
+way of doing it. Because I practice iterative development this happens
+to me a surprising amount of the time. It can be hell to fix.
+
+EmacsLisp can do quite flexible argument definitions already, through
+the 'cl library extension {{{defun*}}}.
+
+The trouble is that it's hard to add optional information to an
+existing function contract.
+
+Say you have a function like this:
+
+{{{
+##! emacs-lisp
+(defun test1 (arg1 &optional arg2)
+   (list arg1 (or arg2 default-value)))
+}}}
+
+That's great. But now say you don't want to that contract, but just
+add the ability to add a third optional parameter. The existing
+optional parameter should still be optional and you should be able to
+specify either of them or neither of them.
+
+It starts to sound like you need keyword args. But this wouldn't work:
+
+{{{
+##! emacs-lisp
+(defun* test1 (arg1 &optional arg2 &key (arg3 arg3-default))
+  (list arg1 (or arg2 default-value) arg3))
+}}}
+
+Because an {{{&key}}} arg cannot be used after an {{{&optional}}} argument.
+
+Switching to keyword args would definitely work. If you can refactor
+all your code to support keyword args maybe that's the right thing to
+do.
+
+But maybe you don't want to change that contract. There is still a way
+to go ahead: pattern matching the args use {{{pcase}}}.
+
+Here's the solution:
+
+{{{
+##! emacs-lisp
+(defun test1 (&rest args)
+  (pcase args
+   (`(,arg1 :arg3 ,arg3 . ,rest)
+    (destructuring-bind (arg1 &optional arg2) (cons arg1 rest)
+      (list arg1 (or arg2 default-value) (or arg3 arg3-default))))
+   (`(,arg1 . ,rest)
+    (destructuring-bind (arg1 &optional arg2) (cons arg1 rest)
+      (list arg1 (or arg2 default-value) arg3-default)))))
+
+(let ((default-value 6)
+      (arg3-default 19))
+  (test1 20 :arg3 11 7)) => (20 7 11)
+}}}
+
+I admit, it looks a bit wierd having the pattern match drop directly
+into the {{{destructuring-bind}}} but that's the best way of
+processing the args. And the fact that the function body is duplicated
+in both these patterns is unusual, often I've found I want variation
+in the function body.
+
+Still, it makes me wonder if some sort of combined definition thing
+of pattern matching and arguments would be useful or whether just
+using patterns more is the right thing. Certainly it seems like a
+{{{defun-pcase}}} would be very useful.
+
+//Nota Bene// - I am not really into ML or Haskell and therefore have never
+really exercised the pattern thing.
