@@ -1,0 +1,36 @@
+= Interesting things in March =
+
+Here's my regularish list of stuff that's interesting. Not that much
+around that's sparking my interest. Maybe that's because I'm busy on
+client site or maybe there isn't much of interest in March. Certainly
+it feels cold and miserable where I am.
+
+Anyway...
+
+=== Make your vagrant machines in EC2. Pretty awesome. ===
+[[https://github.com/mitchellh/vagrant-aws|Make your vagrant machines in EC2. Pretty awesome.]]
+
+=== Tablet banking  ===
+[[http://www.guardian.co.uk/technology/2012/nov/26/barclays-ipad-order-bank-use|if the ipad is used by frontline bank staff, will it still be cool? ]]
+Barclays iPad order could open door to wider bank use.
+
+=== Interesting new mifi like wifi router. ===
+[[http://uk.globalgig.com/|Cheaper mifi thing, looks good.]]
+
+=== The raspberry pi and Elnode, perfect match ===
+[[http://ryan-white.blogspot.co.uk/2013/03/gate-otron9000.html|This guy]]
+put together a gate opener with raspberry pi and elnode. Elnode is a
+nice simple server to just fire the shell script and wrap it with
+HTTP. Elnode is awesome for that.
+
+=== ZAP - an open source pen testing tool ===
+[[http://code.google.com/p/zaproxy/|FOSS pen testing tool]] -
+zaproxy - an easy to use integrated penetration testing tool for
+finding vulnerabilities in web applications. - Google Project Hosting.
+
+Seems like at least one pro-tool is based on this. Why pay when it's
+free?
+
+===  Code analysis tools for your CD pipeline ===
+[[https://www.owasp.org/index.php/Source_Code_Analysis_Tools|Souce code analysis tool]]
+- for the securities dude.
