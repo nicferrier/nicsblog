@@ -1,0 +1,37 @@
+= Stuff from early April =
+
+=== New Relic - no time to fix ===
+[[http://blog.newrelic.com/2013/03/21/we-dont-have-time-to-fix-thing/|fast and furious from newrelic]]
+- Another
+perspective on fast engineering and technical debt.
+
+=== Swearing in the workplace - don't be a faker ===
+[[http://tinyurl.com/4m9jgcm|UEA survey on swearing]] - Why swearing
+can be good; Survey says 'never mind the b******s' from the University
+of East Anglia (UEA)
+
+=== for the gamers among you -  - simply incredible. ===
+[[http://www.pcworld.com/article/2033318/black-annex-is-the-best-qbasic-game-youve-ever-seen.html|for the gamers among you -  - simply incredible.]]
+- Black Annex is the best QBASIC game you've ever seen, via PCWorld
+
+
+=== ZFS for staging services  ===
+[[http://joyent.com/blog/zfs-and-disposable-staging-environments|this is interesting]]
+if you cut through the marketing //amaze-balls// crap.
+
+=== Emacs and Haskell - making money  ===
+[[http://scarcecapital.com/hft/|damn. another idea blown. emacs as a dev stack is going mainstream?]]
+- An
+amazing project to make a trading system using bits and pieces
+including Emacs org-mode.
+
+=== elnode is finally on melpa after this: ===
+[[http://melpa.milkbox.net/#elnode|Elnode is packaged for MELPA]] -
+MELPA is an Emacs package repository based on automatic production
+from GitHub.
+
+===  Nic's screencast on making multi-file elpa packages and using elpakit ===
+[[http://www.youtube.com/watch?v=pMlZ9zPAqbI&feature=youtu.be|I think elpakit is great, people should use it.]]
+- This
+is a demo of how to build multi-file packages.
+
