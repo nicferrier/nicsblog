@@ -1,0 +1,135 @@
+= Dear Nic, are Netflix ruining cloud computing? =
+
+I had thought that what NetFlix were doing was pretty awesome but I
+was
+reading
+[[http://www.informationweek.co.uk/cloud-computing/platform/how-netflix-is-ruining-cloud-computing/240151650|this]]
+and the guy seems pretty emphatic that Netflix are operating a sort of
+1.0 model and that it seems all sorts of bad.
+
+He says that building many server images is a bad idea, which seems
+like it might be right.
+
+I feel so confused. Please help.
+
+== Dear Jim, don't worry. ==
+
+Netflix are fine. It's
+this
+[[http://www.informationweek.co.uk/authors/Joe-Emison#archive|Joe Masters Emison]]
+who has got the world topsy turvy.
+
+First off, let's look at the environment, Netflix are Amazon based,
+true... but it looks like [[http://www.openstack.org/|OpenStack]] and
+even better, [[http://cloudstack.apache.org/|CloudStack]] are coming
+along fine to me.
+
+Further more, Emison's specific comments about configuration
+management are just plain wrong. In fact, I'm looking askance at him
+about it.
+
+== Dear Nic, explain more about deployments? ==
+
+Puppet and Chef are good tools, right? I'm using them. You have me
+worried now. I thought I was doing the right thing. Should I stop
+configuring my servers with those tools?
+
+== Dear Jim, no! wait! ==
+
+Controlling the configuration of your servers with Puppet or Chef (or
+indeed cfengine or power shell scripts or whatever) is great. It's the
+//right// thing to do. Don't stop.
+
+But consider, the problem of configuration management does not end
+with a deployed server. A deployed server is a server or virtual
+server that you've installed, booted and configured under control of
+configuration management. And Puppet and Chef are great for that. But
+do either of those tools control the machine after they've run? do
+they prevent //any other change// being made to the box? No, they do
+not. Deployment scripts, running daemons or humans might all make
+changes to the box that are outside of the configuration management
+system. This happens //all// the time in the real world. 
+
+//ALL. THE. TIME.//
+
+If you're doing real work you will know this, I'm sure **you** know it
+Jim.
+
+[[http://martinfowler.com|Martin Fowler]] calls this
+the
+[[http://martinfowler.com/bliki/PhoenixServer.html|Snowflake problem]]. A
+deployed server can start with a known base configuration, but even
+under control it soon has changes that are not known in the
+configuration management system. It becomes a beautiful, unique
+snowflake. Don't believe me? well try going to a Puppet or Chef admin
+and suggeting you randomly fry some machines. If they look ill, it's
+probably because they know they really don't control their machines.
+
+So, before you ask //What's to do??// I'll tell you that Netflix, for
+one, have already sorted this out. You need
+a [[https://github.com/Netflix/SimianArmy|chaos monkey]] not only to
+tell you where you have single points of failure but also to keep your
+config management honest. You do exactly what I said above, you
+randomly rebuild your servers. Then they become //phoenix//
+servers. They are wholly and completly in configuration management. No
+snowflake change would last long. The snowflakes are crushed under the
+trampling ape's massive feet.
+
+Now, to their massive credit, Netflix have taken this even
+further. Instead of making their servers orthogonally to their release
+builds, they actually make their servers in
+the
+[[http://techblog.netflix.com/2011/08/building-with-legos.html|release build pipeline]]:
+
+{{http://2.bp.blogspot.com/-EkRf0qQdt2U/TkdsLnNy2jI/AAAAAAAAA7E/yBh6KnrQ7TA/s400/build.png?size=600|netflix-release-build-pipeline}}
+
+That, it seems to me, is a pretty interesting thing to do. It means
+that whenever you deploy your server configurations are being
+refreshed. That's a really good thing. Of course, it doesn't mean you
+can't run Puppet or Chef on the servers while they're running. But
+it seems that, as long as you have a chaos monkey you could switch all
+that out to //just// static deployments:
+
+# build your code
+# build your VM
+# deploy your VM
+# run
+# when the chaos monkey has destroyed the VM detect it's destruction
+# deploy a new one from step 1
+
+I think this is an entirely different pattern to the persistent server
+approach. I call that the //orthogonal control model//. Why? because
+the control of the server, the deployment target, is orthogonal to the
+deployment of your applications.
+
+I think it's interesting that both approaches need a chaos monkey to
+keep them honest and prevent servers from becomming snowflakes. But
+it's //really// cool that the Netflix model only needs 1 deployment
+pipeline and the chaos monkey. That seems like a valuable reduction in
+process.
+
+It's true that Netflix's model is now making a whole load of virtual
+machine
+images. [[http://www.informationweek.co.uk/authors/Joe-Emison#archive|Joe Masters Emison]]
+thinks this is a bad idea. Errr. ok. Why exactly?
+
+I stood in a hall recently and listened to a CEO tell his IT people
+about how they should emulate the car industry in achieving
+simplicity. He said the car industry had made great strides in
+achieving simplicity, for example in one particular factory, cutting
+the number of assembly lines down from 40 to 3.
+
+Wow. The trouble is, the software industry is //nothing// like the car
+industry because we don't make physical things. It doesn't matter how
+many virtual assembly lines there are if we can contol them with
+software. We don't care if there are 40 if we can abstract the build
+of them. In fact, we don't care if there are 40,000 or 40,000,000 of
+40,000,000,000,000,000 if we can abstract the build of them.
+
+And that's exactly what Netflix are doing, they're moving the game
+forward by abstracting the definition of what it means to deploy
+something.
+
+So, in short Jim, I don't really care for what a //cloud// journalist
+tells me, I'll stick with the ideas coming out of the Netflix
+people because they sure are smart people.
