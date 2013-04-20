@@ -97,6 +97,12 @@
               <li><a href="/blog/2010_10/elnode">Introducing Elnode, an EmacsLisp web server</a></li>
             </ul>
 
+            <h4>Emacs talks</h4>
+            <ul>
+              <li><a href="http://youtu.be/H9E5qmiuYOQ">Emacsing the EmacsWiki @emacsconf</a></li>
+              <li><a href="http://youtu.be/6tLbEtBaQfc">Packaging with ELPA - basics</a></li>
+              <li><a href="http://youtu.be/pMlZ9zPAqbI">Packaging with ELPA - multi file packages</a></li>
+            </ul>
 	    <h4>DevOps</h4>
             <ul>
               <li><a href="/blog/2013_02/dear-nic-says-jim"><i>Dear Nic</i> tell me about piped logging</a></li>
