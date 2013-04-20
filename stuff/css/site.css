@@ -92,14 +92,11 @@ padding-right: 1em;
     padding-left: 1em;
 }
 
-img.creole {
+img[alt="a busy teamchat webpage"] {
     float: right;
-    margin: 1em -200px 1em 1em;
+    margin: 1em -100px 1em 1em;
     font-size: 36pt;
-    border: solid thin PowderBlue;
-}
-
-img[alt="netflix-release-build-pipeline"] {
+    width:500px;
     border: solid thin PowderBlue;
 }
 
