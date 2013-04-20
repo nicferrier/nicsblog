@@ -156,8 +156,8 @@ You can also safely generalize this around workplaces. If you do the
 test to 1 or 2 people and they don't even blink then it's safe to
 assume it's a swear safe work place and you can F and Blind more
 freely than you could if people raise their eyebrows. Even if your
-test subjects say they are //ok// with you swearing if they visibly
-notice it you probbly need to carry on testing.
+test subjects say they are //OK// with you swearing if they visibly
+notice it you probably need to carry on testing.
 
 == The subtle dangers of swearing ==
 
