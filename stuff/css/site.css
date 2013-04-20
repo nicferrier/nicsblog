@@ -99,6 +99,10 @@ img.creole {
     border: solid thin PowderBlue;
 }
 
+img[alt="netflix-release-build-pipeline"] {
+    border: solid thin PowderBlue;
+}
+
 a {
 text-decoration: none;
 }
