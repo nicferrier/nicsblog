@@ -1,0 +1,187 @@
+= Swearing at work - a guide =
+
+//Please take the title's warning seriously, I will be using swear
+words in this post. If you'd rather not read them but are still
+interested in the content here then ask me via twitter and I'll try
+and come up with a swearing free version.//  COULD WE ADD A CSS BUTTON
+TO **** THE SWEAR WORDS?
+
+
+There seems to be a bit of controvesy about swearing at work in the
+services industry right now. I've noticed several threads on it in the
+consultancy I work for over the time I've been there and I've also
+been told that some people, who don't know me, have coloured reactions
+to me because of this issue.
+
+Colleagues of mine have cited swearing effectiveness studies to me and
+indeed, I found
+one;
+[[http://www.emeraldinsight.com/journals.htm?articleid=1626521&show=abstract|Here it is]],
+from the University of East Anglia, published in the Leadership and
+Organizational Development
+Journal. And
+[[http://tinyurl.com/4m9jgcm|here]]
+is the UEA's press release about it
+
+
+== What is never acceptable ==
+
+If you look into this issue a fascinating fact comes out, there's a
+lot
+of
+[[http://www.lighthouseconsulting.org/Articles/KOTSwearing/|research]]
+from Americans saying that swearing (or cursing, as they would say)
+affects teams
+negatively,
+[[https://docs.google.com/a/thoughtworks.com/viewer?a=v&q=cache:BhDuWQMPMl0J:www.sirc.ca/newsletters/mid-Sept11/documents/Free/expletiveuse.pdf+&hl=en&gl=uk&pid=bl&srcid=ADGEESiIaOIzMftuYzKNA0Ya9M8kmbv1tspYGRXXZPasCNdhkYQ0-1yi_6WYks2x2zJ4Tbz7zDCUrMHu8OVZT3ieHVsghZ4zMXKjEBi_C-8h6e96ZR3MmMhjzL2awmi91TzQRGYLjjKu&sig=AHIEtbTiVcVWyF-_y2L9324TmmmfTCfLaw|particularly if women]]
+are considered.
+
+Mean while, the UEA research, which is based on the British, suggests
+that swearing improves effectiveness and that gender is not an issue.
+
+But this is where the fascinating bit is: the American research either
+does not mention what type of swearing, or specifically mentions
+swearing which is abuse. That is swearing directed at one or more
+persons, as in: //"You fucker"//, //"You useless Fuck"//, //"You're
+shit"// etc...
+
+This UEA/British research, meanwhile, talks about swearing //among// the
+team and specifically //not// at individuals.
+
+This completely chimes with my instincts. If you shout at a colleague
+or employee, or verbally abuse them with or without swearing, you can
+expect to see a drop in performance. That's obvious to me.
+
+Examples without swearing:
+
+* //"You are stupid"//
+
+* //"Don't be so dense"//
+
+* //"You're being obstructive"//
+
+These are just made even worse with swearing. 
+
+== The delicate line  to tread ==
+
+I'd say these were possible to say to someone at work but only in very
+very rare circumstances and then, only when preceeded by //"I feel
+like"//:
+
+* //"I feel like you're being obstructive"//
+
+might be acceptable for example.
+
+== The contextual subjective ==
+
+But, if you don't make it about the person, swearing can //more//
+effectively identify a lack of effectiveness or bad behaviour. You
+just have to be careful to not attribute that to the person you are
+trying to change:
+
+* //"This is a stupid situation"//
+* //"This is a dumb way of doing it."//
+* //"This is a mad way of delivering software"//
+
+Now, add //"fuck"//:
+
+* //"This is a fucking stupid situation"//
+* //"This is a dumb fucking way of doing it."//
+* //"This is a mad way of delivering fucking software"//
+* //"Fuck. This is fucked up"//
+
+None of these is directly abusive and (in my experience) //may// be
+more effective in motivating someone to fix the problem, or at least
+waking them up to it, than the former, swear-less version.
+
+I would personally suggest that swearing to express frustration with
+someone is also ok, because it's not directed at the subject:
+
+* //"Come on Paul, this is fucking ridiculous"//
+* //"Oh man, James, this is a shit storm, let's never do this again"//
+
+It's not directly abusive, it's emphasising the imploring. It does
+seem that you are on stickier ground with this though and it might be
+easier to get wrong.
+
+== The normally safe ==
+
+One of the things the UEA research is highlighting is that incidental
+swearing can be very effective at conveying personality and that is a
+really good thing. In my view, it's particularly effective when it's
+self-deprecating:
+
+* //"Ow! The fucking thing fell on my foot!"//
+* //"I ended up falling over. I looked like a fucking plumb."//
+* //"I got up and did 'My Way'. I was shit."//
+
+This is all normally ok because it's comedic. The intent is to make
+people laugh which gives pleasure. Comedians do this all the time. Why
+not have comedy at work?
+
+== Context over everything ==
+
+Added to all this is the question of context. Do you think you can say
+//"fuck"// to the vicar? Because you probably can't. You probably
+can't swear with people who you don't have any kind of relationship
+with. You probably can't swear with people of very different social
+status or position to you; your bosses boss, your Mother's friends,
+etc...
+
+== Problems to be aware of ==
+
+So taking all this on board, are there any other problems of swearing?
+Well, clearly you can mistakenly offend people directly. This is
+pretty easy to deal with though, you can test a person's ability to
+handle forthright language quite easily:
+
+* //"Bugger. Excuse my French"//
+* //"He is a shit. If you'll pardon me for saying so."//
+
+If people blanche at that you can apologize again and not do it around
+that person. 
+
+Be aware that this might vary with the swear word. Some people will
+get cross about //"Fuck"// but not about //"Shit"//. Almost everyone
+in Britain will blanche at //"Cunt"//. It's a very difficult word to
+use (purely because of the context people have) and I advise you to be
+on very solid ground about when you're going to use it. Here are some
+helpful rules around this particular word:
+
+* only use it with safety checks per-conversation
+* only use it when you are very close in social standing to your correspondant
+* only use it when the correspondant uses it first
+
+You can also safely generalize this around workplaces. If you do the
+test to 1 or 2 people and they don't even blink then it's safe to
+assume it's a swear safe work place and you can F and Blind more
+freely than you could if people raise their eyebrows. Even if your
+test subjects say they are //ok// with you swearing if they visibly
+notice it you probbly need to carry on testing.
+
+== The subtle dangers of swearing ==
+
+But I'd like to highlight another, more subtle, danger of swearing and
+one that has absolutely happened to me. People hear that you swear a
+lot and they sometimes form an opinion of you based on it. It is
+almost always no opinion at all, or a negative opinion.
+
+In other words, the people who think //"right, he's probably a
+contextual, subjective swearer"// don't care because why would you?
+it's at worst harmless and at best very effective. But the people who
+don't understand about contextual, subjective swearing think //"oh my
+gosh! he's yelling swear words in people's faces all day"// and that
+makes them think, quite naturally, that you are bad.
+
+== Summing up ==
+
+A summary of everything I'm saying is:
+
+* direct abuse of a person, one to one is NEVER ok, it's only going to make them less effective; why would you want that //ever//?
+
+* swearing elsewhere can be just emphasis and so can be highly effective and certainly more effective than not doing it - it's all about the context though;
+
+* swearing at all will make some people who are not directly involved with you or the people around you, disrespect you and likely you will not have the time, or space, or indeed the inclination, to explain yourself to them. The further the people are from you the more likely they are to disrespect you because the less likely it is that someone will explain to them the effect of your approach.
+
+So there we are. I hope this was at least amusing. It may be
+interesting even. Remember, this is (if only social) science.
