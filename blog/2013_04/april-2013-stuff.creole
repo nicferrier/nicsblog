@@ -1,5 +1,12 @@
 = Stuff from early April =
 
+Last month was slow, this month feel's like there's been more going on
+so I'll update now, and then again (perhaps) by the end of the month.
+
+=== Sacha uploads the EmacConf videos ===
+[[http://www.youtube.com/playlist?feature=playlist-comment&list=PL4th0AZixyRE9bb8OevAb7I8RuaWJQWnO|her playlist]]
+is online. It was a great conference and lots of fun to talk at.
+
 === New Relic - no time to fix ===
 [[http://blog.newrelic.com/2013/03/21/we-dont-have-time-to-fix-thing/|fast and furious from newrelic]]
 - Another
