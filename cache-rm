@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo grep -lr -E "$1" /var/cache/nginx-nicsblog/ | xargs -L1 sudo rm -f
+
+# End
