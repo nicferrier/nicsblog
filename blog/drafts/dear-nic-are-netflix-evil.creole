@@ -6,9 +6,9 @@ of
 
 Frankly closely coupling open source tools to a single commercial
 vendor (Amazon in this case) is a slight of hand, but I'm baffled by
-the "Cloud Computing 1.0" v.s "Cloud Computing 2.0" debate.
+the //Cloud Computing 1.0// vs //Cloud Computing 2.0// debate.
 
-Back in the bad old days (Cloud Computing 0.0?) I remember merrily
+Back in the bad old days of //Cloud Computing 0.0// I remember merrily
 shovelling
 existing
 [[http://martinfowler.com/bliki/SnowflakeServer.html|snowflake servers]],
