@@ -4,8 +4,8 @@ Have you been following the recent interweb kurfuffle accusing Netflix
 of
 [[http://www.informationweek.co.uk/cloud-computing/platform/how-netflix-is-ruining-cloud-computing/240151650|ruining cloud computing]]?
 
-Frankly closely coupling open source tools to a single commercial
-vendor (Amazon in this case) is a slight of hand, but I'm baffled by
+Frankly, closely coupling open source tools to a single commercial
+vendor (Amazon in this case) is a slight of hand. But I'm baffled by
 the //Cloud Computing 1.0// vs //Cloud Computing 2.0// debate.
 
 Back in the bad old days of //Cloud Computing 0.0// I remember merrily
@@ -15,7 +15,7 @@ existing
 architectures
 and [[http://en.wikipedia.org/wiki/Shell_script|management stacks]]
 onto hypervisor platforms, freeing up racks worth of space in
-expensive datacenters and saving the CTO a few a quid. It was
+expensive datacenters and saving the CTO a few quid. It was
 terrifying.
 
 As tools have matured to allow us to more effectively manage the
@@ -24,7 +24,7 @@ like [[http://www.opscode.com/chef/|Chef]]
 and [[https://puppetlabs.com/|Puppet]] here, the terror has abated and
 green field well managed Cloud Infrastructure has become
 commonplace. I would call these kind of architectures //Cloud
-Computing 1.0// because candidly I think we have a long way to go -
+Computing 1.0// because, candidly, I think we have a long way to go -
 this stuff is still pretty immature.
 
 Now here is where my bewilderment arises. I've been following Netflix
