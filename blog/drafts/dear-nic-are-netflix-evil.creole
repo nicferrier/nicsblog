@@ -1,76 +1,61 @@
 = Dear Nic, are Netflix ruining cloud computing? =
 
-I had thought that what NetFlix were doing was pretty awesome but I
-was
-reading
-[[http://www.informationweek.co.uk/cloud-computing/platform/how-netflix-is-ruining-cloud-computing/240151650|this]]
-and the guy seems pretty emphatic that Netflix are operating a sort of
-1.0 model and that it seems all sorts of bad.
+Have you been following the recent interweb kurfuffle accusing Netflix
+of
+[[http://www.informationweek.co.uk/cloud-computing/platform/how-netflix-is-ruining-cloud-computing/240151650|ruining cloud computing]]?
 
-He says that building many server images is a bad idea, which seems
-like it might be right.
+Frankly closely coupling open source tools to a single commercial
+vendor (Amazon in this case) is a slight of hand, but I'm baffled by
+the "Cloud Computing 1.0" v.s "Cloud Computing 2.0" debate.
 
-I feel so confused. Please help.
+Back in the bad old days (Cloud Computing 0.0?) I remember merrily
+shovelling
+existing
+[[http://martinfowler.com/bliki/SnowflakeServer.html|snowflake servers]],
+architectures
+and [[http://en.wikipedia.org/wiki/Shell_script|management stacks]]
+onto hypervisor platforms, freeing up racks worth of space in
+expensive datacenters and saving the CTO a few a quid. It was
+terrifying.
 
-== Dear Jim, don't worry. ==
+As tools have matured to allow us to more effectively manage the
+configuration of our servers, I'm thinking of things
+like [[http://www.opscode.com/chef/|Chef]]
+and [[https://puppetlabs.com/|Puppet]] here, the terror has abated and
+green field well managed Cloud Infrastructure has become
+commonplace. I would call these kind of architectures //Cloud
+Computing 1.0// because candidly I think we have a long way to go -
+this stuff is still pretty immature.
 
-Netflix are fine. It's
-this
-[[http://www.informationweek.co.uk/authors/Joe-Emison#archive|Joe Masters Emison]]
-who has got the world topsy turvy.
+Now here is where my bewilderment arises. I've been following Netflix
+and some of the talks and blog posts Adrian Cockcroft has been
+publishing over the past year or so. As far as I was concerned they
+were the ones moving towards //2.0// and Puppet and Chef
+were //1.0//. Now this guy from InfoWorld comes along and tells us
+that we've got it the wrong way round! Have I got my money on the
+wrong horse here?
 
-First off, let's look at the environment, Netflix are Amazon based,
-true... but it looks like [[http://www.openstack.org/|OpenStack]] and
-even better, [[http://cloudstack.apache.org/|CloudStack]] are coming
-along fine to me.
+Cheers, Jim.
 
-Further more, Emison's specific comments about configuration
-management are just plain wrong. In fact, I'm looking askance at him
-about it.
 
-== Dear Nic, explain more about deployments? ==
+== Dear Jim, maybe he was drunk? ==
 
-Puppet and Chef are good tools, right? I'm using them. You have me
-worried now. I thought I was doing the right thing. Should I stop
-configuring my servers with those tools?
-
-== Dear Jim, no! wait! ==
+He's a journalist after all.
 
 Controlling the configuration of your servers with Puppet or Chef (or
 indeed cfengine or power shell scripts or whatever) is great. It's the
 //right// thing to do. Don't stop.
 
-But consider, the problem of configuration management does not end
-with a deployed server. A deployed server is a server or virtual
-server that you've installed, booted and configured under control of
-configuration management. And Puppet and Chef are great for that. But
-do either of those tools control the machine after they've run? do
-they prevent //any other change// being made to the box? No, they do
-not. Deployment scripts, running daemons or humans might all make
-changes to the box that are outside of the configuration management
-system. This happens //all// the time in the real world. 
+But as you point out, the problem of configuration management does not
+end with a deployed server. It just ends up as a beautiful,
+unique, //Snowflake// because none of those config management tools
+track changes that happen outside of them.
 
-//ALL. THE. TIME.//
-
-If you're doing real work you will know this, I'm sure **you** know it
-Jim.
-
-[[http://martinfowler.com|Martin Fowler]] calls this
-the
-[[http://martinfowler.com/bliki/PhoenixServer.html|Snowflake problem]]. A
-deployed server can start with a known base configuration, but even
-under control it soon has changes that are not known in the
-configuration management system. It becomes a beautiful, unique
-snowflake. Don't believe me? well try going to a Puppet or Chef admin
-and suggeting you randomly fry some machines. If they look ill, it's
-probably because they know they really don't control their machines.
-
-So, before you ask //What's to do??// I'll tell you that Netflix, for
-one, have already sorted this out. You need
+Netflix have already sorted this out. You need
 a [[https://github.com/Netflix/SimianArmy|chaos monkey]] not only to
 tell you where you have single points of failure but also to keep your
-config management honest. You do exactly what I said above, you
-randomly rebuild your servers. Then they become //phoenix//
+config management honest. Have the mad primate randomly trash your
+servers and then you can rebuild them. Then they become //phoenix//
 servers. They are wholly and completly in configuration management. No
 snowflake change would last long. The snowflakes are crushed under the
 trampling ape's massive feet.
@@ -132,4 +117,4 @@ something.
 
 So, in short Jim, I don't really care for what a //cloud// journalist
 tells me, I'll stick with the ideas coming out of the Netflix
-people because they sure are smart people.
+people because they are smart people and they're doing it.
