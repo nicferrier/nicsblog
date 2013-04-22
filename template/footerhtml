@@ -105,6 +105,7 @@
             </ul>
 	    <h4>DevOps</h4>
             <ul>
+              <li><a href="/blog/2013_04/dear-nic-are-netflix-evil"><i>Dear Nic</i> are NetFlix <i>really</i> evil?</a></li>
               <li><a href="/blog/2013_02/dear-nic-says-jim"><i>Dear Nic</i> tell me about piped logging</a></li>
               <li><a href="/blog/2012_12/street-java"><i>Street</i> Java</a></li>
               <li><a href="/blog/2012_11/chat-ops-from-jesse">Github's Jesse Newland's on ChatOps</a></li>
