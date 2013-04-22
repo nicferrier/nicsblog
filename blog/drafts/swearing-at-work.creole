@@ -3,8 +3,7 @@
 //Please take the title's warning seriously, I will be using swear
 words in this post. If you'd rather not read them but are still
 interested in the content here then ask me via twitter and I'll try
-and come up with a swearing free version.//  COULD WE ADD A CSS BUTTON
-TO **** THE SWEAR WORDS?
+and come up with a swearing free version.//
 
 
 There seems to be a bit of controvesy about swearing at work in the
@@ -37,7 +36,7 @@ negatively,
 are considered.
 
 Mean while, the UEA research, which is based on the British, suggests
-that swearing improves effectiveness and that gender is not an issue.
+that swearing improves effectiveness and that gender is //not// an issue.
 
 But this is where the fascinating bit is: the American research either
 does not mention what type of swearing, or specifically mentions
@@ -60,7 +59,13 @@ Examples without swearing:
 
 * //"You're being obstructive"//
 
-These are just made even worse with swearing. 
+These are just made even worse with swearing.
+
+I'm going to call it out directly: it is not effective to denigrate
+people to their face. It affects people negatively. It does not //buck
+them up//. Other tactics might shock people out of complacency or help
+motivate away from very poor performance, but insults (according to my
+own experience and the evidence I've found) will never do that.
 
 == The delicate line  to tread ==
 
@@ -70,7 +75,12 @@ like"//:
 
 * //"I feel like you're being obstructive"//
 
-might be acceptable for example.
+might be acceptable ways for pointing out where people are failing,
+for example. These can be used to alert people, rather than shock
+them.
+
+Other more detailed advice is available on this subject. It might be
+better to avoid swearing altogether if you have this level of problem.
 
 == The contextual subjective ==
 
@@ -97,7 +107,7 @@ waking them up to it, than the former, swear-less version.
 I would personally suggest that swearing to express frustration with
 someone is also ok, because it's not directed at the subject:
 
-* //"Come on Paul, this is fucking ridiculous"//
+* //"Come on Raj, this is fucking ridiculous"//
 * //"Oh man, James, this is a shit storm, let's never do this again"//
 
 It's not directly abusive, it's emphasising the imploring. It does
@@ -118,6 +128,47 @@ self-deprecating:
 This is all normally ok because it's comedic. The intent is to make
 people laugh which gives pleasure. Comedians do this all the time. Why
 not have comedy at work?
+
+== The dangerous but amazing payoff ==
+
+Probably the most dangerous thing you could do with swearing is also
+the most routine and the scheme with the highest payoff. Having said
+that you should never insult someone directly with or without swearing
+this tactic can seem lunacy.
+
+The tactic is to insult someone directly, with probably the worst
+swearing you would ever use. But. Only if you really, really **don't**
+mean it.
+
+What I'm talking about is that comedy moment when a friend becomes a
+close friend when you insult them, rudely, to their face:
+
+* Person A: //Did anything come out of that meeting I wasn't in?//
+* Person B: //Well, yes, there's a massive job to be done in collating the issues//
+* Person A: //Oh God. Who got that?//
+* Person B: //I voluntered you for it//
+* Person A: //You fucker.//
+
+This is a powerful bonding moment presuming you really, really don't
+mean it, that you are totally joking and the other person //knows// it.
+
+If you're a swearer then you probably do this naturally. If you look
+at a swearing team, they probably do this a lot. It is very valuable
+bonding. I can say that I trust people who swear like this at
+me //much// more than I trust people who never do that with me.
+
+If you're not a swearer, then this tactic would be a very difficult
+thing to do. Perhaps leave it till you're better at other forms of
+swearing. Using a less forthright word as the insult might be a way to
+try out this technique but the less forthright the word, the less
+trust is established by using it.
+
+Why does this establish trust? Well, I don't know, but if you totally
+don't understand it you might be interested in what I believe. The
+swearer is taking a big risk by being so outrageous, a risk that is
+accepted as a statement of trust by the target. As the swearer you are
+saying //"I trust you not to totally lose it over this"//. Hence the
+worse the swearing the more trust the swearer is gambling.
 
 == Context over everything ==
 
@@ -177,7 +228,7 @@ makes them think, quite naturally, that you are bad.
 
 A summary of everything I'm saying is:
 
-* direct abuse of a person, one to one is NEVER ok, it's only going to make them less effective; why would you want that //ever//?
+* direct abuse of a person, one to one is **NEVER** ok, it's only going to make them less effective; why would you want that //ever//?
 
 * swearing elsewhere can be just emphasis and so can be highly effective and certainly more effective than not doing it - it's all about the context though;
 
