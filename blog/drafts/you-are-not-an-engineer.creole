@@ -1,0 +1,145 @@
+= You think you're an engineer but you're not =
+
+When I was about 18 I mistakenly referred to myself as //a Software
+Engineer// in front of my Dad. It was 1988 and the term was gaining
+currency and I felt like that was what I did. I was paid to program
+software in Pascal. I must be a Software Engineer. My Dad got cross
+though and looking back it was real funny:
+
+//I worked till midnight every day for 3 years to get my enginering
+qualifications and I've paid money to the IEEE ever since then to get
+the privilege of calling myself an Engineer. I can be sent to jail if
+my stuff doesn't work or kills someone and I have to worry about that.
+I am held to a standard and required to work within physical laws. You
+on the other hand are just some kid with stuff that's lucky if it goes
+without bugs for a week. I am an engineer. You are NOT.//
+
+It was a long time ago so I may be misquoting him slighly, but not
+much because it struck me so hard. He was right. But it was no less
+true of me than anyone else calling themselves //software
+engineer//. So why were they getting away with it?
+
+It's bothered me throughout my programming life and it's bothered me
+more and more because the term //engineering// has got more and more
+popular with people writing software. Finally, in the Facebook age, it
+seems that almost anyone with a computer is an engineer. 
+
+== Bridge over troubled Jelly ==
+
+I've met other anti-engineer sympathizers over the years. My
+ThoughtWorks colleague, Sam Newman came up with some fun stuff:
+
+//Engineers have lots of stuff that programmers don't... but engineers
+don't have important things that programmers do. When you're making a
+bridge no one tells you while you're doing it that the other side has
+moved. And now you've got to use wood and not steel. And the river is
+now full of sharks. And it's made of jelly.//
+
+He's right of course. Engineering specs move a lot less than software
+ones. Indeed we're //always// complaining about that because we're
+such engineer wannabees. You actually here people use the bridge
+analogy all the time in software workplaces. They use it as
+justification for not doing change.
+
+But I think the truth that programming is not engineering is in the
+first part of what Sam said: //Engineers have lots of stuff that
+programmers don't// And what they have that programmers don't is big
+hats and watch chains and legal culpability and all that... but also,
+and this is the crux of my argument, they have physical laws that
+govern what they can and can't do. Programmers, largely have no fixed
+constraints.
+
+Engineers, whether structural, mechanical, electrical or electronic
+engineers have a large number of fixed physical constraints:
+corrosion, erosion, rigidity, elasticity, charge, voltage, weight, the
+list goes on and on. You want to build something, you first go find
+out the properties of the physical world that apply and then you make
+something that works within them.
+
+Even gravity, which is a variable, is a constant for 99.999% of
+engineers.
+
+== Trying not to kill people ==
+
+This produces a nice, predictable practice. And thanks to that there
+are things you can say about it. If you build a bridge without
+understanding rigidity and elasticity and all the other physical laws
+that apply then you might kill people and you should be responsible
+for that because you could have found that stuff out before you asked
+people to walk across your bridge.
+
+But what about software? Can we really not say, after 40 or so years
+of making software, that there are some things that are constant?
+What are the fixed laws of software engineering? 
+
+Available resources for your software? Memory size? Disc space?
+Errr.... those things have moved so much they have transformed our
+ideas of what a program is over the time period.
+
+How about time constraints? Memory access time? Disc speed? CPU
+instruction time? Errmmmm... again, the world has changed so fast here
+that we've had to applaud the creativity of people who could keep up
+imagining how to use the new abilities the hardware engineers created
+for us.
+
+What about cost? famously, in 1958, British Civil Servants declared
+that while computers were interesting it was unlikely more than about
+4 would ever be needed:
+
+//And that's jolly lucky Prime Minister because they really are
+awfully expensive you know. I think we may only be able to find the
+cash for 2.//
+
+And we all know how absurd that turned out to be. Those poor Civil
+Servants, I'm sure they were clever men and women really.
+
+In fact, the only physical constraints that apply are those that apply
+to Engineers: the speed of light, how fast an electron can travel,
+what the information density of various materials is. But these things
+aren't useful constraints in software engineering until we've reached
+them. And we haven't.
+
+== What's so bad about engineering? ==
+
+So at this point you're probably thinking:
+
+//Ok, I buy it - but what's the problem? you're doing no harm by
+saying you're an engineer when you're not. Heck, I call myself a rock
+climber at the weekend but I can barely get over the garden wall.//
+
+But there is a problem. Software is not engineering but saying it is
+tends to result in engineered solutions. We're back to complaining
+that we're being asked to build software when we want to build
+bridges. Engineers want things that don't kill people but stuff that
+lasts. Engineers build things to not kill people over a long period of
+time.
+
+While persistent un-murderability is a desirable property in almost
+anything, durability per-se is not a property we should seek in
+software because of the very reasons that software is not
+engineering. The environment that software exists in changes //so//
+much that it is not useful to make most software last. It needs to be
+made to be easy to change and to dispose.
+
+If there's one thing we know about software it is that it will need to
+be changed. This is totally not like a bridge. Most bridges need to be
+maintained to cope with the effect of their continued existance but
+none need to change the form of their existance to cope with a change
+in the physical environment:
+
+//We need £50M this year to strengthen pinions in London Bridge
+because gravity increased last year to 12G.//
+
+It just doesn't happen.
+
+Engineering encourages lasting solutions and software needs
+change. Some software will last forever but you don't know which bits
+when you sit down to write it.
+
+== Why are you reading this? I don't have answers ==
+
+I don't know what to do about this except get cross. Maybe I should
+just wheel out my Dad more.
+
+I can imagine him sitting in meetings at Facebook, Amazon and
+Google. A silent presence until someone mentions //engineering//...
