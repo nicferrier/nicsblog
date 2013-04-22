@@ -43,7 +43,13 @@
             <a style="float: right; display: block; padding-right: 1em; background-color: white; background-image: url(https://raw.github.com/nicferrier/elnode/master/default-wiki-logo.gif); height: 40px; width: 250px; border: 1px solid #4183C4;"
                href="https://github.com/nicferrier/elnode">
                 <span style="color: Black; font-weight: bold;">elnode @github</span>
-            </a>
+            </a>      
+            <h4 id="emacstalks">Emacs talks</h4>
+            <ul>
+              <li><a href="http://youtu.be/H9E5qmiuYOQ">Emacsing the EmacsWiki @emacsconf</a></li>
+              <li><a href="http://youtu.be/6tLbEtBaQfc">Packaging with ELPA - basics</a></li>
+              <li><a href="http://youtu.be/pMlZ9zPAqbI">Packaging with ELPA - multi file packages</a></li>
+            </ul>
 	</li>
 	<li id='footertoc'>
             <h4>TeamChat.net</h4>
@@ -97,23 +103,15 @@
               <li><a href="/blog/2010_10/elnode">Introducing Elnode, an EmacsLisp web server</a></li>
             </ul>
 
-            <h4>Emacs talks</h4>
-            <ul>
-              <li><a href="http://youtu.be/H9E5qmiuYOQ">Emacsing the EmacsWiki @emacsconf</a></li>
-              <li><a href="http://youtu.be/6tLbEtBaQfc">Packaging with ELPA - basics</a></li>
-              <li><a href="http://youtu.be/pMlZ9zPAqbI">Packaging with ELPA - multi file packages</a></li>
-            </ul>
 	    <h4>DevOps</h4>
             <ul>
+              <li><a href="/blog/2013_04/swearing-at-work">Swearing at work - a guide for the passionate</a></li>
               <li><a href="/blog/2013_04/dear-nic-are-netflix-evil"><i>Dear Nic</i> are NetFlix <i>really</i> evil?</a></li>
               <li><a href="/blog/2013_02/dear-nic-says-jim"><i>Dear Nic</i> tell me about piped logging</a></li>
               <li><a href="/blog/2012_12/street-java"><i>Street</i> Java</a></li>
               <li><a href="/blog/2012_11/chat-ops-from-jesse">Github's Jesse Newland's on ChatOps</a></li>
               <li><a href="/blog/2010_11/virtualization_for_python">Dependancy management for Python with VEH</a></li>
               <li><a href="/blog/2010_04/how-repos-work-at-woome">How release management worked at WooMe</a></li>
-              <li><a target="_other" href="https://github.com/nicferrier/veh">the VEH repository</a></li>
-	      <li><a target="_other" href="https://github.com/nicferrier/resolvconfpy">Python resolvconf program</a></li>
-	      <li><a target="_other" href="https://github.com/nicferrier/multiserver">Django multiple-instance server</a></li>
 	    </ul>
 
 	    <h4>Roundup</h4>

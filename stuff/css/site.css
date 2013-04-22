@@ -284,6 +284,14 @@ font-size: .7em;
 padding-top: 1em;
 }
 
+#emacstalks {
+padding-top: 2em;
+}
+
+#emacstalks + ul li {
+font-size: 12pt;
+}
+
 /* end footer */
 
 
