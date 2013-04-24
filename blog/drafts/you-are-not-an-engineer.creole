@@ -1,12 +1,12 @@
 = You think you're an engineer but you're not =
 
-When I was about 18 I mistakenly referred to myself as //a Software
-Engineer// in front of my Dad. It was 1988 and the term was gaining
+When I was about 18 I referred to myself as //a Software Engineer// in
+conversation with my Dad. It was 1988 and the term was gaining
 currency and I felt like that was what I did. I was paid to program
 software in Pascal. I must be a Software Engineer. My Dad got cross
 though and looking back it was real funny:
 
-//I worked till midnight every day for 3 years to get my enginering
+//I worked till midnight every day for 3 years to get my engineering
 qualifications and I've paid money to the IEEE ever since then to get
 the privilege of calling myself an Engineer. I can be sent to jail if
 my stuff doesn't work or kills someone and I have to worry about that.
@@ -14,7 +14,7 @@ I am held to a standard and required to work within physical laws. You
 on the other hand are just some kid with stuff that's lucky if it goes
 without bugs for a week. I am an engineer. You are NOT.//
 
-It was a long time ago so I may be misquoting him slighly, but not
+It was a long time ago so I may be misquoting him slightly, but not
 much because it struck me so hard. He was right. But it was no less
 true of me than anyone else calling themselves //software
 engineer//. So why were they getting away with it?
@@ -22,11 +22,12 @@ engineer//. So why were they getting away with it?
 It's bothered me throughout my programming life and it's bothered me
 more and more because the term //engineering// has got more and more
 popular with people writing software. Finally, in the Facebook age, it
-seems that almost anyone with a computer is an engineer. 
+seems that almost anyone with a computer is an engineer. You even find
+people called //Business Process Engineers//. HA HA HA HA HA.
 
 == Bridge over troubled Jelly ==
 
-I've met other anti-engineer sympathizers over the years. My
+I've met other anti-engineer sympathisers over the years. My
 ThoughtWorks colleague, Sam Newman came up with some fun stuff:
 
 //Engineers have lots of stuff that programmers don't... but engineers
@@ -35,11 +36,12 @@ bridge no one tells you while you're doing it that the other side has
 moved. And now you've got to use wood and not steel. And the river is
 now full of sharks. And it's made of jelly.//
 
-He's right of course. Engineering specs move a lot less than software
-ones. Indeed we're //always// complaining about that because we're
-such engineer wannabees. You actually here people use the bridge
-analogy all the time in software workplaces. They use it as
-justification for not doing change.
+He's right of course. Sharks love jelly and our perception is that
+Engineering specs, move a lot less than software ones. Indeed
+we're //always// complaining about that because we're such engineer
+wannabees. You actually hear people use the bridge analogy all the
+time in software workplaces. They use it as justification for not
+doing change.
 
 But I think the truth that programming is not engineering is in the
 first part of what Sam said: //Engineers have lots of stuff that
@@ -61,12 +63,12 @@ engineers.
 
 == Trying not to kill people ==
 
-This produces a nice, predictable practice. And thanks to that there
-are things you can say about it. If you build a bridge without
-understanding rigidity and elasticity and all the other physical laws
-that apply then you might kill people and you should be responsible
-for that because you could have found that stuff out before you asked
-people to walk across your bridge.
+This produces at least an idealistically predictable practice. And
+thanks to that there are things you can say about it. If you build a
+bridge without understanding rigidity and elasticity and all the other
+physical laws that apply then you might kill people and you should be
+responsible for that because you could have found that stuff out
+before you asked people to walk across your bridge.
 
 But what about software? Can we really not say, after 40 or so years
 of making software, that there are some things that are constant?
@@ -103,12 +105,14 @@ them. And we haven't.
 
 So at this point you're probably thinking:
 
-//Ok, I buy it - but what's the problem? you're doing no harm by
-saying you're an engineer when you're not. Heck, I call myself a rock
-climber at the weekend but I can barely get over the garden wall.//
+//OK, I buy it - but what's the problem? you're doing no harm by
+saying you're an engineer when you're not. Heck, some people call Mick
+Jagger a sex symbol but he's just a 72 year old pair of lips stuck on
+a wig. Words get misused all the time, we have to call ourselves
+something.//
 
-But there is a problem. Software is not engineering but saying it is
-tends to result in engineered solutions. We're back to complaining
+But there is a problem. Software is not engineering but saying that it
+is tends to result in engineered solutions. We're back to complaining
 that we're being asked to build software when we want to build
 bridges. Engineers want things that don't kill people but stuff that
 lasts. Engineers build things to not kill people over a long period of
@@ -122,24 +126,46 @@ much that it is not useful to make most software last. It needs to be
 made to be easy to change and to dispose.
 
 If there's one thing we know about software it is that it will need to
-be changed. This is totally not like a bridge. Most bridges need to be
-maintained to cope with the effect of their continued existance but
-none need to change the form of their existance to cope with a change
-in the physical environment:
+be changed. This is totally not like a bridge an ipod or a
+colander. Most bridges need to be maintained to cope with the effect
+of their continued existence, ipods need to occasionally be repaired
+and colanders are probably just thrown away when they eventually
+break... rarely does an engineered product or thing need to change the
+form of it's existence to cope with a change in the physical
+environment.
 
-//We need £50M this year to strengthen pinions in London Bridge
-because gravity increased last year to 12G.//
+Software maintenance is what happens when a piece of software has been
+constructed with engineering principles. People have pointed out to me
+that COBOL systems are till with us after 40 years, but if you ask the
+owners of those systems if they're happy about that (and I have) the
+answer is //"Absolutely not"//. Why not? because it's all very well to
+say that it's maintained but it's just atrophying, maintenance is a
+process of keeping it limping along with increasingly rare and
+therefore ridiculously expensive maintainers. Nothing is building
+confidence that the maintenance will end or result in a system for
+continued purpose.
 
-It just doesn't happen.
+Engineering encourages lasting solutions and software needs to
+constantly change to cope with the fact that the underlying physical
+constraints and abstractions over the top of them totally change every
+5 years. Some software //might// last forever but you don't know which
+bits when you sit down to write it.
 
-Engineering encourages lasting solutions and software needs
-change. Some software will last forever but you don't know which bits
-when you sit down to write it.
+== No answers here, move along ==
 
-== Why are you reading this? I don't have answers ==
+It was interesting to me that many people of my generation acknowledged
+the truth of this article and younger people refuted it. Many others
+shrug and say //"it's just words"// and see other parallels with
+engineers of other complex systems that deal with layers of
+abstractions: city builders, for example. 
 
-I don't know what to do about this except get cross. Maybe I should
-just wheel out my Dad more.
+I acknowledge all that. But I am unconvinced by their //sang froid//. I
+keep coming back to the point that I see no other engineering practice
+where the assumptions you had 10 years ago look so ludicrous now,
+where the whole concept of building something with the idea of
+maintenance, instead of constant, gradual (or not so gradual)
+replacement. City building isn't like that. Product building is not
+like that, Structural and electrical engineering is not like that.
 
-I can imagine him sitting in meetings at Facebook, Amazon and
-Google. A silent presence until someone mentions //engineering//...
+I can only conclude by saying, in the week of Margaret Thatcher's
+funeral: you don't change if you want to. This man's replacing.
