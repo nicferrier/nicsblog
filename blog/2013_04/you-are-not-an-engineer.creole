@@ -27,8 +27,9 @@ people called //Business Process Engineers//. HA HA HA HA HA.
 
 == Bridge over troubled Jelly ==
 
-I've met other anti-engineer sympathisers over the years. My
-ThoughtWorks colleague, Sam Newman came up with some fun stuff:
+I've met other anti-engineer sympathisers over the
+years. My [[http://thoughtworks.com|ThoughtWorks colleague]], Sam
+Newman came up with some fun stuff:
 
 //Engineers have lots of stuff that programmers don't... but engineers
 don't have important things that programmers do. When you're making a
@@ -136,11 +137,11 @@ environment.
 
 Software maintenance is what happens when a piece of software has been
 constructed with engineering principles. People have pointed out to me
-that COBOL systems are till with us after 40 years, but if you ask the
-owners of those systems if they're happy about that (and I have) the
-answer is //"Absolutely not"//. Why not? because it's all very well to
-say that it's maintained but it's just atrophying, maintenance is a
-process of keeping it limping along with increasingly rare and
+that COBOL systems are still with us after 40 years, but if you ask
+the owners of those systems if they're happy about that (and I have)
+the answer is //"Absolutely not"//. Why not? because it's all very
+well to say that it's maintained but it's just atrophying, maintenance
+is a process of keeping it limping along with increasingly rare and
 therefore ridiculously expensive maintainers. Nothing is building
 confidence that the maintenance will end or result in a system for
 continued purpose.
@@ -153,11 +154,16 @@ bits when you sit down to write it.
 
 == No answers here, move along ==
 
-It was interesting to me that many people of my generation acknowledged
-the truth of this article and younger people refuted it. Many others
-shrug and say //"it's just words"// and see other parallels with
-engineers of other complex systems that deal with layers of
-abstractions: city builders, for example. 
+It was interesting to me that many people of my generation
+acknowledged the truth of this article and younger people tended to
+refute it. Maybe one thing is that this argument is long over, the
+kids and Facebook are right, the word has changed meaning and it's
+only old people like me who care about this now (and maybe the guys
+paying the bills for those COBOL programmers).
+
+Many others shrug and say //"it's just words"// and see other
+parallels with engineers of other complex systems that deal with
+layers of abstractions: city builders, for example.
 
 I acknowledge all that. But I am unconvinced by their //sang froid//. I
 keep coming back to the point that I see no other engineering practice
