@@ -19,10 +19,8 @@ won't even pretend to talk about them.
 
 == What does a product owner do? ==
 
-My friend Prashant
-[[http://pmgandhi.wordpress.com/2006/07/page/3/|describes]] what a
-product owner does as the //onsite customer//. This is the classic
-agile definition.
+The classic agile definition of what a product owner does is as the
+//onsite customer//.
 
 I don't like that definition though. I prefer to think the product
 owner should be the onsite salesman. The person responsible for
