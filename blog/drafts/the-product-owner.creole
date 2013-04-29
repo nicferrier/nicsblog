@@ -1,0 +1,296 @@
+= DevOps - the Product Owner =
+
+We seem to be finally waking up to the fact that DevOps is more than a
+few deployment tools. In my view DevOps is what agile should always
+have been. Consequently I am getting interested in it again and I
+thought I'd write these notes about the role of the Product Owner in a
+DevOps setting.
+
+My experience of product owners is bad enough that I could write a
+horror film based on it. Or at least a Malcolm Tucker style
+satire. But the fact that so many people do it badly is just
+indicating how subtle and difficult the role of the modern product
+owner is.
+
+//Caveat// - this is about Product Owners in a business context,
+making money is the focus. There are other contexts in which you still
+need Product Owners, I don't have much experience of them and so I
+won't even pretend to talk about them.
+
+== What does a product owner do? ==
+
+My friend Prashant
+[[http://pmgandhi.wordpress.com/2006/07/page/3/|describes]] what a
+product owner does as the //onsite customer//. This is the classic
+agile definition.
+
+I don't like that definition though. I prefer to think the product
+owner should be the onsite salesman. The person responsible for
+selling the product to the customer. I find this useful, when I talk
+to the PO about stuff I imagine sending her out to the market selling
+what I'm talking about. It helps me empathize with them and their
+responses to me.
+
+It's this idea, of the PO taking software to market, of being
+responsible for selling it, that I think is key to everything they
+do. If they see themselves like that, they do a better job.
+
+At one project I worked on the //Product Owner// spent little time
+engaging with users and lots of time wireframing his ideas of things
+that we should do that matched how //he wanted// the customers to
+behave. The CEO spent a lot of time hanging out on the site, using the
+in-built mechanisms we had to talk to the people using it. He
+developed ideas about the stuff they told him. Sometimes they were
+mad, but they were always valid experiments. The CEO was the real
+Product Owner.
+
+The second important thing about the Product Owner is that they
+//own// the product. As a hacker, don't argue with the Product Owner
+much. They're in charge.
+
+== Properties of the Product Owner ==
+
+It's easy to say //"onsite salesman"//. It doesn't necessarily mean
+much though, so let me break it down. A Product Owner:
+
+* knows their market
+* has a vision for the product
+* is capable of adapting their vision in the face of customer feedback
+* don't just blow with the wind
+
+Optionals:
+
+* passion about the product
+* excitement about people delivering it
+* persuasive about the vision
+
+== Doing the job ==
+
+Product Owners need to carry, in their heads, the dissonance between
+the target vision state and the current state now. That sounds
+complicated, so I'll explain.
+
+The reason you're building a product is the vision, the end state. But
+the end state is also quite vague. Product visions are things like:
+
+* the best music player in the world
+* the most widely used Q&A site for English speakers
+* a top #5 social game
+
+No specifics there. Clearly, people will start imagining all sorts of
+things to get to the end state. The important thing is, what can we do
+//now//, right this minute, to move us forward?
+
+Likely those things, that we can do right now, take a bit of
+imagination to link back to the vision. And that's what I mean by
+dissonance. Sometimes, it might even be that the next thing we want to
+do, tactically, seems diametrically opposed to where the vision wants
+to go to. The Product Owner needs to be able to hold onto that and be
+OK with it, or not OK and able to correct it. Sometimes, we see that
+tactics start to take us away from the vision. The Product Owner needs
+to be carrying that understanding of the gap so they can either adjust
+the vision, or they can adjust the tactics to move back to the
+original vision.
+
+=== Developing the vision ===
+
+Sometimes people come to you with something more vague with a vision
+and ask you to do something. What can you do?
+
+* go meet some people who might buy something
+* buy them a beer, or a cheese sandwich
+* ask them what they want
+* ask lots of people, look for patterns
+
+=== Communicating the vision ===
+
+Product Owners need to be able to explain what the product is and what
+it does. Drawings are a great way of communicating, as a Product Owner
+you should maybe get good at doing sketches about ideas.
+
+Numbers help as well, can you back up your vision with numbers?
+
+* how many music players are there?
+* what's the relative market share?
+* how quickly did they establish it?
+* what footprint do you need to be cash flow positive?
+
+I'd go so far to say it doesn't matter what particular numbers you use
+as long as they explain something about your vision.
+
+=== Coming up with MVP ===
+
+The first thing you need on a new project is a Minimum Viable
+Product. There's a lot of chatter about what this is. Personally I
+think it's well, the minimum you have to do before you have something
+you could give to customers.
+
+This seems to be a really hard thing for a lot of people. Most people
+seem to want to have a finished product before they go live to
+customers. But that's kind of hard. Software takes a long time to
+make. The more software you're asked to make the longer it takes.
+
+So you need something fast. As fast as possible preferably.
+
+As a Product Owner on a new project you probably have a list of stuff
+from all sorts of people. How can you turn that list into a serious
+MVP? I think the key to this is to imagine yourself selling it. Take
+what you're comfortable with and then cut it in half. Can you imagine
+yourself selling that? Why not? Be honest with yourself about it. If
+you can cut it in half can you cut it in half again? If you can then
+can you cut it in half again? Keep going till you have the smallest
+thing you can't imagine yourself being able to sell it anymore. That's
+your MVP. 
+
+If you can't build your MVP then stop your project.
+
+=== Get delivering ===
+
+If you have a product vision and an idea for an MVP you need to get a
+development team to realize it.
+
+Getting a DevOps team is probably not the responsibility of the
+Product Owner, though I've known a few who thought it was their job. I
+think Product Owner's should take a lively interest in the make up of
+the dev team, especially the senior members though it's worth bearing
+in mind that probably the most important thing is to hire critical
+thinkers, who are not necessarily going to agree with you very much.
+
+There are 3 other concrete things that a Product Owner can do to
+positively affect delivery:
+
+* listen to the DevOps team, learn from them about what works and doesn't work
+* maintain unreasonablly high expectations of success: stretch them, expect them to achieve glory
+* praise and commiserate when they fail, there is no shame in failure
+
+It's worth expanding on these a little bit. As the owner of the
+product you can be expected to care passionately about the
+product. You have to stand up and sell it to the client. You can be
+demanding.
+
+It's just not good management to use those demands as a way of beating
+people down. You have to beat people //up//. Trite, I know. But I'm
+serious, talking about stretch goals a lot is a good thing, you can
+temper that with consoling words about how hard it is //now// but you
+can let people know where you want to get to.
+
+Developers and Ops people often fear failure. So help them stop
+fearing failure. Get them to discuss their problems, they nearly
+always boil down to something you can understand, even if you are not
+technical: lack of resources, politics, etc... Talking about them
+exposes them and then you can discuss how to attempt to solve
+them. Stress on //attempt//. Failure should be OK. Eventual success is
+what you're after, even if you fail to solve a problem 20 times.
+
+
+=== Use a process ===
+
+Unless there are just 2 or 3 of you delivering your product you'll likely
+want to have some sort of agile process for making sure you do the
+right things, at least most of the time.
+
+Agile sofware delivery is full of misinformation and down right
+shamsters so take care that you test that what you're doing is
+working and is not too heavyweight.
+
+Here's a silly guideline list for processes:
+
+* Scrum (bad)
+* Kanban (better)
+* Your own process (best!)
+
+Again, trite. But I'm making a serious point, a single named process
+is probably not right for you or your product. You probably need
+elements of the various agile processes:
+
+* capturing aims and objectives
+* visibility of how aims and objectives are being delivered
+* focus and discipline to get things done
+* flexibility to move to new stuff when other stuff isn't working
+
+The most important point about any of this is that your process should
+be changing as you deliver because sure as hell your circumstances
+will be.
+
+One of the things you'll hear from a lot of //agile// consultants is
+//"It's all about working software"//... and they're absolutely
+right. It is. If you find yourself doing or measuring stuff that's not
+working software then what on earth are you doing? Why would you do or
+mesure that?
+
+=== Measuring success ===
+
+If you're lucky enough to deliver software then you need to start
+measuring how succesfull you are at it.
+
+You need to define metrics about what is and what is not success. You
+need to communicate to the DevOps team about how to measure that
+success.
+
+One big theme of DevOps has been metrics tools, things
+like [[http://ganglia.sourceforge.net/|Ganglia]]
+and [[http://munin-monitoring.org/|Munin]]
+and [[http://www.splunk.com/|Splunk]]
+and [[http://loggly.com/|Loggly]] and these all make it easy to
+monitor your objectives.
+
+Clearly, the first thing to do is state your objectives, inside
+whatever process you have. In my view the best thing to do is have a
+very clear stated objective for everything you do:
+
+* we want to increase revenue through ads by 10%
+* we want to increase the user's using this feature by 10,000
+* we want to get 2000 registrations per week
+
+That sort of thing.
+
+If you can do that, then measuring whether you met that success
+becomes quite easy. Well, most of the time. Sometimes maybe you don't
+quite have the data to answer the question. If that happens maybe you
+should ask your DevOps team to change the system to collect the
+data. If you still aren't seeing what you need to answer the question
+then you're failing... deal with that in the normal way. Maybe you
+decide it's impossible to find the answer, so throw away that
+objective and find a new way of stating it or aiming for it.
+
+
+== Danger #1 - no Product Owner ==
+
+If the Product Owner is absent you've lost. You'll likely end up with
+multiple people doing it, not sharing any direction or vision and
+consequently going in many directions at once. You're likely to be
+unable to afford the designers, developers, operations staff, managers
+to handle them and offices to hold them in, to deliver multiple
+visions at once.
+
+If you're in this situation you might:
+
+* yell for management to appoint a Product Owner
+* choose a Product Owner from inside the team
+** you have to do this with integrity though
+* make a Product Ownership committee
+** where many people get to agree on the direction
+
+
+== Danger #2 - blowing with the wind ==
+
+It's all too easy to do. You're not doing well meeting the vision,
+you've got some feedback that feature X is doing well, let' try doing
+more of feature X even though it's not really getting us anything,
+maybe it's not earning any cash or maybe it's costly to do.
+
+Listening to feedback is important but you do need to stick to your
+vision or make sure you're on the way to making money (or whatever
+your success criteria is).
+
+[[http://www.codinghorror.com/blog/2012/05/this-is-all-your-app-is-a-collection-of-tiny-details.html|Jeff Atwood has excellent advice]]
+about collecting and acting on feedback; go read it.
+
+== Summary ==
+
+In the end, I think a Product Owner is someone who can answer this
+question:
+
+//What single thing should we do next to add value to the product?//
+
+Get that right, everything else flows from it.
