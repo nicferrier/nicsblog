@@ -33,15 +33,6 @@ It's this idea, of the PO taking software to market, of being
 responsible for selling it, that I think is key to everything they
 do. If they see themselves like that, they do a better job.
 
-At one project I worked on the //Product Owner// spent little time
-engaging with users and lots of time wireframing his ideas of things
-that we should do that matched how //he wanted// the customers to
-behave. The CEO spent a lot of time hanging out on the site, using the
-in-built mechanisms we had to talk to the people using it. He
-developed ideas about the stuff they told him. Sometimes they were
-mad, but they were always valid experiments. The CEO was the real
-Product Owner.
-
 The second important thing about the Product Owner is that they
 //own// the product. As a hacker, don't argue with the Product Owner
 much. They're in charge.
@@ -100,6 +91,15 @@ and ask you to do something. What can you do?
 * ask them what they want
 * ask lots of people, look for patterns
 
+At one project I worked on the //Product Owner// spent little time
+engaging with users and lots of time wireframing his ideas of things
+that we should do that matched how //he wanted// the customers to
+behave. Our CEO spent a lot of time hanging out on the site, watching
+how people used it and developing ideas about the stuff they told
+him. Sometimes they were mad, but they were always valid
+experiments. The moral? The CEO was the real Product Owner. You don't
+get to be one by just saying you are.
+
 === Communicating the vision ===
 
 Product Owners need to be able to explain what the product is and what
@@ -142,6 +142,9 @@ your MVP.
 
 If you can't build your MVP then stop your project.
 
+It's a bit like the rule that goes //if you can't explain what
+something is in a sentance then you don't understand it//.
+
 === Get delivering ===
 
 If you have a product vision and an idea for an MVP you need to get a
@@ -178,7 +181,12 @@ always boil down to something you can understand, even if you are not
 technical: lack of resources, politics, etc... Talking about them
 exposes them and then you can discuss how to attempt to solve
 them. Stress on //attempt//. Failure should be OK. Eventual success is
-what you're after, even if you fail to solve a problem 20 times.
+what you're after, even if you fail to solve a problem 20 times. 
+
+Keep going, lift people to get there.
+
+=== Care about quality ===
+
 
 
 === Use a process ===
@@ -252,7 +260,30 @@ decide it's impossible to find the answer, so throw away that
 objective and find a new way of stating it or aiming for it.
 
 
-== Danger #1 - no Product Owner ==
+=== Delivering change ===
+
+This is a bit controversial, but I believe that in the end you are
+trying to get your team to delivert, not features or bug fixes, but
+changes.
+
+Web teams, particularly it seems, tend to focus on delivering
+features, or bug fixes, in whatever time they have. But the key to
+making a product better is to think about just delivering
+changes. This change affects the users in this way, this change
+affects the users in that way. These changes combine for a good
+effect. These other changes combine for a bad effect.
+
+If you have the right approach to testing and the right approach to
+managing your team than delivering change over features or bug fixes
+is the single thing that will move you to continuous improvement.
+
+
+== What could possibly go wrong? ==
+
+If you're on the watch for classic mistakes in your or your teams
+behaviour or situation, you can maybe avoid them.
+
+=== Danger #1 - no Product Owner ===
 
 If the Product Owner is absent you've lost. You'll likely end up with
 multiple people doing it, not sharing any direction or vision and
@@ -270,7 +301,7 @@ If you're in this situation you might:
 ** where many people get to agree on the direction
 
 
-== Danger #2 - blowing with the wind ==
+=== Danger #2 - blowing with the wind ===
 
 It's all too easy to do. You're not doing well meeting the vision,
 you've got some feedback that feature X is doing well, let' try doing
@@ -283,6 +314,29 @@ your success criteria is).
 
 [[http://www.codinghorror.com/blog/2012/05/this-is-all-your-app-is-a-collection-of-tiny-details.html|Jeff Atwood has excellent advice]]
 about collecting and acting on feedback; go read it.
+
+=== Danger #3 - huge backlog you step through ===
+
+If you're stepping through a huge backlog you came up with at some
+point you're likely doing it wrong. Why would a backlog stay relevant
+over time? It's unlikely if you're collecting feedback and responding
+to it.
+
+A very real problem is that people have ideas, good ideas often and
+they think those ideas should be implemented. But that's not
+necessarily the case. A good backlog is a soure of ideas that may be
+relevant to the situation at hand, not a source of ideas that must be
+implemented.
+
+This situation is not helped by our backlog management tools (or at
+least the ones I've seen) which rarely allow us to meaningfully
+differentiate between a fuzzy idea, a more concrete idea and something
+we've got evidence to show will be the best next thing to do.
+
+The Product Owner can fix this by owning the backlog and making it
+clear by non-systemic communication which are fuzzy tasks and which
+are concrete. Constantly reinforcing that there is a difference is a
+help.
 
 == Summary ==
 
