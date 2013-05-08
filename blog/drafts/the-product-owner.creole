@@ -213,7 +213,7 @@ working and is not too heavyweight.
 Here's a silly guideline list for processes:
 
 * Scrum (bad)
-* Kanban (better)
+* KanBan (better)
 * Your own process (best!)
 
 Again,
@@ -295,9 +295,9 @@ KanBan
 [[http://scrumcrazy.wordpress.com/2013/02/04/kanban-vs-scrum-kanban-is-not-for-software-development-but-scrum-is/|article]]
 before?
 
-//there IS a time and place for Kanban — a correct context, if you
-will.  If you’ve been reading closely, that context is as a change
-management process, which is ‘complicated’ work, and requires that
+//there IS a time and place for Kanban - a correct context, if you
+will.  If you've been reading closely, that context is as a change
+management process, which is 'complicated' work, and requires that
 there be already existing processes in place//
 
 Dealing with change should change your process for the improvement you
