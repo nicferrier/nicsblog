@@ -185,10 +185,6 @@ what you're after, even if you fail to solve a problem 20 times.
 
 Keep going, lift people to get there.
 
-=== Care about quality ===
-
-
-
 === Use a process ===
 
 Unless there are just 2 or 3 of you delivering your product you'll likely
@@ -277,6 +273,36 @@ If you have the right approach to testing and the right approach to
 managing your team than delivering change over features or bug fixes
 is the single thing that will move you to continuous improvement.
 
+
+=== Care about quality ===
+
+A key to going very quickly is being safe. Making sure you and your
+team know that what you'll deliver live will actually do what you
+think it's going to do is key.
+
+Making change, instead of features is a big part of getting this right
+because it's easier to test that a change is correct than testing the
+whole feature is correct.
+
+What can a Product Owner do to increase quality? Mainly you have to
+care about it, keep asking about automated testing, don't accept
+manual testing, it isn't giving you quality. You must have a
+reproducible test and that means a computer doing it. If there are
+things your team say are hard to test then talk about changing them to
+make them easier. My view is that you should sacrifice almost
+everything else to achieve predictable results because users really
+hate unpredictability.
+
+Ask your team about quality metrics. Do //not// accept code coverage
+as a metric because it's deeply flawed. Instead, look for test
+hygiene. How many tests are they creating? how many tests are they
+throwing away? How much test code is being created? and thrown away?
+
+Tests should be being thrown away because otherwise the test suite
+will grow and grow to the point that it's not useful.
+
+Ask about test hygiene a lot. Make it part of standup or whatever your
+regular review with the team is.
 
 == What could possibly go wrong? ==
 
