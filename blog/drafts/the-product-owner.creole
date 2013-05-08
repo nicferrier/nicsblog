@@ -7,7 +7,8 @@ thought I'd write these notes about the role of the Product Owner in a
 DevOps setting.
 
 My experience of product owners is bad enough that I could write a
-horror film based on it. Or at least a Malcolm Tucker style
+horror film based on it. Or at least
+a [[http://www.youtube.com/watch?v=JjAyazqtQj8|Malcolm Tucker style]]
 satire. But the fact that so many people do it badly is just
 indicating how subtle and difficult the role of the modern product
 owner is.
@@ -26,7 +27,7 @@ I don't like that definition though. I prefer to think the product
 owner should be the onsite salesman. The person responsible for
 selling the product to the customer. I find this useful, when I talk
 to the PO about stuff I imagine sending her out to the market selling
-what I'm talking about. It helps me empathize with them and their
+what I'm talking about. It helps me empathise with them and their
 responses to me.
 
 It's this idea, of the PO taking software to market, of being
@@ -92,7 +93,7 @@ and ask you to do something. What can you do?
 * ask lots of people, look for patterns
 
 At one project I worked on the //Product Owner// spent little time
-engaging with users and lots of time wireframing his ideas of things
+engaging with users and lots of time wire framing his ideas of things
 that we should do that matched how //he wanted// the customers to
 behave. Our CEO spent a lot of time hanging out on the site, watching
 how people used it and developing ideas about the stuff they told
@@ -128,7 +129,20 @@ seem to want to have a finished product before they go live to
 customers. But that's kind of hard. Software takes a long time to
 make. The more software you're asked to make the longer it takes.
 
-So you need something fast. As fast as possible preferably.
+And if there are incumbents, and there almost always is someone doing
+something like you want to do, then waiting until you have the perfect
+match for every feature is just a way to give them more time to beat
+you.
+
+The thing is, an MVP is not really about making a sale at all. It's
+just for checking that you're doing the right thing. Are your asking
+the right questions? Have you made the right assumptions about product
+placement?
+
+So you need something fast. As fast as possible preferably. And you
+need something measurable. Something you can release that people can
+try and see whether they like it or not. If a lot of people try it at
+least you know you're onto //something//. Whatever that might be.
 
 As a Product Owner on a new project you probably have a list of stuff
 from all sorts of people. How can you turn that list into a serious
@@ -140,15 +154,16 @@ can you cut it in half again? Keep going till you have the smallest
 thing you can't imagine yourself being able to sell it anymore. That's
 your MVP. 
 
-If you can't build your MVP then stop your project.
+If you can't build your MVP in a reasonable time frame (2 weeks?) then
+stop your project because it's unlikely you'll get anywhere.
 
 It's a bit like the rule that goes //if you can't explain what
-something is in a sentance then you don't understand it//.
+something is in a sentence then you don't understand it//.
 
 === Get delivering ===
 
 If you have a product vision and an idea for an MVP you need to get a
-development team to realize it.
+development team to realise it.
 
 Getting a DevOps team is probably not the responsibility of the
 Product Owner, though I've known a few who thought it was their job. I
@@ -161,7 +176,7 @@ There are 3 other concrete things that a Product Owner can do to
 positively affect delivery:
 
 * listen to the DevOps team, learn from them about what works and doesn't work
-* maintain unreasonablly high expectations of success: stretch them, expect them to achieve glory
+* maintain unreasonably high expectations of success: stretch them, expect them to achieve glory
 * praise and commiserate when they fail, there is no shame in failure
 
 It's worth expanding on these a little bit. As the owner of the
@@ -191,7 +206,7 @@ Unless there are just 2 or 3 of you delivering your product you'll likely
 want to have some sort of agile process for making sure you do the
 right things, at least most of the time.
 
-Agile sofware delivery is full of misinformation and down right
+Agile software delivery is full of misinformation and down right
 shamsters so take care that you test that what you're doing is
 working and is not too heavyweight.
 
@@ -201,9 +216,11 @@ Here's a silly guideline list for processes:
 * Kanban (better)
 * Your own process (best!)
 
-Again, trite. But I'm making a serious point, a single named process
-is probably not right for you or your product. You probably need
-elements of the various agile processes:
+Again,
+trite. [[http://scrumcrazy.wordpress.com/2013/02/04/kanban-vs-scrum-kanban-is-not-for-software-development-but-scrum-is/|KanBan is not a software development process]].
+I'm making a serious point, a single named process is probably not
+right for you or your product. You probably need elements of the
+various agile processes:
 
 * capturing aims and objectives
 * visibility of how aims and objectives are being delivered
@@ -218,12 +235,12 @@ One of the things you'll hear from a lot of //agile// consultants is
 //"It's all about working software"//... and they're absolutely
 right. It is. If you find yourself doing or measuring stuff that's not
 working software then what on earth are you doing? Why would you do or
-mesure that?
+measure that?
 
 === Measuring success ===
 
 If you're lucky enough to deliver software then you need to start
-measuring how succesfull you are at it.
+measuring how successful you are at it.
 
 You need to define metrics about what is and what is not success. You
 need to communicate to the DevOps team about how to measure that
@@ -259,7 +276,7 @@ objective and find a new way of stating it or aiming for it.
 === Delivering change ===
 
 This is a bit controversial, but I believe that in the end you are
-trying to get your team to delivert, not features or bug fixes, but
+trying to get your team to deliver, not features or bug fixes, but
 changes.
 
 Web teams, particularly it seems, tend to focus on delivering
@@ -273,6 +290,19 @@ If you have the right approach to testing and the right approach to
 managing your team than delivering change over features or bug fixes
 is the single thing that will move you to continuous improvement.
 
+Remember me linking to that
+KanBan
+[[http://scrumcrazy.wordpress.com/2013/02/04/kanban-vs-scrum-kanban-is-not-for-software-development-but-scrum-is/|article]]
+before?
+
+//there IS a time and place for Kanban — a correct context, if you
+will.  If you’ve been reading closely, that context is as a change
+management process, which is ‘complicated’ work, and requires that
+there be already existing processes in place//
+
+Dealing with change should change your process for the improvement you
+want to make. You want to get feedback quicker? so deliver quicker and
+adapt your process so that you can.
 
 === Care about quality ===
 
@@ -301,7 +331,7 @@ throwing away? How much test code is being created? and thrown away?
 Tests should be being thrown away because otherwise the test suite
 will grow and grow to the point that it's not useful.
 
-Ask about test hygiene a lot. Make it part of standup or whatever your
+Ask about test hygiene a lot. Make it part of stand-up or whatever your
 regular review with the team is.
 
 == What could possibly go wrong? ==
@@ -341,6 +371,9 @@ your success criteria is).
 [[http://www.codinghorror.com/blog/2012/05/this-is-all-your-app-is-a-collection-of-tiny-details.html|Jeff Atwood has excellent advice]]
 about collecting and acting on feedback; go read it.
 
+[[http://www.romanpichler.com/blog/agile-product-innovation/the-product-ownership-test/|Roman Pilcher's Product Ownership test]]
+is also good on this.
+
 === Danger #3 - huge backlog you step through ===
 
 If you're stepping through a huge backlog you came up with at some
@@ -350,7 +383,7 @@ to it.
 
 A very real problem is that people have ideas, good ideas often and
 they think those ideas should be implemented. But that's not
-necessarily the case. A good backlog is a soure of ideas that may be
+necessarily the case. A good backlog is a source of ideas that may be
 relevant to the situation at hand, not a source of ideas that must be
 implemented.
 
