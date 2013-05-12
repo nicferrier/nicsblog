@@ -87,16 +87,16 @@ then. Here's an example:
 ##! erlang
 loop() -> receive 
    {Filename, Size} ->
-       Sender ! Num,
+       Sender ! Size,
        loop()
    end.
 
 start() -> spawn(fun loop/0).
 }}}
 
-One strong similarity is the scope. BASH does not have scope scope
-in a pipeline because each stage is a separate process, so no way to
-do it.
+One strong similarity is the scope. BASH does not have scope in a
+pipeline because each stage is a separate process. That's exactly the
+same as in this Erlang example.
 
 
 So all in all I think this is a simple way to explain actors to
