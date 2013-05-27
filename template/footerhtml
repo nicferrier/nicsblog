@@ -44,6 +44,10 @@
                href="https://github.com/nicferrier/elnode">
                 <span style="color: Black; font-weight: bold;">elnode @github</span>
             </a>      
+
+            <h4 id="emacstalks">DevOps sketch notes</h4>
+            <iframe width="251" height="188" src="http://www.youtube.com/embed/EKWn_J4q62c" frameborder="0" allowfullscreen></iframe>
+            
             <h4 id="emacstalks">Emacs talks</h4>
             <ul>
               <li><a href="http://youtu.be/H9E5qmiuYOQ">Emacsing the EmacsWiki @emacsconf</a></li>
