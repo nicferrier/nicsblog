@@ -1,0 +1,157 @@
+= Deploying Elnode apps =
+
+This is obviously something dear to my heart. It's been difficult to
+come up with a good story on deploying Elnode apps. There's a lot of
+things conflated in the problem: Emacs' environmental dynamism, what a
+micro-service is, the concrete problem of getting Emacs instances to
+talk to each other...
+
+However, I think, at last I am getting somewhere. The state of the art
+right now is [[http://github.com/nicferrier/elmarmalade|the new version of marmalade]].
+
+== Break it down ==
+
+Let's break marmalade's current deploy script down.
+
+{{{
+##! emacs-lisp
+(setq deploy-dir (expand-file-name (car command-line-args-left) default-directory))
+(make-directory (concat deploy-dir "/.emacs.d/elpa") t)
+(setq package-user-dir (concat deploy-dir "/.emacs.d/elpa"))
+(setq custom-file (setq user-init-file (concat deploy-dir "/.emacs.d/init.el")))
+(customize-set-variable
+ 'package-archives
+ '(("gnu" . "http://elpa.gnu.org/packages/")
+   ("marmalade" . "http://marmalade-repo.org/packages/")))
+(customize-set-variable 'elnode-init nil)
+}}}
+
+This is fairly generic stuff for any Elnode app, it makes the
+deployment directory such that we can easily start Emacs on it. 
+
+We also define the package-archives. At this point we could add a
+specific repository that we were going to use, including a file
+repository made with [[http://github.com/nicferrier/elpakit|elpakit]]
+for example. Like this:
+
+{{{
+(customize-set-variable
+ 'package-archives
+ '(("gnu" . "http://elpa.gnu.org/packages/")
+   ("marmalade" . "http://marmalade-repo.org/packages/")
+   ("app-repo" . "/home/user/apprepo")))
+}}}
+
+We also turn off Elnode default startup. That just gets confusing.
+
+=== Customizing the app ===
+
+The next section is just a big block of all the customize variables
+that are relevant to the app:
+
+{{{
+(customize-set-variable 'elnode-log-files-directory (expand-file-name "logs" deploy-dir))
+(customize-set-variable 'marmalade-server-port 8005)
+(customize-set-variable 'marmalade-db-dir (expand-file-name "~/marmalade/db"))
+(customize-set-variable 'marmalade-package-store-dir (expand-file-name "~/marmalade/packages"))
+(customize-set-variable 'marmalade-boot-onload t)
+}}}
+
+One of the principles of good application deployment is that we should
+not have per instance data but clearly we have to have some. What port
+should it start on, for example.
+
+The next section is again very generic:
+
+{{{
+(customize-save-customized)
+(package-initialize)
+(package-refresh-contents)
+}}}
+
+We save the customizations, which will create the init file we
+specified to start with and then we ensure the package environment is
+setup.
+
+=== Package installation ===
+
+At this point, the instance of Emacs running the deployment script has
+a package system configured for the target Emacs instance. So now we
+can:
+
+{{{
+(package-install-file
+ (expand-file-name
+  "marmalade-service-2.0.9.tar"
+  default-directory))
+}}}
+
+This is deploying a local package file, but we could just as easily
+use {{{package-install}}} to install a package from an archive. Using
+a package file is a good half way house to having an application
+specific archive though. All the dependancies for the application can
+still be resolved through the normal archives.
+
+=== Auto starting ===
+
+Finally, we want to make marmalade auto start, so we need to add
+something that can init marmalade after the package has loaded:
+
+{{{
+(with-temp-buffer
+  (print
+   '(add-hook
+     'after-init-hook
+     (lambda nil
+       (marmalade-init)))
+   (current-buffer))
+  (append-to-file (point-min)(point-max) custom-file))
+}}}
+
+I'm not entirely happy with writing code to the init file like this,
+but I figure it would probably be worse in another language.
+
+== Making it work ==
+
+Presuming we have a {{{deploy.el}}} constructed like the one above we
+can make it build an install directory for marmalade like so:
+
+{{{
+rm -rf emacs-marmalade ; emacs --script deploy.el emacs-maramalade
+}}}
+
+There's a bit of balance here. The first bit of the script could be
+made much more marmalade specific and then we might be able to do away
+with the specific directory. Indeed, it might be the right thing to do
+if we want to start multiple instances of one app for micro-service
+reasons.
+
+We can start what we have deployed like this:
+
+{{{
+HOME=$(realpath emacs-marmalade) emacs --daemon=marmalade
+}}}
+
+If that goes wrong it can be hard to debug so it's easier to do it
+this way while you're testing:
+
+
+{{{
+HOME=$(realpath emacs-marmalade) emacs -nw
+}}}
+
+
+If you use the daemon though, it means we can control it with
+emacsclient pretty easily as well:
+
+{{{
+emacsclient -s /tmp/emacs1000/marmalade /tmp
+}}}
+
+I'm still not happy that the deploy script isn't totally portable for
+all apps but of course it never will be fully because there is so much
+custom config for apps.
+
+I think the way forward may be to write deploy scripts from some
+boilerplate. Maybe they could even be self extracting with a package
+file.
