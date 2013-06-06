@@ -63,6 +63,7 @@
             </ul>
 	    <h4>Emacs Lisp</h4>
             <ul>
+              <li><a href="/blog/2013_06/deploying-elnode-apps">How to deploy Elnode apps</a></li>
               <li>
                   <a href="/blog/2013_03/refactoring-elisp-polymorphically">Using pcase for refactoring</a>
                   <script type="text/javascript" src="http://www.reddit.com/buttonlite.js?i=2&url=http://nic.ferrier.me.uk/blog/2013_03/refactoring-elisp-polymorphically"></script>
