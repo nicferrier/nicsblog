@@ -146,12 +146,12 @@ Of course, you can combine these two techniques:
    (find-file "~/fake/not-utf-8-yet"))
 }}}
 
-This adds automatic utf-8 encoding only to files in the //"/fake/".
+This adds automatic utf-8 encoding only to files in the //"/fake/"// namespace.
 
 == Using noflet ==
 
 {{{noflet}}} is just a package and like any other package it can be
-installed from [[http://marmalade-repo.org|marmalad-repo]] and
+installed from [[http://marmalade-repo.org|marmalade-repo]] and
 depended on with other packages.
 
 If you build your elisp as packages the following is the magic package
