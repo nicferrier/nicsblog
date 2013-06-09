@@ -171,11 +171,11 @@ Of course you still need to:
 in your code.
 
 
-== noflet controvesy ==
+== noflet controversy ==
 
-noflet is also helping me with a bit of Emacs controvesy. Stefan
+{{{noflet}}} is also helping me with a bit of Emacs controvesy. Stefan
 Monnier, the maintainer of Emacs, has decided, in his wisdom, that the
-existing Emacs CommonLisp compatability library needs a lot of
+existing Emacs CommonLisp compatibility library needs a lot of
 change and some of the change breaks {{{flet}}} usage. I don't like
 that. I use {{{flet}}} a lot. 
 
