@@ -148,7 +148,18 @@ Of course, you can combine these two techniques:
 
 This adds automatic utf-8 encoding only to files in the //"/fake/".
 
+== Using noflet ==
 
+{{{noflet}}} is just a package and like any other package it can be
+installed from [[http://marmalade-repo.org|marmalad-repo]] and
+depended on with other packages.
+
+If you build your elisp as packages the following is the magic package
+header you need to let you depend on {{{noflet}}}:
+
+{{{
+;; Package-requires: ((noflet "0.0.5"))
+}}}
 
 == noflet controvesy ==
 
