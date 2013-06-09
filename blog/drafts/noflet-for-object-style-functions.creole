@@ -1,0 +1,168 @@
+= noflet - oo meets fp =
+
+Lisp is a powerful language. People have developed Object Oriented
+features in Lisp for some time. One of the first complete OO systems
+was CLOS, Common Lisp's Object System.
+
+Lisp is also often used in a functional way.
+
+But rarely do the functional and the OO styles mix. OO tends to be a
+bit more //assigny//, with lots of //setq//'s to save state.
+
+I rarely want the //assigny// type of OO programming but I often want
+some OO techniques in my functional programming. One of the main
+things I miss is decorating through overloading. Here's what I mean in
+Java; firstly class A:
+
+{{{
+##! java
+class A {
+  public int methodA(int x) {
+     return 10 * x;
+  }
+}
+}}}
+
+and now class B:
+
+{{{
+##! java
+class B extends A {
+  public int methodA(int x) {
+     if (x < 1000) {
+        return super.methodA(x);
+     }
+     else {
+        return 20 * x;
+     }
+  }
+}
+}}}
+
+I quite like this. It's especially useful when testing.
+
+I can't have it in Lisp very easily. At least in EmacsLisp.
+
+== Ta Da! NOFLET! ==
+
+Of course I can have it in Lisp easily. I just make a macro.
+
+I've built
+the [[http://github.com/nicferrier/noflet|noflet emacs-lisp package]]
+to let me do this.
+
+noflet is very similar to the standard Lisp {{{flet}}}. It let's you
+define functions in the same way you define variables:
+
+{{{
+(let ((a 1))
+  (noflet ((my-func (x)
+             (* a x)))
+     (my-func 10)))
+}}}
+
+This defines a function {{{my-func}}}, which only exists for the time
+the {{{let}}}-body is executing.
+
+{{{noflet}}} is dynamically bound, so it's good for overriding 
+functions:
+
+{{{
+(defun my-func (x)
+  (* x 10))
+
+(noflet ((my-func (x) 100))
+  (my-func 7)) ;; => 700
+}}}
+
+But the reason for {{{noflet}}}'s existance is that it can provide
+access to a binding it is shadowing:
+
+
+{{{
+(defun my-func (x)
+  (* x 10))
+
+(noflet ((my-func (x) 
+           (if (< x 10)
+              100
+              ;; else call the old defn
+              (funcall this-fn x))))
+  (my-func 7)) => 700
+}}}
+
+This is //just// like using //super// in Java. //this-fn// is the
+original value of the function //my-func//, that is being shadowed by
+the noflet definition which now calls the original!
+
+This is particularly useful.
+
+
+=== Mock a sub-class of a thing ===
+
+We can mock file functions, for just a namespace, for example:
+
+{{{
+(noflet ((find-file (filename)
+          (if (starts-with filename "/fake/")
+             (get-buffer fake-file)
+             ;; else do normal find-file
+             (funcall this-fn filename)))
+           ...)
+   (find-file "/fake/file"))
+}}}
+
+If the file name starts with //"/fake/"// a static buffer is
+returned, otherwise we do whatever normally happens. This is great for
+testing complex things like files or processes.
+
+=== Decorate a function's result ===
+
+{{{
+(noflet ((find-file (filename)
+          (with-current-buffer 
+                (funcall this-fn filename)
+            (encode-coding-region 
+              (point-min) (point-max) 'utf-8))))
+   (find-file "~/not-utf-8-yet"))
+}}}
+
+Here we force encoding to UTF-8 by wrapping the result from the origin
+function.
+
+=== Combining the two ===
+
+Of course, you can combine these two techniques:
+
+{{{
+(noflet ((find-file (filename)
+         (if (starts-with filename "/fake/")
+           (with-current-buffer 
+                  (funcall this-fn filename)
+              (encode-coding-region 
+                (point-min) (point-max) 'utf-8))
+            ;; Else do the normal
+            (funcall this-fn filename))))
+   (find-file "~/fake/not-utf-8-yet"))
+}}}
+
+This adds automatic utf-8 encoding only to files in the //"/fake/".
+
+
+
+== noflet controvesy ==
+
+noflet is also helping me with a bit of Emacs controvesy. Stefan
+Monnier, the maintainer of Emacs, has decided, in his wisdom, that the
+existing Emacs CommonLisp compatability library needs a lot of
+change and some of the change breaks {{{flet}}} usage. I don't like
+that. I use {{{flet}}} a lot. 
+
+But now I don't need to use {{{flet}}}, now I can use {{{noflet}}}.
+
+One worry about this is that it results in an increasingly personal
+Lisp. This is a worry because one doesn't want one's code to be
+unreadable by anyone but one's self. But all coding is a social
+problem, maybe the change occurring to the {{{cl}}} library and
+{{{flet}}} is disturbing enough to cause readability and portability
+concerns of it's own. In this case perhaps {{{noflet}}} is a good thing.
