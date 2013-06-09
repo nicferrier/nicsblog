@@ -158,8 +158,18 @@ If you build your elisp as packages the following is the magic package
 header you need to let you depend on {{{noflet}}}:
 
 {{{
+##! emacs-lisp
 ;; Package-requires: ((noflet "0.0.5"))
 }}}
+
+Of course you still need to:
+
+{{{
+(require 'noflet)
+}}}
+
+in your code.
+
 
 == noflet controvesy ==
 
