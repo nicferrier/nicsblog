@@ -56,12 +56,12 @@
             </ul>
 	</li>
 	<li id='footertoc'>
-            <h4>TeamChat.net</h4>
+            <a id='teamchat'></a><h4>TeamChat.net</h4>
             <ul>
               <li><a href="/blog/2012_11/teamchat_about">Introducuing TeamChat</a></li>
               <li><a href="/blog/2012_11/chat-ops-from-jesse">Jesse Newland's on ChatOps</a></li>
             </ul>
-	    <h4>Emacs Lisp</h4>
+	    <a id='emacslisp'></a><h4>Emacs Lisp</h4>
             <ul>
               <li><a href="/blog/2013_06/noflet-for-object-style-functions">The <code>noflet</code> macro for overriding functions</a></li>
               <li><a href="/blog/2013_06/deploying-elnode-apps">How to deploy Elnode apps</a></li>
@@ -109,7 +109,7 @@
               <li><a href="/blog/2010_10/elnode">Introducing Elnode, an EmacsLisp web server</a></li>
             </ul>
 
-	    <h4>DevOps</h4>
+	    <a id='devops'></a><h4>DevOps</h4>
             <ul>
               <li><a href="/blog/2013_05/the-product-owner"><i>The role of the Product Owner</i> - and how it works with a DevOps team</a></li>
               <li><a href="/blog/2013_04/you-are-not-an-engineer"><i>You are not an engineer</i> - introspecive, existential hand wringing</a></li>
