@@ -111,6 +111,7 @@ This needs to be done because packages are not always named in the way
 they are namespaced. For example Magnars' {{{dash}}} library is
 namespaced {{{-}}}. So the package declaration there would be:
 
+{{{
 ;;; dash.el --- A modern list library for Emacs
 
 ;; Copyright (C) 2012 Magnar Sveen
@@ -119,6 +120,7 @@ namespaced {{{-}}}. So the package declaration there would be:
 ;; Version: 1.0.3
 ;; Namespace: -
 ;; Keywords: lists
+}}}
 
 A similar package extension would need to be added to multi-file packages.
 
