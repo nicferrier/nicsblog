@@ -31,13 +31,14 @@ off into common packages and 2. use intra function modularity to fix
 it.
 
 Spinning everything off into common packages works to some extent and
-EmacsLisp has some of this going on write now. Magnars' excellent {{{dash}}}
-and {{{s}}} libraries are attempts to do this. But it's an approach
-that tends to have limitations. There are a grab bag of decent macros
-and functions that aren't really related to anything else and it's
-hard to see how to fit them into a common libs. The idea of having a
-general purpose library then surfaces but this is difficult to manage
-as well.
+EmacsLisp has some of this going on right
+now. [[https://github.com/magnars/dash.el|Magnars' excellent {{{dash}}}]]
+and [[https://github.com/magnars/s.el|{{{s}}}]] libraries are attempts
+to do this. But it's an approach that tends to have limitations. There
+are a grab bag of decent macros and functions that aren't really
+related to anything else and it's hard to see how to fit them into a
+common libs. The idea of having a general purpose library then
+surfaces but this is difficult to manage as well.
 
 The 2nd solution is intra function namespacing and this too has it's
 limitations. This is the technique of declaring private functions
