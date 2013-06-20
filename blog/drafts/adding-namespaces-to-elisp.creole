@@ -183,7 +183,34 @@ in the same way as the package prefix.
 === Backwards compatability ===
 
 If a symbol is defined outside of a package, excepting the rule about
-no symbols with //"::"// there is no need for any change.
+no symbols with //"::"// there is no need for any change. A globally
+defined symbol is still globally defined. So if in my package I:
+
+{{{
+(defun mapcar (name)
+  "Use google maps to find cars by NAME."
+  ...)
+}}}
+
+I will trash the global definition of {{{mapcar}}}.
+
+I think that's ok, personally. Emacs Lisp has got a core API of useful
+functions that don't need to change and people will have to work
+round. If we expect that to change to get namespacing of any kind
+we're going to be waiting forever. We have to work round it. If this
+system is succesful then //maybe// the core API will change to adopt
+it. In another 15 years (and that's fine).
+
+So why do this at all? Because it stops the problem getting worse, it
+means that new packaged code can always be separate and Emacs existing
+API names are the most we ever have to cope with as regards namespace
+collision.
+
+Someone asked me //But this will mean you can hide important bits of
+Emacs, by accident//... well sure. But that's the same as now. You can
+{{{fset}}} important functions like {{{get-buffer}}} and Emacs will
+totally break.
+
 
 === Resolution order ===
 
