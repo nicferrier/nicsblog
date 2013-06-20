@@ -1,0 +1,210 @@
+= Hatching a plan to add namespaces to EmacsLisp =
+
+One of the oft quoted reasons for EmacsLisp being rubbish is that it
+does not have namespaces, modules, packages (Emacs' packages are
+something different).
+
+== A description of why namespaces are needed ==
+
+With no namespacing facility you end up with a global namespace.
+Everyone's names can trample on each other. If you and I choose to
+name our package //my// and we both write //my-to-string// we've got a
+problem.
+
+As the language ages this tends to produce ever longer prefixes, the
+old ones are taken by possibly now useless packages. The social
+problems around coding mean it's hard to agree to end a package's
+life. It will always be there in google.
+
+The prefixing problem happens in even languages that do have
+namespaces but it's worse in EmacsLisp. Every function in your package
+has to carry the prefix because there is only one namespace. So while
+it might be ok for everyone to write their own version of {{{aif}}}
+for example, not everyone can call it {{{aif}}}, they have to
+namespace it to their package.
+
+This means that code gets increasingly wordy. And that puts people off
+writing it and reading it.
+
+There are a couple of pragmatic solutions to this, 1. spin everything
+off into common packages and 2. use intra function modularity to fix
+it.
+
+Spinning everything off into common packages works to some extent and
+EmacsLisp has some of this going on write now. Magnars' excellent {{{dash}}}
+and {{{s}}} libraries are attempts to do this. But it's an approach
+that tends to have limitations. There are a grab bag of decent macros
+and functions that aren't really related to anything else and it's
+hard to see how to fit them into a common libs. The idea of having a
+general purpose library then surfaces but this is difficult to manage
+as well.
+
+The 2nd solution is intra function namespacing and this too has it's
+limitations. This is the technique of declaring private functions
+locally to some top-level function, like so:
+
+{{{
+(defun my-top-level (arg1)
+  (flet ((worker1 (arg)
+           "Say 'hello world' if `arg' is a greeting."
+           (if (string= "hello" arg)
+             "hello world!"
+             arg)))
+     (worker1 arg1)))
+}}}
+
+The problem with this is that the functions are accesible only to the
+one top-level function. We can be more creative and design a macro
+that has the common private functions in it and then use in all our
+other functions:
+
+{{{
+(defmacro my-namespace (&rest body)
+  `(flet ((worker1 (arg)
+            "Say 'hello world' if `arg' is a greeting."
+            (if (string= "hello" arg)
+                "hello world!"
+                arg)))
+     ,@body))
+
+(defun my-top-level (arg1)
+   (my-namespace
+     (worker1 arg1)))
+}}}
+
+This works quite well but when the functions are not top-level you
+lose a lot of tooling, no hover over documentation, not even
+documentation lookup. The whole point of Emacs is the excellent
+tooling.
+
+So this seems like a bit of a dead end to me.
+
+== A suggested solution ==
+
+There have been a couple of suggested solutions to this in EmacsLisp
+land. None really worked for me, all ended up leaving the debugger
+unusable and breaking other tooling.
+
+For some time I've been thinking about a way to do this in Emacs
+without too much damage.
+
+Here's my plan. It is somewhat based on the CommonLisp idea of packages.
+
+=== Declaring namespaces ===
+
+We need to have a way of declaring a symbol prefix to be a package
+namespace. This could be done in the package header:
+
+{{{
+;;; noflet.el --- locally override functions
+
+;; Copyright (C) 2013  Nic Ferrier
+
+;; Author: Nic Ferrier <nferrier@ferrier.me.uk>
+;; Keywords: lisp
+;; Version: 0.0.7
+;; Namespace: noflet-
+;; Url: https://github.com/nicferrier/emacs-noflet
+}}}
+
+This needs to be done because packages are not always named in the way
+they are namespaced. For example Magnars' {{{dash}}} library is
+namespaced {{{-}}}. So the package declaration there would be:
+
+;;; dash.el --- A modern list library for Emacs
+
+;; Copyright (C) 2012 Magnar Sveen
+
+;; Author: Magnar Sveen <magnars@gmail.com>
+;; Version: 1.0.3
+;; Namespace: -
+;; Keywords: lists
+
+A similar package extension would need to be added to multi-file packages.
+
+
+=== Make the reader understand packages ===
+
+Then we need to alter the reader so that it is aware of what package
+it is reading code in. This is like CommonLisp's {{{*package*}}}
+variable. The EmacsLisp reader could know which package is being read
+by at least using a file local variable, or some other more
+sophisticated technique.
+
+=== Reading symbols ===
+
+Then we can alter the reader to no longer use a single obarray. When
+reading the symbols in a package the reader needs to make a decision
+to intern a symbol in one of two obarrays;
+
+a symbol like //namespace//{{{symbol}}} needs to go in the standard
+obarray, as now. But a symbol with no package namespace, like just 
+//"symbol"//, needs to be placed in a //namespace// specific obarray.
+
+Each package would need it's own obarray; but that's all, we don't
+need trees of obarrays. Just a global one and then package specific
+ones.
+
+When resolving symbols the reader should lookup a namespaced string in
+the global obarray and a non-namespaced string in whatever package
+specific obarray is relevant to the code being read.
+
+This would achieve separation of private and public API and would be
+the biggest change.
+
+=== Referring to private symbols outside of the package ===
+
+It would be stupid, imo, to have any code in an Emacs system as really
+//private//. It's totally against the spirit of Emacs.  
+
+There should always be a way of reaching a non-namespaced symbol. I
+would propose following the CommonLisp idiom and using {{{::}}}. Thus
+reading a symbol //"my::to-string"// would be taken to mean: find the
+namespace obarray for //"my"// and look in that for the
+symbol //"to-string"//.
+
+Interning a symbol with //"::"// in it should no longer be
+possible. It should raise an error.
+
+I'm not aware of anyone using //"::"// as a package separator though I
+would not be surprised if they did. If that is already in the wild we
+could perhaps use more //:// or try and get some agreement to change
+those packages.
+
+A final idea about package resolution namespace prefixes is to allow
+them to be defined per package. So I could use //"::"// in my packages
+to refer to other packages private namespace but another person may
+declare that they use //"&&"//. That could be declared in the package
+in the same way as the package prefix.
+
+=== Other advantages ===
+
+There is some controvesy in Emacs land right now because of Stefan
+Monnier's somewhat arbirary renaming of Emacs' CL library. Stefan has
+namespaced all the old Elisp {{{cl}}} functions so that now you
+//should// write:
+
+{{{
+(cl-defun my-func (arg1 &key (param1 default) (param2 default2))
+  "A special function."
+  ...)
+}}}
+
+this is awful because it is wordy and again you lose some tool
+support. There is no syntax coloring of the {{{cl-}}} namespace for
+example.
+
+But with the namespace changes we could allow namespacing //and//
+import.
+
+Import would mean that you could pull the symbols from another
+namespace into your private package specific obarray under any name
+you care to choose. Even no name.
+
+So we could import {{{cl-}}} functions into the private namespace of
+our package. The symbols would then resolve properly for us without a
+namespace (or with any namespace we choose).
+
+I imagine that importing namespaced symbols into no-namespaced symbols
+would become a very common idiom.
+
