@@ -179,7 +179,19 @@ to refer to other packages private namespace but another person may
 declare that they use //"&&"//. That could be declared in the package
 in the same way as the package prefix.
 
-=== Other advantages ===
+=== Backwards compatability ===
+
+If a symbol is defined outside of a package, excepting the rule about
+no symbols with //"::"// there is no need for any change.
+
+=== Resolution order ===
+
+Clearly names could shadow each other. I think there has to be a clear
+rule that the global obarray is inspected first and if a symbol is
+found there that's what is used, no further look up should be done.
+
+
+== Advantages ==
 
 There is some controvesy in Emacs land right now because of Stefan
 Monnier's somewhat arbirary renaming of Emacs' CL library. Stefan has
@@ -210,3 +222,8 @@ namespace (or with any namespace we choose).
 I imagine that importing namespaced symbols into no-namespaced symbols
 would become a very common idiom.
 
+=== Simplifying the common case ===
+
+Given this system you can see the common case of unqualified names in
+a package being used. It would be simple, just define all the
+functions unqualified and {{{defalias}}} the external ones.
