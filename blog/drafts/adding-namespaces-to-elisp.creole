@@ -140,7 +140,7 @@ Then we can alter the reader to no longer use a single obarray. When
 reading the symbols in a package the reader needs to make a decision
 to intern a symbol in one of two obarrays;
 
-a symbol like //namespacesymbol//{{{symbol}}} needs to go in the standard
+a symbol like //namespace//{{{symbol}}} needs to go in the standard
 obarray, as now. But a symbol with no package namespace, like just 
 //"symbol"//, needs to be placed in a //namespace// specific obarray.
 
