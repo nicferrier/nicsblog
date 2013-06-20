@@ -180,6 +180,13 @@ to refer to other packages private namespace but another person may
 declare that they use //"&&"//. That could be declared in the package
 in the same way as the package prefix.
 
+
+=== Resolution order ===
+
+Clearly names could shadow each other. I think there has to be a clear
+rule that the global obarray is inspected first and if a symbol is
+found there that's what is used, no further look up should be done.
+
 === Backwards compatability ===
 
 If a symbol is defined outside of a package, excepting the rule about
@@ -210,13 +217,6 @@ Someone asked me //But this will mean you can hide important bits of
 Emacs, by accident//... well sure. But that's the same as now. You can
 {{{fset}}} important functions like {{{get-buffer}}} and Emacs will
 totally break.
-
-
-=== Resolution order ===
-
-Clearly names could shadow each other. I think there has to be a clear
-rule that the global obarray is inspected first and if a symbol is
-found there that's what is used, no further look up should be done.
 
 
 == Advantages ==
