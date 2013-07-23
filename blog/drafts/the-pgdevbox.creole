@@ -1,0 +1,133 @@
+= The pgdevbox =
+
+I have just made [[http://www.pgdevbox.com|pgdevbox]], a simple
+vagrant machine with a pre-built PostgreSQL 9.3 server in it. This is
+something I've been meaning to do for years.
+
+PostgreSQL is just the //best// database software in my opinion. MySQL
+may be more popular, but the way the software was built never sat well
+with me and I was proved right. There are many technical problems with
+MySQL as it scales. PostgreSQL seems to scale better. 
+
+PostgreSQL is also an effective NoSQL server, it can be configured to
+go very fast when you need it too (I've had PostgreSQL beat memcache
+for serving pure key value stuff, after some crazy tweaking).
+
+What PostgreSQL has never done very effectively is to be easy for
+developers. It's a database developed by people who know what they are
+doing. They don't necessarily look out for the novice, or near novice.
+
+That's what [[http://www.pgdevbox.com|pgdevbox]] is for.
+
+== Use the virtual machine - that's what it's for ==
+
+[[http://vagrantup.com|vagrant]] is a useful virtualization tool which
+makes using virtual machines a little simpler than it normally is. So
+it's perfect for this job.
+
+Inside the virtual machine is a PostgreSQL 9.3 database with a single
+pre-built database with a single table in it, a table with a single
+JSON column.
+
+This is very easy to use from most dynamic programming languages. You
+can simply treat it as a big key value store and dump data into it.
+
+Or you could ignore the built in table and use it with an ORM such as
+Rails or Django have.
+
+The site includes a node.js example but it's //sooo// simple to use
+from most languages. Here's a ruby example:
+
+{{{
+##! ruby
+require 'rubygems'
+require 'bundler/setup'
+require 'postgres-pr/connection'
+
+conn = PostgresPR::Connection.new('vagrant', 'vagrant', nil, 'tcp:localhost')
+puts conn.query("SELECT * FROM a").rows
+}}}
+
+... and the setup for ruby is like:
+
+{{{
+##! shell-script
+mkdir -p rubypgdevdemo/vendor
+cd rubypgdevdemo
+printf 'source "http://rubygems.org"\ngem "postgres-pr"\n' > Gemfile
+bundle install --path vendor
+}}}
+
+... and if you run it then here is what you see:
+
+{{{
+##! shell-script
+$ ruby test.rb
+{"a": "10", "b": "20"}
+{"a": "20", "b": "40"}
+{"a": "30", "b": "20"}
+}}}
+
+== Why PostgreSQL is a good Key/Value store ==
+
+The PG devs do seem to have a good handle on making key/value
+stores. The newish JSON type builds on a lot of previous work on the
+HStore type to make something easy for programmers to use.
+
+Here's an IRB session some example with that ruby example above:
+
+{{{
+nferrier@nics-xps:~/rubypgdevdemo$ irb
+1.9.3p448 :001 > require 'rubygems'
+ => false 
+1.9.3p448 :002 > require 'bundler/setup'
+ => true 
+1.9.3p448 :003 > require 'postgres-pr/connection'
+ => true 
+1.9.3p448 :004 > conn = PostgresPR::Connection.new('vagrant', 'vagrant', nil, 'tcp:localhost')
+ => #<PostgresPR::Connection:0x0000000146b828 ....>
+1.9.3p448 :005 > require 'json'
+ => true 
+1.9.3p448 :006 > j=JSON.dump({"a" => 10 })
+ => "{\"a\":10}" 
+1.9.3p448 :013 > conn.query("SELECT '#{j}'::json").rows
+ => [["{\"a\":10}"]] 
+}}}
+
+so it's pretty easy to get JSON in, and just as easy to get it out:
+
+{{{
+1.9.3p448 :014 > JSON.parse(conn.query("SELECT '#{j}'::json").rows[0][0])
+ => {"a"=>10} 
+}}}
+
+and this is true of //all// languages. This is, after all, why we have
+made JSON such a standard.
+
+
+== Interesting things ==
+
+The thing I'm not sure about [[http://www.pgdevbox.com|pgdevbox]] yet,
+is how to promote it.
+
+Clearly, the audience isn't really PostgreSQL experts. It's people who
+know they need some sort of database but also know it's a faff.
+
+Scaling out of the devbox is easy. You can use PostgreSQL tools to
+dump the database and put it on Heroku, or build a //real// PostgreSQL
+database on Amazon or on your own hardware. But though it's easy, it's
+not trivial. It would be nice if it was trivial. Maybe I will work on
+that a little bit.
+
+Accesing PostgreSQL JSON stuff from javascript in a browser is also
+not trivial. You always need to build some sort of web server side
+proxy. Something else I have considered for a long time is how to make
+that easy. Maybe I can build a service around that and put it into the
+dev box. I'm not sure.
+
+So. On those bits, I'm stuck. I don't know how to promote the dev
+box and I'm not sure how to make a trivially scalable or front end
+accessible system.
+
+So what? it's useful as it is. Here you go. Enjoy.
+
