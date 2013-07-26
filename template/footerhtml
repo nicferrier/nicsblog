@@ -63,6 +63,7 @@
             </ul>
 	    <a id='emacslisp'></a><h4>Emacs Lisp</h4>
             <ul>
+              <li><a href="/blog/2013_06/adding-namespaces-to-elisp">A proposal for adding namespaces to EmacsLisp</a></li>
               <li><a href="/blog/2013_06/noflet-for-object-style-functions">The <code>noflet</code> macro for overriding functions</a></li>
               <li><a href="/blog/2013_06/deploying-elnode-apps">How to deploy Elnode apps</a></li>
               <li>
