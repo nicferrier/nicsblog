@@ -125,14 +125,18 @@ namespaced {{{-}}}. So the package declaration there would be:
 
 A similar package extension would need to be added to multi-file packages.
 
-
-=== Make the reader understand packages ===
+=== Make Lisp and the reader understand packages ===
 
 Then we need to alter the reader so that it is aware of what package
 it is reading code in. This is like CommonLisp's {{{*package*}}}
 variable. The EmacsLisp reader could know which package is being read
 by at least using a file local variable, or some other more
 sophisticated technique.
+
+An open question right now is whether the Lisp evaluator should
+attempt to remember what package it's call path is related to so that
+if code calls {{{intern}}} manually the symbol would be interned in
+the same way as with the reader.
 
 === Reading symbols ===
 
@@ -148,12 +152,18 @@ Each package would need it's own obarray; but that's all, we don't
 need trees of obarrays. Just a global one and then package specific
 ones.
 
-When resolving symbols the reader should lookup a namespaced string in
-the global obarray and a non-namespaced string in whatever package
-specific obarray is relevant to the code being read.
+The rules for {{{intern}}}ing a symbol should be:
 
-This would achieve separation of private and public API and would be
-the biggest change.
+* given a string //X//
+* lookup //X// in the local obarray
+* if it exists return the symbol
+* else
+** lookup //X// in the global obarray
+** if it exists return the symbol
+** else
+*** add the symbol to the local obarray
+
+//Discussed on [[https://lists.gnu.org/archive/html/emacs-devel/2013-07/msg00772.html|emacs-devel]]//
 
 === Referring to private symbols outside of the package ===
 
@@ -166,32 +176,16 @@ reading a symbol //"my::to-string"// would be taken to mean: find the
 namespace obarray for //"my"// and look in that for the
 symbol //"to-string"//.
 
-Interning a symbol with //"::"// in it should no longer be
-possible. It should raise an error.
+Interning a symbol with //"::"// in it should intern the symbol name
+in that namespace obarray.
 
-I'm not aware of anyone using //"::"// as a package separator though I
-would not be surprised if they did. If that is already in the wild we
-could perhaps use more //":"// or try and get some agreement to change
-those packages.
-
-A final idea about package resolution namespace prefixes is to allow
-them to be defined per package. So I could use //"::"// in my packages
-to refer to other packages private namespace but another person may
-declare that they use //"&&"//. That could be declared in the package
-in the same way as the package prefix.
-
-
-=== Resolution order ===
-
-Clearly names could shadow each other. I think there has to be a clear
-rule that the global obarray is inspected first and if a symbol is
-found there that's what is used, no further look up should be done.
+//Discussed on [[https://lists.gnu.org/archive/html/emacs-devel/2013-07/msg00754.html|emacs-devel]]//
 
 === Backwards compatability ===
 
-If a symbol is defined outside of a package, excepting the rule about
-no symbols with //"::"// there is no need for any change. A globally
-defined symbol is still globally defined. So if in my package I:
+If a symbol is defined outside of a package there is no need for any
+change. A globally defined symbol is still globally defined. So if in
+my package I:
 
 {{{
 (defun mapcar (name)
