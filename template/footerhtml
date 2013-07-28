@@ -112,6 +112,7 @@
 
 	    <a id='devops'></a><h4>DevOps</h4>
             <ul>
+              <li><a href="/blog/2013_07/the-pgdevbox"><i>The PostgreSQL Dev Box</i> - easily get going with PostgreSQL</a></li>
               <li><a href="/blog/2013_05/the-product-owner"><i>The role of the Product Owner</i> - and how it works with a DevOps team</a></li>
               <li><a href="/blog/2013_04/you-are-not-an-engineer"><i>You are not an engineer</i> - introspecive, existential hand wringing</a></li>
               <li><a href="/blog/2013_04/swearing-at-work">Swearing at work - a guide for the passionate</a></li>
