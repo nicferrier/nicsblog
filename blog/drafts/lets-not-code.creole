@@ -1,0 +1,210 @@
+= let's not learn to code =
+
+<<html
+<iframe class="screencast"
+src="http://player.vimeo.com/video/71278954?title=0&amp;byline=0&amp;portrait=0"
+width="500" height="281" frameborder="0" webkitAllowFullScreen
+mozallowfullscreen allowFullScreen></iframe>
+html>>
+This is a few thoughts about why we shouldn't forget that knpwing how
+to code is a good thing. It's been prompted by a couple of things,
+including Brett
+Victor's
+[[http://vimeo.com/71278954|latest amusing turn at DBX]]. This was
+a disguised, but none the less, heartfelt plea to reject dogma around programming. He
+made the point that we were using tools developed 30 years ago (such
+as Emacs and Vi) and many people, in Brett's view, have fixed ideas
+about what coding is. We need to stay flexible and creative and not
+block things out //just because//.
+
+== Curses! ==
+
+I think Brett's right, of course. Programming in an 80 column by 25 line format
+is heavily constrained and is entirely due to historical
+context. There are good reasons for that history. One of them is
+the //curses// standard, a way of talking to screens that was invented
+when most computer users were stuck with terminals made by the likes
+of DEC or IBM. 
+
+A lot of apps get stuck with curses like behaviour because it's such a
+common denonminator. All unix boxes still support curses. You can
+establish a curses environment easily by just
+//ssh//ing to a server; Mac, Linux and even Windows graphical
+environments all have terminal apps that emulate curses. Curses apps
+are //still// being written. A lot.
+
+So combine age with prevalence and you get a //good enough//
+problem. Curses is lowest common denominator but it ends up being a
+reason people don't do anything more. To fix curses you would need to:
+
+* make a new session protocol and programs to replace ssh
+* make a new display api to replace curses
+* make a bunch of apps to use it
+* probably make a compatibility layer for curses
+* probably provide at least a vi display engine for the new library
+
+it's a huge task.
+
+It's not easy to move partially either. You can't pick just a bit and
+iterate. Not without understanding that you won't see any success for
+many many years.
+
+So the first point I'd like to make is that I agree with Brett but I
+think there are really good reasons why we are where we are. I don't
+actually see much dogma around that to be honest. I just see some
+recognition and resignation of how hard it's going to be to change.
+
+I'd like to point out that people are trying, around the edges.
+
+<<html
+<iframe class="wide-screencast" width="560" height="315"
+src="//www.youtube.com/embed/bUR_eUVcABg?rel=0" frameborder="0"
+allowfullscreen></iframe>
+html>>
+Here's the [[http://xiki.org/|Xiki project]], which is a reinvented
+shell program. It's a fascinating view of what a //terminal// could
+be.
+
+Hopefully, if you've not seen anything like this before you'll be
+inspired. It's actually not a new idea, the venerable Rob Pike (of
+Google Go fame) worked on
+the
+[[http://wikipedia.org/wiki/Acme_(text_editor)|Acme editor for the Plan9 operating system]]. It
+had many similar ideas about a stream of text and media and code all
+mingled together.
+
+<<html
+<div class="clear"></div>
+<iframe class="screencast-left" width="420" height="315"
+src="//www.youtube.com/embed/ibPziLRGvkg?rel=0" frameborder="0"
+allowfullscreen></iframe>
+html>>
+There's also
+the
+[[http://www.enlightenment.org/p.php?p=about/terminology|Terminology project]],
+which has similar aims.
+
+I'd also like to point to Ubuntu's Unity project. It seems to get a
+lot of hate from programmer types and it is very opnioniated, to the
+point of arrogance, but the essential idea is a really good
+one. Command line interfaces are a great way of commanding computers,
+of telling them what to do. Unity is a highly graphical rendering of
+such an interface but it's still text. It's still words. What
+Canonical is trying to do is make command lines work well for a
+particular application.
+
+== What is code? ==
+
+If you invent a new way to program that can't be shown on a curses
+display you have a problem because it means the code can only be
+changed in the environment in which it was created, with the tools
+that it was created with.
+
+Microsoft took this route in the 80s, creating ever more graphical
+tools to generate or hide code. The tools were nice. The code was
+awful. And look at where Microsoft are now. It's very hard to work
+with some Microsoft products, they're hard to script, hard to compose,
+hard to decompose.
+
+And then there's //NoFlo//.
+
+<<html
+<iframe class="screencast" width="480" height="360"
+src="http:&#x2F;&#x2F;www.kickstarter.com&#x2F;projects&#x2F;noflo&#x2F;noflo-development-environment&#x2F;widget&#x2F;video.html"
+frameborder="0"> </iframe>
+html>>
+
+I probably wouldn't be writing this blog post if it weren't for
+NoFlo. There are quite a few things that irritate me about NoFlo but
+the biggest one is the idea that a graphical tool will stop people
+having to learn to code. They even call it out on their page:
+
+//If you don't code, don't learn//
+
+I hate that. Please don't listen to that. Please do learn to code.
+
+There are some things that are right: 
+
+//If you pay for code, you can't afford to be in the dark//
+
+but I think that's just a reason to learn to code in Javascript and
+HTML and CSS. 
+
+And people are doing that. I went
+to [[http://makersacademy.com|MakersAcademy in London]] a few weeks
+ago. It's an excellent startup offering a 12 week course in coding for
+a reasonable price. What was interesting to me was some of the
+students I met there, particularly the guy who was running his own
+shop and learned to code so that he could hack his website, or at
+least be an educated consumer of the programmers he was using.
+
+What really bothers me about the modernist message of graphical tools
+being the easy way to programming is that we have only just managed to
+roll back the bad start we had with not teaching kids to code.
+
+I remember being in my school's computer room as the local MP, Cecil
+Parkinson, was being shown around. I remember the feeling of
+depression when one of my teachers explained to him why it wasn't
+necessary to teach programming to children because in a few years
+computers would be easy for literally //any one// to program.
+
+And then we had 20 or 30 years of misguided policy, teaching children
+how to use Microsoft Word, and not how to write the replacement for
+Microsoft Word (at least in the UK we did).
+
+Of course, I'm not saying that single incident was to blame. But
+here's my second point: if we as coders, start believing that textual
+representation of coding can be totally replaced with
+something //easier// people will start to listen. And we would, of
+course be quite wrong about that.
+
+Coding isn't hard by default. If you've never done it before it is
+different. But so is knitting. Or baking. There is nothing really
+implicit that makes coding //beyond// anyone's intelligence.
+
+Doing hard things is always hard. Of course. Being an expert in
+anything takes time. I'm not suggesting otherwise. But there is huge
+benefit in being at least familiar with coding. Just as there is huge
+benefit in being familiar with baking or knitting. But familiarity
+with coding is //more// important than those. Why? For the simple
+reason that we don't have a lot of people who are familiar with it. We
+have enough bakers and enough knitters, or at least, nearly
+enough. But we don't have enough coders. Not even close.
+
+== More of what makes code so special ==
+
+On the same day I came across NoFlo I came
+across
+[[http://www.slideshare.net/billwscott/antipatterns-that-stifle-lean-ux-teams|this great presentation]]
+from [[http://www.slideshare.net/billwscott|Bill Scott]]
+called //Anti-Patterns that Stifle Lean UX Teams//.
+
+<<html
+<iframe class="screencast" src="http://www.slideshare.net/slideshow/embed_code/21789231" 
+   width="427" height="356" frameborder="0" marginwidth="0"
+   marginheight="0" scrolling="no" 
+   style="border:1px solid #CCC;border-width:1px 1px
+   0;margin-bottom:5px" 
+   allowfullscreen webkitallowfullscreen mozallowfullscreen>
+</iframe>
+html>>
+
+It's a great presentation about how to keep the design function as
+agile as possible. I have a lot of personal experience of working with
+so called //Rock star// designers who don't understand agility and
+Bill's presentation calls out all the good points.
+
+It particularly resonates considering one of the driving forces behind
+tools like NoFlo is as magic design tools. Designers don't need to
+work in a team, they can produce their own code. What's more, they
+don't need to learn any of that messy //coding//. They'll be happier
+with pictures. Right?
+
+And this points to what I think is the real problem of our age. It's
+not how difficult code is to learn how to do. It's not even //curses//
+or //terminals//. It's collaborating with each other. That's
+hard. Working with people is hard. Getting people to work together is
+hard.
+
+NoFlo talk about that a little. If they talked about it some more I'd
+perhaps be more confident.
