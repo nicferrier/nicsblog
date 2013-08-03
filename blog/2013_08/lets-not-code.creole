@@ -6,7 +6,7 @@ src="http://player.vimeo.com/video/71278954?title=0&amp;byline=0&amp;portrait=0"
 width="500" height="281" frameborder="0" webkitAllowFullScreen
 mozallowfullscreen allowFullScreen></iframe>
 html>>
-This is a few thoughts about why we shouldn't forget that knpwing how
+This is a few thoughts about why we shouldn't forget that knowing how
 to code is a good thing. It's been prompted by a couple of things,
 including Bret
 Victor's
