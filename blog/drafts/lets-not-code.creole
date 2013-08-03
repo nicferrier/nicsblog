@@ -18,12 +18,15 @@ about what coding is. We need to stay flexible and creative and not
 block things out //just because//.
 
 I think Bret is also trying to address wider concerns about
-programming inclusivity and asking why we can't look at other ways to
-pull people into working on code because that makes making things
-easier. This concerns me too and I'll write something else about
+programming inclusivity. He's asking why we can't look at other ways
+to pull people into working on code, more people working on code makes
+making things easier. This concerns me too and I'll write something
+else about
 the
 [[http://thoughtworks.github.io/p2/issue02/continuous-design.html|//NoPSD// ideas]]
-soon.
+soon. We //have// to make it easier for designers to work on code. We have
+to make it easier for business people to work on
+code. [[http://www.marketplace.org/topics/economy/excel-mistake-heard-round-world|Clearly, we have to make it easier for quants to write code in something other than Excel]].
 
 == Curses! ==
 
