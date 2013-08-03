@@ -17,14 +17,22 @@ as Emacs and Vi) and many people, in Bret's view, have fixed ideas
 about what coding is. We need to stay flexible and creative and not
 block things out //just because//.
 
+I think Bret is also trying to address wider concerns about
+programming inclusivity and asking why we can't look at other ways to
+pull people into working on code because that makes making things
+easier. This concerns me too and I'll write something else about
+the
+[[http://thoughtworks.github.io/p2/issue02/continuous-design.html|//NoPSD// ideas]]
+soon.
+
 == Curses! ==
 
-I think Bret's right, of course. Programming in an 80 column by 25 line format
-is heavily constrained and is entirely due to historical
-context. There are good reasons for that history. One of them is
+Mostly, I think Bret's right. Programming in an 80 column by 25 line
+format is heavily constrained and is entirely due to historical
+context. But there are good reasons for that history. One of them is
 the //curses// standard, a way of talking to screens that was invented
 when most computer users were stuck with terminals made by the likes
-of DEC or IBM. 
+of DEC or IBM.
 
 A lot of apps get stuck with curses like behaviour because it's such a
 common denonminator. All unix boxes still support curses. You can
