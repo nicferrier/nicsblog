@@ -26,7 +26,9 @@ the
 [[http://thoughtworks.github.io/p2/issue02/continuous-design.html|//NoPSD// ideas]]
 soon. We //have// to make it easier for designers to work on code. We have
 to make it easier for business people to work on
-code. [[http://www.marketplace.org/topics/economy/excel-mistake-heard-round-world|Clearly, we have to make it easier for quants to write code in something other than Excel]].
+code. [[http://www.marketplace.org/topics/economy/excel-mistake-heard-round-world|Clearly, we have to make it easier for quants to write code in something other than Excel]]
+before they make a really big mistake that causes policy makers to
+crash the world's economy or something.
 
 == Curses! ==
 
