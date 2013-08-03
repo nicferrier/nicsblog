@@ -8,18 +8,18 @@ mozallowfullscreen allowFullScreen></iframe>
 html>>
 This is a few thoughts about why we shouldn't forget that knpwing how
 to code is a good thing. It's been prompted by a couple of things,
-including Brett
+including Bret
 Victor's
 [[http://vimeo.com/71278954|latest amusing turn at DBX]]. This was
 a disguised, but none the less, heartfelt plea to reject dogma around programming. He
 made the point that we were using tools developed 30 years ago (such
-as Emacs and Vi) and many people, in Brett's view, have fixed ideas
+as Emacs and Vi) and many people, in Bret's view, have fixed ideas
 about what coding is. We need to stay flexible and creative and not
 block things out //just because//.
 
 == Curses! ==
 
-I think Brett's right, of course. Programming in an 80 column by 25 line format
+I think Bret's right, of course. Programming in an 80 column by 25 line format
 is heavily constrained and is entirely due to historical
 context. There are good reasons for that history. One of them is
 the //curses// standard, a way of talking to screens that was invented
@@ -49,7 +49,7 @@ It's not easy to move partially either. You can't pick just a bit and
 iterate. Not without understanding that you won't see any success for
 many many years.
 
-So the first point I'd like to make is that I agree with Brett but I
+So the first point I'd like to make is that I agree with Bret but I
 think there are really good reasons why we are where we are. I don't
 actually see much dogma around that to be honest. I just see some
 recognition and resignation of how hard it's going to be to change.
@@ -171,6 +171,11 @@ reason that we don't have a lot of people who are familiar with it. We
 have enough bakers and enough knitters, or at least, nearly
 enough. But we don't have enough coders. Not even close.
 
+You get good by practicing. But if there's something to complain about
+it's that so many of us practice by working on the same type of
+things. That's part of the reason why we end up with lots of desktop
+environments, compilers and build tools and only one {{{curses}}}.
+
 == More of what makes code so special ==
 
 On the same day I came across NoFlo I came
@@ -206,5 +211,12 @@ or //terminals//. It's collaborating with each other. That's
 hard. Working with people is hard. Getting people to work together is
 hard.
 
-NoFlo talk about that a little. If they talked about it some more I'd
-perhaps be more confident.
+That's the thing about hacking, not only do you have to get to be an
+expert in writing code (which is like learning knitting or baking or
+chainsawing) but you have to learn how to code with other people. So
+learning to code is really step one. Which is why we shouldn't pretend
+that it's the hard bit.
+
+NoFlo talk about that how they are going to work on collaboration
+tools a little. If they talked about it some more I'd perhaps be more
+confident.
