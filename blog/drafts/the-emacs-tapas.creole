@@ -1,0 +1,185 @@
+= releasing the emacs tapas =
+
+Today I am releasing the [[http://emacstapas.com|emacs tapas]].
+
+//Tapas//. Yeah. I blame [[http://devblog.avdi.org|Avdi Grimm]] a hacker of some
+repute who did a series of short videos to teach Ruby that he called
+[[http://rubytapas.com|the Ruby Tapas]] (they're good, watch 'em).
+
+It makes some sense. Tapas is a collection of small dishes that you
+can pick and choose from. EmacsTapas is a collection of short
+screencasts documenting Emacs which you can pick and choose from.
+
+I've been using Emacs for a long time professionally. I often get
+asked for advice and help with Emacs and even more often people talk
+to me as if I am some sort of magician and that my
+//mastery// of Emacs is way beyond them.
+
+And of course it isn't. Emacs and Lisp are both seen as being
+complicated, both have some esoteric things about them but neither are
+complicated. Not really.
+
+I can't convince every one with a 5 minute conversation. I just don't
+get to talk to that many people. So I thought I'd put together a
+series of screencasts.
+
+And of course, it's not just the basics. Emacs Lisp is a powerful
+choice as a second language because it can be used to drive one of the
+most versatile tools for software development. Learning about buffer
+editing and handling text means you can start extending Emacs and
+making it work for you.
+
+== Why did I let it get this complicated? ==
+
+I just can't help it. Once I'd decided I would do a series of
+programming screencasts I knew I'd need an attached page documenting
+what was in the screencast. To make those I would need to use creole
+(because it's what I personally find the easiest text formatting
+language to use). But I would need indexes and all sorts of other
+things as well... so I built an app to serve the pages and their
+indexes.
+
+Of course,
+I [[http://github.com/nicferrier/emacs-tapas|built the app]]
+using [[http://elnode.org|Elnode]].  In building the app I crossed off
+a number of //todos// with creole including building comprehensive
+structure editing and handling embed links with handlers.
+
+So this code:
+
+{{{
+(defvar tapas/struct-class :other
+  "Dynamic variable for passing the class of page.
+
+The value should be one of `:other', `:episode', `:series' or
+`:main'.")
+
+(defun tapas/creole-struct (struct)
+  (noflet ((heading->section-id (heading)
+             (format
+              "%s-row"
+              (replace-regexp-in-string
+               "[ ?]" "-" (cdr heading)))))
+    (let* ((even t)
+           (tx
+            (loop for e in struct
+               do (setq even (not even))
+               append
+                 (if (eq (car e) 'heading2)
+                     (list
+                      `(plugin-html
+                        . ,(s-format
+                            "</div></div></div>
+<div class=\"section ${even}\" id=\"${section}\">
+<div class=\"container\">
+<div class=\"row\">" 'aget `(("even" . ,(if even "even" ""))
+                             ("section" . ,(heading->section-id e))))) e)
+                     ;; Else just...
+                     (list e)))))
+      tx)))
+
+(defun tapas-creole->bootstrap (struct)
+  "Transform STRUCT, a creole structure, into something bootstrapable.
+
+HTML DIV elements are hacked into the structure wherever we find
+an HR element.  The HR elements are retained."
+  (let ((tx (tapas/creole-struct struct)))
+    (append
+     `((plugin-html
+        . ,(concat
+            (when (member tapas/struct-class '(:episode :series))
+              "<a id=\"homelink\" href=\"/\">emacs tapas</a>")
+            "<div class=\"section\" id=\"sec-top\">
+<div class=\"container\">
+<div class=\"row\">")))
+     tx
+     `((plugin-html . "</div></div></div><footer>")
+       (ul
+        "(C) 2013 Nic Ferrier"
+        "[[/terms|terms]]"
+        "[[/contact|contact]]")
+       (plugin-html . ,tapas-licence-badge)
+       (plugin-html . "</footer>")))))
+}}}
+
+converts a creole list representation into HTML. The structure looks
+like this:
+
+{{{
+((para . "{{youtube:_gJlqfP8sho|list basics}}...")
+ (heading2 . "what's in the movie?")
+ (para . "//making lists// with the {{{list}}} ...")
+ (para . "how list literals are great for structure") 
+ (preformatted . "`(\"nic\"
+  (\"job\" \"hacker\")
+  (\"packages\" \"elnode\" \"elpakit\" \"creole\")
+  \"magnars\"
+  (\"job\" \"movie star\")
+  (\"packages\" \"dash\" \"s.el\" \"mc\"))"...))
+}}}
+
+and we transform it by adding a header and a footer {{{plugin-html}}}
+element and by doing some basic surrounding of headings with enough
+HTML to provide CSS structure.
+
+I think this is quite exciting. It's almost as powerful and expressive
+as XSLT but it's simpler (to implement) and faster.
+
+
+== How indexes work ==
+
+For some time I wanted to add some sort of semantic linking to
+creole and I've now done so.
+
+Creole has an embed syntax for images that looks like this:
+
+{{{
+some words and then {{http://someimgurl|an embed}}
+}}}
+
+This is intended for images but it could really be any embed. So I've
+added scheme handling to creole so that you can add handlers for
+schemes, like //include// to pull in a part of another creole page, or
+//youtube// to embed a youtube video.
+
+It turns out this is an excellent way of building indexes for
+pages. Here's what an index page looks like:
+
+{{{
+= working with Lisp data =
+
+a series of episodes exploring how lisp is used within Emacs.
+
+== list basics ==
+{{include:list-basics|the basics of list handling}}
+
+== advanced list topics ==
+{{include:list-advanced|more advanced understanding of lists}}
+}}}
+
+This is ideal, we're including text and the video for the actual page
+but getting to provide context for the index in question. What data I
+actually choose to present is a matter for the web server program.
+
+Of course, by keeping indexes like this I do have a consistency
+problem (if an article changes name, for example, I have to update the
+indexes that refer to it). I haven't solved that problem yet but Emacs
+makes it quite simple. I could also build a wiki like editor to the
+tapas and ask the server to maintain the indexes for me.
+
+
+== Unexpected results ==
+
+It's always nice when you get something unexpected out of something
+you're doing. I admit I look for that.
+
+And out of the Emacs Tapas it seems I am going to get a general creole
+service. Which would be nice.
+
+
+== Video quality ==
+
+I'm struggling a little with video quality with the tapas
+series. Screencasts are very difficult to do and video editing tools
+on linux aren't great. If anyone has any advice there do get in touch.
+
