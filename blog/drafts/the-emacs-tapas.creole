@@ -179,7 +179,8 @@ service. Which would be nice.
 
 == Video quality ==
 
-I'm struggling a little with video quality with the tapas
-series. Screencasts are very difficult to do and video editing tools
-on linux aren't great. If anyone has any advice there do get in touch.
+Back to the Tapas... I'm struggling a little with video quality with
+the tapas series. Screencasts are very difficult to do and video
+editing tools on linux aren't great. If anyone has any advice there do
+get in touch.
 
