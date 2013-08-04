@@ -63,6 +63,7 @@
             </ul>
 	    <a id='emacslisp'></a><h4>Emacs Lisp</h4>
             <ul>
+              <li><a href="/blog/2013_08/the-emacs-tapas">About the Emacs Tapas</a></li>
               <li><a href="/blog/2013_06/adding-namespaces-to-elisp">A proposal for adding namespaces to EmacsLisp</a></li>
               <li><a href="/blog/2013_06/noflet-for-object-style-functions">The <code>noflet</code> macro for overriding functions</a></li>
               <li><a href="/blog/2013_06/deploying-elnode-apps">How to deploy Elnode apps</a></li>
@@ -114,8 +115,6 @@
             <ul>
               <li><a href="/blog/2013_07/the-pgdevbox"><i>The PostgreSQL Dev Box</i> - easily get going with PostgreSQL</a></li>
               <li><a href="/blog/2013_05/the-product-owner"><i>The role of the Product Owner</i> - and how it works with a DevOps team</a></li>
-              <li><a href="/blog/2013_04/you-are-not-an-engineer"><i>You are not an engineer</i> - introspecive, existential hand wringing</a></li>
-              <li><a href="/blog/2013_04/swearing-at-work">Swearing at work - a guide for the passionate</a></li>
               <li><a href="/blog/2013_04/dear-nic-are-netflix-evil"><i>Dear Nic</i> are NetFlix <i>really</i> evil?</a></li>
               <li><a href="/blog/2013_02/dear-nic-says-jim"><i>Dear Nic</i> tell me about piped logging</a></li>
               <li><a href="/blog/2012_12/street-java"><i>Street</i> Java</a></li>
@@ -124,8 +123,11 @@
               <li><a href="/blog/2010_04/how-repos-work-at-woome">How release management worked at WooMe</a></li>
 	    </ul>
 
-	    <h4>Roundup</h4>
+	    <h4>Thoughts and ponderings</h4>
             <ul>
+              <li><a href="/blog/2013_08/lets-not-code"><i>Let's not learn to code</i> - why I don't like NoFlo</a></li>
+              <li><a href="/blog/2013_04/you-are-not-an-engineer"><i>You are not an engineer</i> - introspecive, existential hand wringing</a></li>
+              <li><a href="/blog/2013_04/swearing-at-work">Swearing at work - a guide for the passionate</a></li>
               <li><a href="/blog/2013_04/april-2013-stuff">Early April's roundup</a></li>
               <li><a href="/blog/2013_03/interesting-things-from-march">Interesting things from March</a></li>
               <li><a href="/blog/2013_02/things-of-interest-the-last-week">Interesting things from the end of February</a></li>
