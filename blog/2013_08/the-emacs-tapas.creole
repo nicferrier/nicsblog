@@ -247,3 +247,5 @@ retain the domain name and the twitter account.
 
 I don't like altering blog articles substantively after they're
 published but I've done that here to avoid any association with Avdi.
+
+I am //not// going to change this blog url though.
