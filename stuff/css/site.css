@@ -128,6 +128,21 @@ img[alt="a busy teamchat webpage"] {
     border: solid thin PowderBlue;
 }
 
+img[title="screenshot of the fridgeletters"] {
+    margin: 1em -100px 1em 1em;
+    font-size: 36pt;
+    width:500px;
+    border: solid thin PowderBlue;
+}
+
+img[title="closeup fridgeletters"] {
+    margin: 1em -100px 1em 1em;
+    font-size: 36pt;
+    width:500px;
+    border: solid thin PowderBlue;
+}
+
+
 a {
 text-decoration: none;
 }

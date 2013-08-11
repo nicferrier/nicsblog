@@ -1,0 +1,106 @@
+= Fridge Lettering =
+
+I was going to build a paste site for
+[[http://lispinsummerprojects.org|Lisp In Summer Projects]] called
+//fridgedoor// and I came up with a neat CSS logo for it.
+
+I've decided I will call it something different and the logo is no
+longer appropriate... but I thought I'd document it because it was
+fun.
+
+The idea was to make some letters look like children's fridge magnet
+letters that might get put on the refrigerator door. Like this:
+
+{{/stuff/img/fridgedoor-screenshot-2013-08-11.png?size=500|screenshot of the fridgeletters}}
+
+A close up may show it better:
+
+{{/stuff/img/fridgeletters-closeup-screenshot-2013-08-11.png?size=500|closeup fridgeletters}}
+
+It looks quite realistic I think. It would look more realistic if the
+letters were all jumbled about a bit, I never got that far but it's
+possible.
+
+So how to do this? First, some DOM:
+
+{{{
+##! html
+ <body>
+     <div id="logo"><a href="/">FRIDGEDOOR</a></div>
+}}}
+
+I found that uppercase letters worked best for this. Lower case made
+it look even more childish, which is not particularly the aspect I was
+going for. That may be useful though, at some point.
+
+Next, some JavaScript, to pull in the lettering.js jQuery library
+which makes it possible to address each individual letter of the
+logo.
+
+{{{
+##! js2
+var timer;
+timer = window.setInterval(
+    function () {
+        if (typeof jQuery === "undefined") {
+            var e=document.createElement('script');
+            e.setAttribute('src', "http://mysite/jquery-1.10.2.min.js");
+            e.setAttribute('language', 'javascript');
+            document.body.appendChild(e);
+        }
+        else {
+            clearTimeout(timer);
+            $.getScript(
+                "http://mysite/jquery.lettering-0.6.1.min.js",
+                function () {
+                    $("#logo a").lettering();
+                });
+        }
+    },
+    10);
+}}}
+
+And finally, the CSS:
+
+{{{
+##! css
+div#logo {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    font-size: 40pt;
+    margin-bottom: 20px;
+    letter-spacing: 5px;
+}
+
+div#logo span:nth-child(4n+1) {
+    color: Blue;
+    text-shadow: -2px 0 DarkBlue, 0 2px DarkBlue,2px 0 DarkBlue, 0 -2px DarkBlue;
+}
+
+div#logo span:nth-child(4n+2) {
+    color: Red;
+    text-shadow: -2px 0 DarkRed, 0 2px DarkRed,2px 0 DarkRed, 0 -2px DarkRed;
+}
+
+div#logo span:nth-child(4n+3) {
+    color: Orange;
+    text-shadow: -2px 0 Tomato, 0 2px Tomato,2px 0 Tomato, 0 -2px Tomato;
+}
+
+div#logo span:nth-child(4n+4) {
+    color: Green;
+    text-shadow: -2px 0 DarkGreen, 0 2px DarkGreen,2px 0 DarkGreen, 0 -2px DarkGreen;
+}
+}}}
+
+== Points of interest? ==
+
+There are steps to make each letter in a piece of text addressable
+with a CSS pseudo-class, something like:
+
+{{{
+div#logo:nth-letter(4n+1)
+}}}
+
+would then be possible and we would't need the JS.
