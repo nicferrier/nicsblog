@@ -2,15 +2,7 @@
 
 [[#Updates|goto update notes]]
 
-Today I am releasing the [[http://emacsbites.com|emacs tapas]].
-
-//Tapas//. Yeah. I blame [[http://devblog.avdi.org|Avdi Grimm]] a hacker of some
-repute who did a series of short videos to teach Ruby that he called
-[[http://rubytapas.com|the Ruby Tapas]] (they're good, watch 'em).
-
-It makes some sense. Tapas is a collection of small dishes that you
-can pick and choose from. EmacsTapas is a collection of short
-screencasts documenting Emacs which you can pick and choose from.
+Today I am releasing the [[http://emacsbites.com|emacs bites screencasts]].
 
 I've been using Emacs for a long time professionally. I often get
 asked for advice and help with Emacs and even more often people talk
@@ -42,7 +34,7 @@ things as well... so I built an app to serve the pages and their
 indexes.
 
 Of course,
-I [[http://github.com/nicferrier/emacs-tapas|built the app]]
+I [[http://github.com/nicferrier/emacs-bites|built the app]]
 using [[http://elnode.org|Elnode]].  In building the app I crossed off
 a number of //todos// with creole including building comprehensive
 structure editing and handling embed links with handlers.
@@ -50,13 +42,13 @@ structure editing and handling embed links with handlers.
 So this code:
 
 {{{
-(defvar tapas/struct-class :other
+(defvar bites/struct-class :other
   "Dynamic variable for passing the class of page.
 
 The value should be one of `:other', `:episode', `:series' or
 `:main'.")
 
-(defun tapas/creole-struct (struct)
+(defun bites/creole-struct (struct)
   (noflet ((heading->section-id (heading)
              (format
               "%s-row"
@@ -80,16 +72,16 @@ The value should be one of `:other', `:episode', `:series' or
                      (list e)))))
       tx)))
 
-(defun tapas-creole->bootstrap (struct)
+(defun bites-creole->bootstrap (struct)
   "Transform STRUCT, a creole structure, into something bootstrapable.
 
 HTML DIV elements are hacked into the structure wherever we find
 an HR element.  The HR elements are retained."
-  (let ((tx (tapas/creole-struct struct)))
+  (let ((tx (bites/creole-struct struct)))
     (append
      `((plugin-html
         . ,(concat
-            (when (member tapas/struct-class '(:episode :series))
+            (when (member bites/struct-class '(:episode :series))
               "<a id=\"homelink\" href=\"/\">emacs tapas</a>")
             "<div class=\"section\" id=\"sec-top\">
 <div class=\"container\">
@@ -100,7 +92,7 @@ an HR element.  The HR elements are retained."
         "(C) 2013 Nic Ferrier"
         "[[/terms|terms]]"
         "[[/contact|contact]]")
-       (plugin-html . ,tapas-licence-badge)
+       (plugin-html . ,bites-licence-badge)
        (plugin-html . "</footer>")))))
 }}}
 
@@ -175,13 +167,13 @@ tapas and ask the server to maintain the indexes for me.
 It's always nice when you get something unexpected out of something
 you're doing. I admit I look for that.
 
-And out of the Emacs Tapas it seems I am going to get a general creole
+And out of the Emacs Bites it seems I am going to get a general creole
 service. Which would be nice.
 
 
 == Video quality ==
 
-Back to the Tapas... I'm struggling a little with video quality with
+Back to the screencasts... I'm struggling a little with video quality with
 the tapas series. Screencasts are very difficult to do and video
 editing tools on linux aren't great. If anyone has any advice there do
 get in touch.
@@ -252,3 +244,6 @@ EmacsBites afer a request from Avdi Grimm, who owns RubyTapas. Avdi
 believes Tapas is associated with him and so, despite him not having a
 Trademark on the name I am renaming my site to avoid any confusion. I
 retain the domain name and the twitter account.
+
+I don't like altering blog articles substantively after they're
+published but I've done that here to avoid any association with Avdi.
