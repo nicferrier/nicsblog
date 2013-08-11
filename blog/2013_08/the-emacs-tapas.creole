@@ -1,6 +1,8 @@
-= releasing the emacs tapas =
+= releasing emacs bites =
 
-Today I am releasing the [[http://emacstapas.com|emacs tapas]].
+[[#Updates|goto update notes]]
+
+Today I am releasing the [[http://emacsbites.com|emacs tapas]].
 
 //Tapas//. Yeah. I blame [[http://devblog.avdi.org|Avdi Grimm]] a hacker of some
 repute who did a series of short videos to teach Ruby that he called
@@ -184,3 +186,69 @@ the tapas series. Screencasts are very difficult to do and video
 editing tools on linux aren't great. If anyone has any advice there do
 get in touch.
 
+
+== Updates ==
+
+//Update 10th August 2013// -
+someone
+[[https://news.ycombinator.com/item?id=6191077|put emacsbites on HackerNews]]. 
+
+Some stats:
+
+| front page                    | about 5 hours         |
+| score                         | 120                   |
+| visits                        | 7,514                 |
+| average time on page          | 2 minutes, 44 seconds |
+| bounce rate                   | 77.55%                |
+| average page load time        | 3.46 seconds          |
+| average page download         | 0.09 seconds          |
+| increase in gittip donations  | 0.25 cents            |
+| increase in twitter followers | 12                    |
+
+
+Browser break down:  
+
+| browser           | visits | pages/visit | avg visit duration | % new visits | bounce rate % |
+|-------------------+--------+-------------+--------------------+--------------+---------------|
+| Chrome            |  2,622 |        1.47 |           00:01:19 |       92.79% |        76.47% |
+| Firefox           |    993 |        1.59 |           00:01:41 |       89.33% |        74.92% |
+| Safari            |    620 |        1.46 |           00:01:17 |       92.42% |        76.29% |
+| Android Browser   |    395 |        1.34 |           00:00:35 |       92.91% |        81.52% |
+| Safari (in-app)   |    365 |        1.24 |           00:00:26 |       95.89% |        86.85% |
+| Opera             |     39 |        1.38 |           00:01:08 |       92.31% |        71.79% |
+| Internet Explorer |     37 |        1.59 |           00:01:28 |      100.00% |        83.78% |
+| Opera Mini        |     28 |        1.25 |           00:02:31 |       92.86% |        89.29% |
+| Mozilla           |     23 |        1.13 |           00:00:08 |       82.61% |        91.30% |
+
+
+Interesting data. The HN crowd isn't very generous for one thing. I
+think emacsbites is not doing a very good job of consolidating it's
+online presence, people can't necessarily find the twitter or the
+gittip. I did a deliberately bad UX job on the gittip because I didn't
+want to shove it down people's throats. That will likely change a bit.
+
+Many of the comments were focussed on the fact that
+my series is about learning Lisp and Emacs together, it's not a
+beginners guide to Emacs. It seems like a lot of people want a
+beginners guide to Emacs.
+
+I'm not going to do a //real// beginners guide. I think that a problem
+with those is that people get lost in //what to do//. Emacs is such a
+powerful program but without an application to use it for... what are
+you going to do?
+
+I also think that Emacs is simple enough, these days that you can pick
+it up from my videos if you know what an editor is. Which I expect
+most people do.
+
+What I will do is to try and get some of the people who have done
+tutorial screencasts to record more short screencasts and try and link
+to them.
+
+I'll also link to a list of the existing ones anyway.
+
+//Update 7th August 2013// - I am renaming from EmacsTapas to
+EmacsBites afer a request from Avdi Grimm, who owns RubyTapas. Avdi
+believes Tapas is associated with him and so, despite him not having a
+Trademark on the name I am renaming my site to avoid any confusion. I
+retain the domain name and the twitter account.
