@@ -1,0 +1,168 @@
+= Setting up SMTP auth =
+
+If you're on the road a lot, there's an obvious way to setup email on
+a laptop. Have a local SMTP MTA to which you can send email locally so
+it can queue your emails for you until you connect to some Wifi
+somewhere. Use an MTA on the Internet as a relay for your laptop,
+ideally use your company's MX.
+
+The complication is setting up your mail relaying so that this works
+in a secure way. You don't want to make an open relay
+anywhere. Postfix can authenticate when sending mail to a relay -
+that's an ideal way to work. 
+
+By the way, Postfix is a great solution to mail. Personally I gave up
+on Exim after some nutter in the Debian project made the config so
+confusing that you need a masters degree in debconf before you can
+change anything. The Postfix package has never suffered that level of
+idiocy, fortunately, so it's my preference for email everywhere. It
+helps that it's also awesome fast and easy to setup.
+
+== Doing auth with the server ==
+
+The first thing you need is to be able to test MTA auth on the
+relay. Here's how to use Emacs to test:
+
+{{{
+(let* ((username "testy")
+       (password "testytest")
+       (smtp-server "someserver.example.com")
+       ;; make a stream
+       (tcp (open-network-stream 
+               "smtptest" "*smtptest*" 
+                smtp-server 25)))
+  ;; Clear the buffer and then send auth
+  (with-current-buffer (process-buffer tcp) (erase-buffer))
+  (switch-to-buffer-other-window (process-buffer tcp))
+  (accept-process-output tcp)
+  (process-send-string
+   tcp (format "AUTH PLAIN %s\r\n"
+               (base64-encode-string (format "\0%s\0%s" username password))))
+  (accept-process-output tcp)
+  (delete-process tcp))
+}}}
+
+I'm sure there are other options, being an Elisp nut this one works
+for me.
+
+== Setting up the relay MTA ==
+
+Packages you'll need on your relay:
+
+* sasl2-bin
+* postfix (obviously)
+
+There's //quite// a good
+guide [[http://www.postfix.org/SASL_README.html|here]] but I found lot
+of problems so I'll document the whole thing.
+
+
+=== Setup saslauthd ===
+
+Setting up saslauthd is a bit of a
+pain. [[http://www.jimmy.co.at/weblog/?p=52|This guide]] gives us
+this:
+
+{{{
+rm -r /var/run/saslauthd/
+mkdir -p /var/spool/postfix/var/run/saslauthd
+ln -s /var/spool/postfix/var/run/saslauthd /var/run
+chgrp sasl /var/spool/postfix/var/run/saslauthd
+adduser postfix sasl
+}}}
+
+Then restart postfix and saslauthd
+
+
+=== Setup postfix for auth ===
+
+Postfix needs:
+
+{{{
+smtpd_sasl_path = smtpd
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_security_options = noanonymous
+}}}
+
+in {{{main.cf}}}.
+
+Also in {{{main.cf}}} you need to alter the
+{{{smtpd_recipient_restrictions}}}. You presumably have this setup
+already, so you just have to add the ability to allow SASL authorized
+connections, something like:
+
+{{{
+smtpd_recipient_restrictions =
+  permit_sasl_authenticated
+  permit_mynetworks
+  reject_unauth_destination
+  reject_invalid_hostname
+  reject_unknown_sender_domain
+}}}
+
+You also need to setup how Postfix will talk to {{{authsasld}}}, on my
+system I made a {{{/etc/postfix/sasl/smtpd.conf}}}:
+
+{{{
+pwcheck_method: saslauthd
+mech_list: PLAIN LOGIN
+}}}
+
+Now restart Postfix and you should be able to test the auth locally
+using a PAM user:
+
+{{{
+testsaslauthd -u somelocaluser -p passwordforthat
+}}}
+
+You should also be able to connect to the SMTP server and send an AUTH
+request. The ELisp above is one way of trying that.
+
+== the postfix SMTP client ==
+
+On your mobile computer you need to setup the postfix client. I added
+the following lines to {{{main.cf}}}
+
+{{{
+relayhost = [MTA-name]
+smtp_sasl_auth_enable = yes
+smtp_sasl_mechanism_filter = plain, login
+smtp_sasl_security_options = noanonymous
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+}}}
+
+Where ///MTA-name// is the name of my actual, Internet connected, MTA.
+
+This sets up the SMTP engine to send auth to servers. You then have to
+add your login details for the MTA to {{{/etc/postfix/sasl_passwd}}};
+make a file {{{/etc/postfix/sasl_passwd}}} something like this:
+
+{{{
+[MTA-name]   username:password
+}}}
+
+and then run the postmap commnd to make the hashed version:
+
+{{{
+postmap hash:/etc/postfix/sasl_passwd
+}}}
+
+you shouldn't have to worry about leaving the password on your
+laptop. But it's maybe safer to make the file only readable by
+{{{root}}}:
+
+{{{
+chmod g=,o= /etc/postfix/sasl_passwd*
+}}}
+
+Now you should be able to restart Postfix and it will auth to your
+relay MTA whenever you send anything.
+
+== An orthogonal aside ==
+
+This is all an example of a pattern of computing I'm very interested
+in, agent computing. You ask your laptop to get something done, send
+an email for example, and it doesn't actually do it itself, but works
+with a bunch of other software elsewhere to get it done. Rather than
+the arguments about centralized or peer to peer Internets I think this
+is the way to go.
