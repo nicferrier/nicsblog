@@ -1,0 +1,109 @@
+= Pushing the repo to live: yes or no? =
+
+A big change in release management over the last 10 years has been
+//pushing the repo to live//. You develop in some dynamic language,
+Ruby, Python, whatever, and when you need to release you push the
+changes from your source  repository to a live machine. Often
+literally with {{{git push}}} or some such.  Tools like Capistrano
+have been built around the concept and are popular and it's even
+encouraged by PaaS tools like Heroku.
+
+But is pushing to live a good idea?
+
+No, I reckon. Let's look at the supposed advantages first:
+
+* it's easy
+* I have the change history on all my machines, wherever I am I can see what I did
+* the structure of my live code base relates strongly to my repository structure
+* I sometimes make changes on live and I want to be able to pull them back
+
+Let's critique these:
+
+//It's easy// - Doesn't tell us anything; it's easy, why?
+
+//I have the change history on all my machines// - Oh for goodness
+sake. Just open another shell session to wherever you do have
+history. Don't like switching shell sessions? use tiled windows. This
+is not a root cause problem.
+
+//The structure of my live code base relates strongly to my repository
+structure// - now you're just making it up. How is this an advantage?
+You could easily take a zip or a tar of your repo structure and dump
+that on live and it would have the same structure. Come on. Try
+harder.
+
+//I sometimes make changes on live and I want to be able to pull them
+back// - now you're being honest and this is a good one. And yes, I
+can hear the legions of //professional engineers// sucking the air
+through their teeth and exclaiming //Making changes on live sir? No
+sir!// but I've often found that if you're doing lean engineering and
+you've got very distributed small services and you're doing some A/B
+test or canary test then directly mucking with the code on live is
+quite useful. It's kind of like having a repl on your users. Certainly
+I've done it to great effect and syadmins of my parish have done it to
+great effect. But this is a reason to have a good repository related
+code base, not to push the repository itself everywhere. If you want a
+very dynamic environment on live for a test then push the repo there
+for the period of the test. It's not a reason to do everything that
+way all the time.
+
+
+== ... and now the bad things ... ==
+
+Given that we've debunked the good things what are the bad things
+about repository pushing?
+
+* it adds resistance to changing the structure of the resulting code for deploy
+** if you build an artifact to push your code //can// change structure, whether that's a good thing or not is up to you; but you have the option
+
+* it makes you check in things that should not be checked in
+** where you absolutely must have an artifact of your build present you have to now pre-build it and check it in
+** this violates the Don't Repeat Yourself principle, maybe that's ok sometimes but I think it's always a useful smell about a system
+** why is DRY useful? because repeating yourself opens up the potential to have information out of sync, when information is out of sync who knows which is the authoritative version?
+
+* or it makes you build things that should not be checked in over and over, on each live server
+** this is bad because:
+*** you're building things over and over, duh
+*** you need the build tools on live, potential security hole!
+*** yes, I've argued you should be able to alter live, but only in a time limited way. Get the build tools, pull the repo, do your hacking and then //remove// the artifacts you created.
+
+* change history can expose all sorts of weaknesses to servers
+** it's just another thing to have to protect ...  and for what benefit?
+
+* pushes can fail in complex ways, for example: merge errors
+** just sending a file can fail too of course. But a lot more simply: the network died, the disc was full, etc...
+
+* pushing the repository alters the state of the running code, things are inconsistent
+** mostly everything in an app server will be in memory already but what if it's not?
+** suddenly you are potentially introducing short lived bugs that you don't know about and will be unlikely to find the cause of
+** and pushing to big repositories can take a long time
+** it's possible to alleviate this problem by using blue/green deployment but that's harder because you need to wait for the push to all the servers but pushes can fail in complex ways.
+
+== ok, alternatives? =
+
+You could just make a build script that checks out the code without
+the change history and rsyncs or otherwise mirrors it to your live
+machines. That's almost just as easy as using the repo directly.
+
+The best thing to do IMO is to write a script that builds an artifact
+of your repository and pushes it to live. Use a tarball, a zip file,
+whatever you like and then mirror that to your servers and unpack it
+there.
+
+This gives you options and points of abstraction:
+
+* when you tar/zip you can change the structure of the file system or add in built artifacts with a clear derivation
+* when you copy the tar/zip to the live servers that can be under the control of the servers (pull) or under central control (push)
+** this makes blue/green setups much easier
+** servers can notify a central switch over when they are ready (when the file has arrived and been unpacked)
+** or you can have a fork/join model with a centralized script
+
+== you're not Martin Fowler ==
+
+No, you're right. But I did stand next to him once.
+
+I've done this pushing to live stuff. And I've seen it done where I
+could see the weaknesses. It's a case of //I used to be bad but I done
+wrong and now I seen the light//.
+
+Which is why you should listen.
