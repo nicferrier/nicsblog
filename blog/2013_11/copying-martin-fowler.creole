@@ -1,0 +1,67 @@
+= blatantly copying Martin Fowler =
+
+Because I was a ThoughtWorks principle, people sometimes ask me about
+Martin Fowler. He's the Chief Scientist at ThoughtWorks. //"Does he wear
+a white coat and experiment with explosive agile things?"// they joke.
+
+And the answer is that sometimes he might do that. I'm not sure. But
+most of the time he does a really cool job.
+
+When you're sitting on a ThoughtWorks project in the middle of nowhere
+Martin, just occasionally, turns up. It always seemed to me he
+appeared by magic, just turning up and sitting down. I often wondered
+how he got through security at these various clients. Perhaps he's a
+ninja as well. I never asked him that.
+
+Anyway, he sits down and we chat about the weather for 5 minutes
+because, you know, we're both English even though he's an American
+now. 
+
+And then he asks "How's it going?". And you tell him. And he gets out
+a notebook, or a laptop or something and starts writing down
+notes. And occasionally, you'll say something about this piece of
+technology or this practice or that problem and then he'll say
+something like "Oh, do you know that Jim in Canada is doing that?" or
+"You should talk to Jane in Brazil about that because they found an
+interesting solution..." or something like that.
+
+You sit and talk to him for a while and then he might even come out to
+dinner with you, especially if you've got a bit of a team there. And
+you'll chat about Software and Agile and Northamptonshire and the
+terrible British weather and the hideousness of travelling and what
+it's like to be quite famous. And then he'll fly on to the next team.
+
+And then he goes home and he puts all this information from all these
+people into his head and he mixes it around and it comes out as blog
+posts. Blog posts about problems people are experiencing every day,
+blog posts about tech trends that he actually sees happening. Not ones
+that people are paying him to write about. While he's writing them he
+often involves the people that he's been talking to. Which pulls
+everyone back together around that one problem. Even if only for a few
+days while everyone discusses what Martin found.
+
+In this way his job is very scientific. Which is why he's
+ThoughtWorks' Chief Scientist.
+
+Why am I writing a blog post about this? Because I passionately 
+believe that Martin's job is one that is not being done by enough
+large firms. ThoughtWorks has about 3,000 people and I'd guess it was
+about the size of many struggling enterprises. One thing those
+enterprises could do to improve would be to have people doing the
+Martin Fowler role. Travel round, even virtually, and talk to
+people. Find out what they're doing, how they're solving problems,
+what new things they are using, if any. And then write about it and
+involve the people you're writing about in writing about it.
+
+It's this process of constant review and re-broadcast that seems to me
+to be central to getting better. In effect, what Martin does is a
+constant retrospection on ThoughtWorks' clients technology trends.
+
+I am trying to do exactly that at BwinParty. like ThoughtWorks and
+many other non-small enterprises we are heavily distributed so there's
+a lot of travelling. I'm not trying to do it on my own
+though. Instead, I'm trying to get a few people across the
+organization interested in doing this frequent travelling and meeting
+people and learning from them.
+
+Maybe it would work at your enterprise?
