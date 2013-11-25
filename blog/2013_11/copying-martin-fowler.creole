@@ -1,6 +1,6 @@
 = blatantly copying Martin Fowler =
 
-Because I was a ThoughtWorks principle, people sometimes ask me about
+Because I was a ThoughtWorks principal, people sometimes ask me about
 Martin Fowler. He's the Chief Scientist at ThoughtWorks. //"Does he wear
 a white coat and experiment with explosive agile things?"// they joke.
 
