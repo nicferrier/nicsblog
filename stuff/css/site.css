@@ -173,7 +173,6 @@ h2 {
 font-size: 20pt;
 color: CadetBlue;
 border-bottom: thick solid CadetBlue;
-clear: both;
 }
 
 #emph {
@@ -234,8 +233,7 @@ color: Ivory;
 
 #footerside {
 float: right;
-margin-right: 5em;
-float: right;
+margin-right: 2em;
 text-align: right;
 width: 18em;
 padding-bottom: 2em;

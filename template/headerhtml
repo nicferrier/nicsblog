@@ -10,7 +10,7 @@
         src="https://www.gittip.com/nicferrier/widget.html"
         width="48pt" height="20pt"></iframe>
 </div>
-<div id="header" style="float:right;">
+<div id="header">
     <ul>
 	<li id='footerside'>
             <a id="donate"/>
