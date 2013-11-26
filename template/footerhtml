@@ -113,6 +113,7 @@
 
 	    <a id='devops'></a><h4>DevOps</h4>
             <ul>
+              <li><a href="/blog/2013_11/copying-martin-fowler">Why enterprises should copy what <i>Martin Fowler</i> does at <i>ThoughtWorks</i></a></li>
               <li><a href="/blog/2013_07/the-pgdevbox"><i>The PostgreSQL Dev Box</i> - easily get going with PostgreSQL</a></li>
               <li><a href="/blog/2013_05/the-product-owner"><i>The role of the Product Owner</i> - and how it works with a DevOps team</a></li>
               <li><a href="/blog/2013_04/dear-nic-are-netflix-evil"><i>Dear Nic</i> are NetFlix <i>really</i> evil?</a></li>
