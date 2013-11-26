@@ -47,21 +47,30 @@ based development and all that.
 Orchestration requires a conductor. The conductor directs the
 orchestra during the performance.
 
-Choreography is the process of agreeing, between dancers, how a dance
-will be performed //before// it is performed. We don't stop during the
-performance of the dance to discuss alternative moves and we don't
-take instruction from a conductor during the dance. We listen to the
-music and we follow the choreography that we agreed.
+Choreography is the process of agreeing, between the dancers, how a
+dance will be performed //before// it is performed. We don't stop
+during the performance of the dance to discuss alternative moves and
+we don't take instruction from a conductor during the dance. We listen
+to the music and we follow the choreography that we
+agreed. Importantly, if there even is an autocratic //choreographer//
+that person might even be dead during the actual performance. Likely
+as not the performance will differ in very subtle ways from what has
+been agreed. The choreography has to have built in tolerance for those
+differences.
 
 We have this same idea of choreography in service
 orientation. Choreography means to encode in our services what the
-other dancers in the performance are, directly, before we perform the
-dance, before we release. 
+other dancers in the performance are or are doing, directly, before we
+perform the dance of live runtime.
 
 When we change the dance, when we change the services that we
 co-operate with, we can't do that as we dance. We have to stop the
 dance, change the choreography, maybe practice a bit, and then start
-dancing again.
+dancing again. We start a new form of the dance instead of trying to
+improvise the dance as we go along. Improvising //might// work if
+there are only a few participants... but if there's a whole marching
+band you better be sure they all know what they're doing before they
+start.
 
 == more choreography misconceptions  ==
 
