@@ -1,0 +1,115 @@
+= What is Service Choreography? =
+
+One thing with micro-services that people get caught up on is how to
+do orchestration. The answer is don't. Instead of doing orchestration,
+do choreography.
+
+== orchestration as an anti-pattern ==
+
+What is service orchestration? It's the process of managing different
+services and the dependencies between them such that we promote the
+principles of loose coupling.
+
+The tragedy of this is that orchestration efforts almost inevitably
+result in the introduction of frameworks specifically designed to
+facilitate orchestration. Often this results in large indirection
+tables with services declaring that they want to use XYZ service and
+other services declaring they might provide XYZ service. At a macro
+level orchestration systems look familiar to Object Oriented
+programmers. They look like the sorts of things you get with Java
+or C# interfaces and dependency injection.
+
+The thing is, often the dependencies of a service don't have multiple
+implementations, only one. So as soon as we introduce orchestration
+for that we're introducing needless complexity. Why parameterize
+something that doesn't need to be parameterized?
+
+Orchestration is very often achieved through indirection with a
+service registry. Orchestration is therefore useful when runtime
+configuration of a service might change on the fly.
+
+== why runtime adaption doesn't matter ==
+
+But we have continuous delivery (we do, right?). Why does run time
+adaptation matter?  if we want to change what a service calls we don't
+need dependency injection or any parameterization on the service call,
+we'll just make a change to the depending service and do a release,
+right?
+
+And changing the code to effect a change, rather than changing the
+configuration of the code to effect the change, is better because you
+reduce the number  of places that you have to record change. If we use
+the code we record the change in version control and we can use trunk
+based development and all that.
+
+== hence choreography ==
+
+Orchestration requires a conductor. The conductor directs the
+orchestra during the performance.
+
+Choreography is the process of agreeing, between dancers, how a dance
+will be performed //before// it is performed. We don't stop during the
+performance of the dance to discuss alternative moves and we don't
+take instruction from a conductor during the dance. We listen to the
+music and we follow the choreography that we agreed.
+
+We have this same idea of choreography in service
+orientation. Choreography means to encode in our services what the
+other dancers in the performance are, directly, before we perform the
+dance, before we release. 
+
+When we change the dance, when we change the services that we
+co-operate with, we can't do that as we dance. We have to stop the
+dance, change the choreography, maybe practice a bit, and then start
+dancing again.
+
+== more choreography misconceptions  ==
+
+//If you don't have parameterization of service endpoints then you are
+reducing your service's ability to scale.//
+
+This is a fallacy based on the idea that you need to dynamically alter
+the endpoint that a service talks to in order to scale it. But that's
+not true. Altering the endpoint that a service talks to is one way to
+scale but if you use protocols that can be proxied then another way of
+scaling is to just place a proxy between the client and the endpoint
+and make the proxy load balance to different actual backends.
+
+In other words we need less loose coupling in the code if we use
+protocols that provide facilities for loose coupling.
+
+What's one of those protocols? well HTTP. You can't get much more
+common than that. Another example is SMTP. 
+
+//We don't orchestrate just between services but within them//
+
+This shows a fallacy about how to scale things. Scaling things is
+absolutely about rebuilding services. Either it's that or you over
+engineered the service that did not need to scale. 
+
+Orchestration advocates often like to pretend that adjuststing a
+parameter will let you scale a particular service. But if it's so easy
+to do that why not automate and pipeline that change so a service can
+automatically adapt to the load? And then you no longer have
+orchestration, but choreography.
+
+//Without a centralized configuration management schema we're lost//
+
+This is another tenet of orchestration. Another way of looking at it
+is that it is an effort to centralize all configuration and
+environment management. Microservice approaches reject this, building
+massively centralized anything tends to result in overly expensive
+solutions. Why not aggregate the information that does need to be
+centralized, deliberately, instead of centralizing by default? In
+other words, isn't centralizing everything just another example of
+premature optimization?
+
+
+== there's always another way to say  it ==
+
+In this case we might say:
+
+//yeah, yeah, dependency injection is super cool, but let's not use it
+for everything.//
+
+ 
