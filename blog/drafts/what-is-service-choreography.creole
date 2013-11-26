@@ -87,7 +87,7 @@ This shows a fallacy about how to scale things. Scaling things is
 absolutely about rebuilding services. Either it's that or you over
 engineered the service that did not need to scale. 
 
-Orchestration advocates often like to pretend that adjuststing a
+Orchestration advocates often like to pretend that adjusting a
 parameter will let you scale a particular service. But if it's so easy
 to do that why not automate and pipeline that change so a service can
 automatically adapt to the load? And then you no longer have
