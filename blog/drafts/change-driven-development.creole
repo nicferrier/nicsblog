@@ -1,0 +1,321 @@
+= Change Driven Development =
+
+Change driven development is my codification of a lot of different
+development practices that are about achieving flow.
+
+DEFINE FLOW
+
+When I talk about Change Driven Development I am talking about all
+these things:
+
+* TDD
+* test first
+* ATDD
+* toggle first
+* tracer bullets
+* iterating
+* stupid first
+* lean engineering
+* systems thinking
+* microservices
+* automation and control
+
+I'm going to describe each one of these in this article but I'm also
+going to explain what Change Driven Development is over and above
+these things.
+
+In summary I am going to claim that Change Driven Development is the
+acknowledgment that Change to a System should be a first class
+construct.
+
+
+=== a brief history of sensible policies ===
+
+//TDD// - //Test Driven Development// or more usefully //Test Driven
+Design// is the process of using unit tests to aid the production of
+code. If we write the //test first// and then write the code to make
+the test pass we establish a pattern of promoting code safety at the
+lowest level of functions and methods and modules and classes. Test
+first and TDD is consistently resisted by those who haven't really
+tried it and consistently praised by those who have kept at it. Like
+all things, there are times when it's less useful than others, but it
+is a very useful technique to employ as a programmer.
+
+One of the most useful things about TDD and test first is that it
+highlights where problematic dependencies are at a very early
+stage. When we introduce the first test for a dependency we will start
+to see the best way to abstract the dependency so that it can be
+properly tested. Since abstracting the dependency and retaining
+control of the dependency tend to be the same thing TDD often has
+excellent Design effects.
+
+//ATDD// - //Acceptance Test Driven Development (or Design)// is doing the
+same thing as TDD but with Acceptance tests. A classic model of
+testing is the Agile Testing Pyramind {{EMBED}}. This shows that unit
+tests are extensively used because they are the cheapest form of test
+to write, run and maintain. It's a key insight to notice that if we
+could make Acceptance Tests as cheap as Unit Tests we would probably
+just maintain Acceptance Test suites. We probably would still write
+unit tests with TDD because of the positive design effect, but maybe
+we wouldn't keep them as artifacts.
+
+ATDD has other positive effects than just the ones that are obvious
+from scaling up TDD. ATDD involves people in the business chain, it
+creates a possibility of getting the business people to agree to a
+contract with the developers expressed with ATDD. Thus it makes
+more visible the cost of changing the contract. 
+
+Because of this involvement with business people ATDD is often
+practiced with a tool that makes business involvement easier such as
+Fitnesse or Robot [[LINKS]]. But another aspect of ATDD that is
+interesting is that more people speak code now than ever before and we
+can expect that to only get better. Presenting ATDD tests in a high
+level language like Python or Ruby is possible, I would say
+beneficial. Code is what we practice, anything else is translating
+code and therefore introduces ambiguity.
+
+//Toogle first// is the practice of using software toggles (a switch
+to allow you to turn a piece of code on or off) to control all changes
+in a system. Toggle first is the practice of accepting that everything
+we add or change (even fix) should be controllable as a first class
+construct. So we add an if statement around every thing we do. The way
+the toggle is implemented varies tremendously. Some toggles are just
+straight if's:
+
+{{{
+boolean my_new_feature = FALSE;
+if my_new_feature
+then
+   // ...
+else
+  // whatever the old code did ...
+endif;
+}}}
+
+Some toggles might use some framework to expose the toggle so that it
+can be more effectively switched at runtime:
+
+{{{
+if ToggleRuntimeStore["my_new_feature"]
+then
+   // ...
+else
+  // whatever the old code did ...
+endif;
+}}}
+
+It's important to note that the 2nd form is more of an anti-pattern of
+poor automation and delivery speed than it is a more configurable
+system. If you had good automation changing a toggle in the source
+code directly is simply a matter of rolling out a new change. If that
+takes seconds then it seems better to record the change in version
+control than use an outside system to effect the change.
+
+Another thing that makes toggles particularly interesting is that they
+separate the process of deployment from the process of release. A
+piece of code to blow up all the servers can now safely be deployed,
+as long as the toggle remains off everything is cool. This fact means
+that we can control long lived deploys by breaking them up and not
+turning on a feature with it's toggle until everything in the
+deployment is done. That can even be orchestrated by a deployment
+agent.
+
+//Tracer bullets// are related to toggles and to TDD. A tracer bullet
+is an initial release of a new project that should travel to
+production. Tracer bullets should have no business code in them at
+all, in fact, the ideal Tracer bullet for a Java backed website might
+be:
+
+{{{
+##! java
+import javax.servlet.http.*;
+
+public void doGet(HttpServletRequest request, 
+                   HttpServletResponse response) throws ... {
+  response.sendStatus(200, "Ok");
+}
+}}}
+
+Firing the tracer bullet means to compile this, build a jar, build a
+deployable, whatever... build acceptance tests for it, get them run,
+get it on all the environments you are required to, get it tested
+there, get it on production and tested there. But do all that under
+automation. With no manual steps. Where the bullet hits a wall and
+stops then you work to take down the wall (or make a hole in it) and
+then fire another bullet.
+
+Tracer bullets are used when you need to go really fast and you have a
+lot of steps to go through or when those steps are unknown. It can
+happen in parallel to a lot of development. If the tracer bullet fires
+many times because of blockers each tracer might carry the latest dev
+work, appropriately toggled.
+
+
+//Iterating// needs to be called out separately because so many of us and
+the organisations we work for are so bad at it. Iterating is tied very
+closely to //stupid first//. Brian Kernighan [[LINK]] said that we
+should never write programs as clever as we are because you have to be
+20% smarter to debug them. Most designers of programs seem to have a
+jolly laugh at this and then forget it.
+
+But how you iterate is that you //start stupid//. Then changing
+something is easy. Starting stupid could be as easy as making a tracer
+bullet. Another is to use an MVP [[see my previous advice on MVPs]],
+but a real MVP, not a Minimum Whatever It Was At RBS Product.
+
+Iterating is what you do to change from pure stupid to something that
+can be used. But you do it step by step and release them all. Ideally
+you release them all to customers.
+
+I was recently asked, with attention spans being what they are, if I
+wasn't worried that uploading a shoddy version of an app to an
+appstore would tarnish an apps reputation. Well, no. Attention spans
+being what they are I doubt anyone remembers. And anyway, changing
+brand (and even UI) for experiments is pretty easy. I wouldn't want to
+release to a target or successful brand with really broken
+software. But I don't see why that would ever be necessary.
+
+This all brings us to //lean engineering// which takes the ideas from
+Eric Ries' //The Lean Startup// and applies them to engineering. 
+{{NOT SURE ABOUT SAYING THIS}} The ideas are worthwhile anyway: small iterations focussed on experimental
+changes to behaviour, when an experiment succeeds capitalize on that
+with more experiments around that. When experiments fail, roll back to
+previous states and try something else.
+
+One of the interesting things about lean engineering is what an
+amazing device for getting rid of technical debt it is. If we start to
+build a lot of technical debt over a feature a few experiments may
+tell us that the whole branch of ideas is pointless and thus we can
+remove the code that drives it. Thus removing the debt.
+
+Of course, it would be bad if that was your only mechanism for dealing
+with technical debt.
+
+//Systems thinking// is thinking about the system holisitcally and not
+just the component part that you're dealing with now. Too often we
+have employed database administrators who only think about the
+database, web programmers who only think about the web servers,
+sysadmins who only think about the hardware and designers who only
+think about snowboarding and no one to think about the whole
+system. All these people are somewhat excused their focus. These areas
+of technoloy are difficult and specialization is necessary. And
+snowboarding is cool. But we need to take care that there are
+technical people who are thinking about the whole system and they
+should help the specialists understand the whole system. 
+
+With past technology architectures system thinking has been
+difficult. There have been so many varied components working in so
+many different ways that you almost had to be an expert in all of them
+to get anywhere. 
+
+Which brings us to //Microservice architecture// which is a relatively
+new take on Service Oriented Architecture. SOA is a well worn idea,
+that services should be built instead of monolithic
+applications. Services talk to each other and collaborate on solving
+the system whole. The trouble is that the complexity of SOA
+architectures increased rather than decreased the problem of
+understanding the system. In a typical SOA architecture you might
+easily find 10 different wire protocols, different types of message
+passing (asynchronous and synchronous) and many different service
+technologies, queue engines, application servers, web servers,
+databases... all wrapped with complex monitoring and redundancy
+systems
+
+Microservices aims to change that in three ways, by limiting the focus
+of a service to one thing, by emphasizing choreography over
+orchestration and by standardizing the protocol for interactions as
+HTTP. Doing one thing and one thing well is sometimes called //the
+Unix way// and has clear benefits. Actually the enabler of that has
+been the wide spread acceptance of websockets as part of the HTTP
+stack, now there is a clear way to write simple HTTP based services
+with either synchronous or asynchronous communications. 
+
+Choreography rejects much of what people have tried to achieve with
+Orchestration which often looks like configuration management went on
+a bender and ended up in an opium den. Choreography is the process of
+defining, as part of the service, what it's interactions are going to
+be. If service X needs to provide a message to service Y it should be
+coded like that, sending (probably JSON) data with HTTP from service X
+to service Y. Hardcoded. If any scaling or redundancy needs to be done
+it can be done with proxies and other protocol aware gateways. We no
+longer need to orchestrate because we have standardized the protocol.
+
+Microservices are at once easier to understand themselves and a
+simplifying force for a system. Not that the system has less
+components. Absolutely not, there are many more components in a
+microservices architecture than traditional architectures (wrapping
+each non-HTTP service in a microservice is something that is often
+done) but the components all have strong uniformity (they all talk
+HTTP) so we understand how to scale them individually (proxies,
+basically). This reduces monitoring and testing complexity but also
+reduces automation complexity. We know we have to roll out lots of
+little services so we are required to automate everything.
+
+Which brings us finally to //automation and control// which is the
+computerization of everything to do with deployment and operating a
+product. Automation and control means continuous delivery and
+computerized change management through automated build and test
+pipelines.
+
+=== the history of Change Driven Development ===
+
+* initially developed at WooMe
+* the process of writing change driven acceptance tests which are then discarded
+* the process of rolling out gradual change to databases
+** key to which is the process of separarting deployment from release (or toggles)
+** other people have been doing this for a time, dbdeploy etc...
+* @ThoughtWorks - other stuff that people were doing obviously fits in
+** toggles
+** tracer bullet
+** influence of Martin Fowler, "this is what we all did in SmallTalk"
+
+=== what is change driven development if it's more than all these things? ===
+
+It is the acknowledgment, of everyone involved in development, that
+everything we do is a change to the overall state of the system and
+that, just like any mutation, we should try to be deliberate and in
+control.
+
+
+Change Driven Development is achieved when:
+
+the Product Owners stop trying to add a new feature and instead seek
+to explore a new direction with experiments which might culiminate in
+a new feature;
+
+the Product Owner, the Designers and the Development Team no longer
+have to perform complex negotiation over estimation because each
+separate task is so small that everyone is confident the task will
+take a non disruptive amount of time;
+
+the Development Team and the Designers are picking up new tasks from
+the Product Owner with little prioritization because everything is an
+experiment and where something is urgent it's obvious;
+
+the Designers are constantly iterating user experience through
+experiments;
+
+the Definition Of Done for any experiment is as clear to the
+Development Team and the Designers as it is for the Product Owner,
+they all speak enough code to understand the formal language of the
+Acceptance Tests written around each Change;
+
+the Development Team easily translate experiments or other work to do
+into a series of changes to the code which are all toggled and have
+individual acceptance tests wrapped around them;
+
+change is now a first class construct.
+
+=== related thoughts ===
+
+* the history of change history
+** sccs - record changes to a file
+** cvs - record changes to a file, centrally
+** dvcs - record changes to a set of files with peer to peer
+** toggles - record changes as code
+
+the history shows that we want to record more and more about change,
+to understand it semantically.
+
+
+frameworks and development - starting stupid?
