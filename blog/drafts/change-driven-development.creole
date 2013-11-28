@@ -129,7 +129,7 @@ straight if's:
 
 {{{
 ##! java
-boolean myNewFeature = FALSE;
+boolean myNewFeature = false;
 if (myNewFeature) {
    // ...
 }
