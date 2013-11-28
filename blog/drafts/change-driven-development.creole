@@ -17,8 +17,11 @@ these things:
 * stupid first
 * lean engineering
 * systems thinking
-* microservices
+* microservice architecture
 * automation and control
+
+
+=== a brief history of sensible policies ===
 
 I'm going to describe each one of these in this article but I'm also
 going to explain what Change Driven Development is over and above
@@ -28,18 +31,17 @@ In summary I am going to claim that Change Driven Development is the
 acknowledgment that Change to a System should be a first class
 construct.
 
+==== Test Driven Development ==== 
 
-=== a brief history of sensible policies ===
-
-//TDD// - //Test Driven Development// or more usefully //Test Driven
-Design// is the process of using unit tests to aid the production of
-code. If we write the //test first// and then write the code to make
-the test pass we establish a pattern of promoting code safety at the
-lowest level of functions and methods and modules and classes. Test
-first and TDD is consistently resisted by those who haven't really
-tried it and consistently praised by those who have kept at it. Like
-all things, there are times when it's less useful than others, but it
-is a very useful technique to employ as a programmer.
+//Test Driven Development// or more usefully //Test Driven Design// is
+the process of using unit tests to aid the production of code. If we
+write the //test first// and then write the code to make the test pass
+we establish a pattern of promoting code safety at the lowest level of
+functions and methods and modules and classes. Test first and TDD is
+consistently resisted by those who haven't really tried it and
+consistently praised by those who have kept at it. Like all things,
+there are times when it's less useful than others, but it is a very
+useful technique to employ as a programmer.
 
 One of the most useful things about TDD and test first is that it
 highlights where problematic dependencies are at a very early
@@ -48,6 +50,8 @@ to see the best way to abstract the dependency so that it can be
 properly tested. Since abstracting the dependency and retaining
 control of the dependency tend to be the same thing TDD often has
 excellent Design effects.
+
+==== Acceptance Test Driven Development ====
 
 //ATDD// - //Acceptance Test Driven Development (or Design)// is doing the
 same thing as TDD but with Acceptance tests. A classic model of
@@ -65,14 +69,55 @@ creates a possibility of getting the business people to agree to a
 contract with the developers expressed with ATDD. Thus it makes
 more visible the cost of changing the contract. 
 
-Because of this involvement with business people ATDD is often
-practiced with a tool that makes business involvement easier such as
-Fitnesse or Robot [[LINKS]]. But another aspect of ATDD that is
-interesting is that more people speak code now than ever before and we
-can expect that to only get better. Presenting ATDD tests in a high
-level language like Python or Ruby is possible, I would say
-beneficial. Code is what we practice, anything else is translating
-code and therefore introduces ambiguity.
+One big difference between ATDD and TDD tests is that Acceptance Tests
+are not owned just by the developers. The Product Owner's also care
+about what is in the Acceptance Test. Indeed, the best way to do
+software development is for the Product Owner to encode their
+//Definition of Done// in an Acceptance test. Because of this
+involvement with business people ATDD is often practiced with a tool
+that makes business involvement easier such as Fitnesse or
+Robot [[LINKS]]. But another aspect of ATDD that is interesting is
+that more people speak code now than ever before and we can expect
+that to only get better. Presenting ATDD tests in a high level
+language like Python or Ruby is possible, I would say beneficial. Code
+is what we practice, anything else is translating code and therefore
+introduces ambiguity. {{different article on testing dissonance}}
+
+The way that Acceptance Tests are written is key to Change Driven
+Development. When we deliver changes to a system, as opposed to whole
+features, we only need to acceptance test the change. So when we look
+at the change to the product that we are making we can test just that
+change. Of course, if we know we are delivering a rapid sequence of
+changes we should probably iterate the just the one test to bulk up
+the test with all those changes. But ordinarily we are not doing that,
+we release a change to one part of the system which may take us just
+one day to develop (or much less even) and then we leave that change
+long enough to establish whether the change worked (did the user's
+like it? did it collect the data we wanted? did it improve the
+performance we wanted?)
+
+Test hygiene becomes much easier with change driven development. We
+hardly ever have to alter existing tests because they refer to
+changes. Instead we can simply stop running them. The point at which
+you can stop running a change test is when there is nothing else going
+out which might break that change, for example, when all other changes
+which were in development at the same time as the change have been
+released and shown to be working. Normally, if you have change flow,
+this is a couple of days or a week. Very rarely is it more than that.
+
+Hygiene never makes tests go away completely. They're always in source
+control for one thing. So even if we don't run them they are always
+available to us as a resource to write the next change.
+
+And it really should be the //next// change. I recommend naming change
+tests after stories or tickets, so you get the story or ticket number
+in the name of the test. When the next change story comes along, you
+build another test, even if the change is almost identical as one
+you've done before. This gives you a discoverable audit trail of
+changes with acceptance tests and achieves a kind of transactional
+change of the entire system.
+
+==== Toggle First ====
 
 //Toogle first// is the practice of using software toggles (a switch
 to allow you to turn a piece of code on or off) to control all changes
@@ -83,25 +128,27 @@ the toggle is implemented varies tremendously. Some toggles are just
 straight if's:
 
 {{{
-boolean my_new_feature = FALSE;
-if my_new_feature
-then
+##! java
+boolean myNewFeature = FALSE;
+if (myNewFeature) {
    // ...
-else
+}
+else {
   // whatever the old code did ...
-endif;
+}
 }}}
 
 Some toggles might use some framework to expose the toggle so that it
 can be more effectively switched at runtime:
 
 {{{
-if ToggleRuntimeStore["my_new_feature"]
-then
+##! java
+if (ToggleRuntimeStore["my_new_feature"]) {
    // ...
-else
+} 
+else {
   // whatever the old code did ...
-endif;
+}
 }}}
 
 It's important to note that the 2nd form is more of an anti-pattern of
@@ -120,6 +167,36 @@ turning on a feature with it's toggle until everything in the
 deployment is done. That can even be orchestrated by a deployment
 agent.
 
+Toggles for changes are fascinating things. They make version control
+a first class construct.
+
+{{embed to explain the history of change?}}
+
+* the history of change history
+** sccs - record changes to a file
+** cvs - record changes to a file, centrally
+** dvcs - record changes to a set of files atomically
+** toggles - record changes as code
+
+Toggling changes means that you write a toggle around every change you
+do, probably every commit. The toggle should be named after the story
+that you are working on (preferably with a unique story or ticket
+number).
+
+There's now no need for multiple branches to separate parallel
+development efforts. In fact, multiple branches make life a big pain
+because you could be creating toggle merge problems (where two teams
+are introducing a new change/toggle to the same part of the code). If
+everyone is merging each others changes as much as possible these
+toggle merge problems are minimized massively. Note that this is
+excellent for parallel teams, if they are trampling over each other's
+code they now have a mechanistic way of agreeing. It's just not the
+same as daily merge hell, it's much easier because the toggles force
+the abstraction necessary.
+ 
+
+==== Tracer Bullets ====
+
 //Tracer bullets// are related to toggles and to TDD. A tracer bullet
 is an initial release of a new project that should travel to
 production. Tracer bullets should have no business code in them at
@@ -137,19 +214,35 @@ public void doGet(HttpServletRequest request,
 }}}
 
 Firing the tracer bullet means to compile this, build a jar, build a
-deployable, whatever... build acceptance tests for it, get them run,
+deployable, whatever... build acceptance tests for it (although
+clearly, the acceptance test doesn't need to do much) get them run,
 get it on all the environments you are required to, get it tested
 there, get it on production and tested there. But do all that under
 automation. With no manual steps. Where the bullet hits a wall and
 stops then you work to take down the wall (or make a hole in it) and
 then fire another bullet.
 
-Tracer bullets are used when you need to go really fast and you have a
-lot of steps to go through or when those steps are unknown. It can
-happen in parallel to a lot of development. If the tracer bullet fires
-many times because of blockers each tracer might carry the latest dev
-work, appropriately toggled.
+Tracer bullets are most useful when you need to go really fast and you
+have a lot of steps to go through for deployment or when those steps
+are unknown. For example in complex, agility immature enterprises like
+Banks or Insurance companies. //Yes, I am picking on you.//
 
+Firing a tracer bullet is less about clever software engineering and
+more about discovering the gateways. Thus it's often performed by
+people who focus less on code, for example an //Ops// person in a
+//DevOps// feature team. It could even be done by a centralized
+//DevOps// team. Beause of it's nature, it can happen in parallel to a
+lot of development. If the tracer bullet fires many times because of
+blockers each tracer might carry the latest dev work, appropriately
+toggled.
+
+Tracer bullets show that Change Driven Development is intellectually
+consistent. What's the first change we make? from nothing to one thing
+that does almost nothing. The next change is for the one thing that
+does almost nothing to do something.
+
+
+==== Iterating and Stupid First ====
 
 //Iterating// needs to be called out separately because so many of us and
 the organisations we work for are so bad at it. Iterating is tied very
@@ -158,10 +251,10 @@ should never write programs as clever as we are because you have to be
 20% smarter to debug them. Most designers of programs seem to have a
 jolly laugh at this and then forget it.
 
-But how you iterate is that you //start stupid//. Then changing
+But //how// you iterate is that you //start stupid//. Then changing
 something is easy. Starting stupid could be as easy as making a tracer
 bullet. Another is to use an MVP [[see my previous advice on MVPs]],
-but a real MVP, not a Minimum Whatever It Was At RBS Product.
+but a real MVP, not a Minimum Not Embarassing Product.
 
 Iterating is what you do to change from pure stupid to something that
 can be used. But you do it step by step and release them all. Ideally
@@ -175,12 +268,25 @@ brand (and even UI) for experiments is pretty easy. I wouldn't want to
 release to a target or successful brand with really broken
 software. But I don't see why that would ever be necessary.
 
+==== Lean ====
+
 This all brings us to //lean engineering// which takes the ideas from
-Eric Ries' //The Lean Startup// and applies them to engineering. 
-{{NOT SURE ABOUT SAYING THIS}} The ideas are worthwhile anyway: small iterations focussed on experimental
+Eric Ries' //The Lean Startup// and applies them to engineering.  The
+ideas are worthwhile anyway: small iterations focussed on experimental
 changes to behaviour, when an experiment succeeds capitalize on that
 with more experiments around that. When experiments fail, roll back to
 previous states and try something else.
+
+Lean is clearly related to Change Driven Development. I view it as
+pushing the concept of change up the Product Stack into the Product
+Owner. With Lean we are getting the Product Owners to understand
+Change as something they should be trying to specify rather than
+expecting the development team to deliver. And key to this is the idea
+that the change may not be succesfull. Part of the definition of the
+change is to define what the acceptance criteria of a succesfull
+change would be? If our experiment succeeds what will happen? So the
+collection of metrics should always be part of any product driven
+change.
 
 One of the interesting things about lean engineering is what an
 amazing device for getting rid of technical debt it is. If we start to
@@ -189,7 +295,14 @@ tell us that the whole branch of ideas is pointless and thus we can
 remove the code that drives it. Thus removing the debt.
 
 Of course, it would be bad if that was your only mechanism for dealing
-with technical debt.
+with technical debt. But it's a good way of paying off a lot of debt
+related to something you don't want to do anymore. Or something that
+seems risky to do. Iterate experimentally on the risky thing a bit,
+check with metrics whether it works, if it doesn't throw it, including
+it's debt away but if it does work, pay down the debt in some concrete
+way.
+
+==== Systems Thinking ====
 
 //Systems thinking// is thinking about the system holisitcally and not
 just the component part that you're dealing with now. Too often we
@@ -203,7 +316,9 @@ snowboarding is cool. But we need to take care that there are
 technical people who are thinking about the whole system and they
 should help the specialists understand the whole system. 
 
-With past technology architectures system thinking has been
+==== Microservice Architecture ====
+
+With past technology architectures Systems Thinking has been
 difficult. There have been so many varied components working in so
 many different ways that you almost had to be an expert in all of them
 to get anywhere. 
@@ -221,14 +336,18 @@ technologies, queue engines, application servers, web servers,
 databases... all wrapped with complex monitoring and redundancy
 systems
 
-Microservices aims to change that in three ways, by limiting the focus
-of a service to one thing, by emphasizing choreography over
-orchestration and by standardizing the protocol for interactions as
-HTTP. Doing one thing and one thing well is sometimes called //the
-Unix way// and has clear benefits. Actually the enabler of that has
-been the wide spread acceptance of websockets as part of the HTTP
-stack, now there is a clear way to write simple HTTP based services
-with either synchronous or asynchronous communications. 
+Microservices aims to change that in three ways:
+
+* by limiting the focus of a service to one thing
+* by emphasizing choreography over orchestration 
+* and by standardizing the protocol for interactions as HTTP
+
+Doing one thing and one thing well is sometimes called //the Unix
+way// and has clear benefits. The enabler of this has been the wide
+spread acceptance of websockets as part of the HTTP stack; now there
+is a clear way to write simple HTTP based services with either
+synchronous or asynchronous communications. This reduces performance
+concerns around having to writing polling services.
 
 Choreography rejects much of what people have tried to achieve with
 Orchestration which often looks like configuration management went on
@@ -251,6 +370,9 @@ basically). This reduces monitoring and testing complexity but also
 reduces automation complexity. We know we have to roll out lots of
 little services so we are required to automate everything.
 
+
+==== Automation and Control ====
+
 Which brings us finally to //automation and control// which is the
 computerization of everything to do with deployment and operating a
 product. Automation and control means continuous delivery and
@@ -259,22 +381,51 @@ pipelines.
 
 === the history of Change Driven Development ===
 
-* initially developed at WooMe
-* the process of writing change driven acceptance tests which are then discarded
-* the process of rolling out gradual change to databases
-** key to which is the process of separarting deployment from release (or toggles)
-** other people have been doing this for a time, dbdeploy etc...
-* @ThoughtWorks - other stuff that people were doing obviously fits in
-** toggles
-** tracer bullet
-** influence of Martin Fowler, "this is what we all did in SmallTalk"
+I was running the technical side of a dating starup called WooMe a few
+years ago. We had a smallish team and we were very focussed. We
+learned a lot about lean and scaling in general.
+
+What forced us to understand change was build acceptance tests that
+compensated for not having human testers. We had good QA people but
+they always burned out under the intensity of our senior product
+person. So I decided I would computerize the QA and let him try and
+burn that out. And I was right. He burned first.
+
+We found that we were adequately able to control quality with change
+driven tests. They ended up as change driven tests because we were
+already doing toggles for releasing database releated change (using
+tools like DbDeploy) and we understood how to test those changes.
+
+We knew that we needed a pipeline with tests in it and we knew that
+they could not grow in time substantially, so we looked for ways to
+stop running tests. Doing tests around change just seemed the obvious
+thing.
+
+When I joined ThoughtWorks I started talking to a lot of people there
+about the practice. It became clear that no one was really doing it
+and sometimes it was hard to explain to people how it worked.
+
+Change driven development clearly encompases a lot of stuff that
+people already did, toggles being a case in point. But change
+management is still more than just toggles, it's toggling every change
+and therefore representing the changes has very high level constructs
+indeed.
+
+When I talked to Martin Fowler about Change and tracer bullets he
+understood what I was talking about, "this is what we all did in the
+SmallTalk days" he said. Like me, Martin often tries to relate current
+practices to what was done before in a process that worked.
+
+As I've talked to more and more people about this stuff I have become
+convinced that it is the understanding of Change that adds coherenence
+to all the other techniques, including Lean.
 
 === what is change driven development if it's more than all these things? ===
 
 It is the acknowledgment, of everyone involved in development, that
-everything we do is a change to the overall state of the system and
-that, just like any mutation, we should try to be deliberate and in
-control.
+everything we do is a change to the overall state of the entire system
+and that, just like any mutation, we should try to be deliberate and
+in control.
 
 
 Change Driven Development is achieved when:
