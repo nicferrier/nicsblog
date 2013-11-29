@@ -124,8 +124,7 @@ to allow you to turn a piece of code on or off) to control all changes
 in a system. Toggle first is the practice of accepting that everything
 we add or change (even fix) should be controllable as a first class
 construct. So we add an if statement around every thing we do. The way
-the toggle is implemented varies tremendously. Some toggles are just
-straight if's:
+the toggle is implemented varies. Some toggles are just straight if's:
 
 {{{
 ##! java
@@ -158,17 +157,63 @@ code directly is simply a matter of rolling out a new change. If that
 takes seconds then it seems better to record the change in version
 control than use an outside system to effect the change.
 
+Another way of doing toggles is afforded by any language that supports
+lazy evaluation; in Clojure or any other Lisp we could construct a
+macro that allowed us to write something like this:
+
+{{{
+##! clojure
+(change ticket-7899 false
+  (progn
+     ;; what happens when the toggle is on
+     ... )
+  (progn
+     ;; what happens when the toggle is off
+     ... ))
+}}}
+
 Another thing that makes toggles particularly interesting is that they
 separate the process of deployment from the process of release. A
 piece of code to blow up all the servers can now safely be deployed,
-as long as the toggle remains off everything is cool. This fact means
-that we can control long lived deploys by breaking them up and not
-turning on a feature with it's toggle until everything in the
+as long as the toggle remains off our servers are safe. This fact
+means that we can control long lived deploys by breaking them up and
+not turning on a feature with it's toggle until everything in the
 deployment is done. That can even be orchestrated by a deployment
 agent.
 
 Toggles for changes are fascinating things. They make version control
 a first class construct.
+
+{{{
+##! java
+// original code              // changed code          
+if (test) {                    if (test) {              
+ methodOne();                    methodOne();           
+                                 notifyComplete();      
+}                              }                        
+}}}
+
+
+But the toggled version might look like:
+
+{{{
+##! java
+boolean toggleXYZ = false;
+if (toggleXYZ) {
+    if (test) {              
+      methodOne();           
+      notifyComplete();      
+    }                        
+}
+else {
+   if (test) {
+     methodOne();
+   }
+}
+}}}
+
+
+So the change is now represented, directly, in our code.
 
 {{embed to explain the history of change?}}
 
@@ -204,6 +249,7 @@ all, in fact, the ideal Tracer bullet for a Java backed website might
 be:
 
 {{{
+
 ##! java
 import javax.servlet.http.*;
 
