@@ -162,7 +162,7 @@ lazy evaluation; in Clojure or any other Lisp we could construct a
 macro that allowed us to write something like this:
 
 {{{
-##! clojure
+##! lisp
 (change ticket-7899 false
   (progn
      ;; what happens when the toggle is on
