@@ -186,7 +186,7 @@ a first class construct.
 
 {{{
 ##! java
-// original code              // changed code          
+// original code               // changed code          
 if (test) {                    if (test) {              
  methodOne();                    methodOne();           
                                  notifyComplete();      
