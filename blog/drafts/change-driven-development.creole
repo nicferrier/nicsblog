@@ -290,12 +290,13 @@ does almost nothing to do something.
 
 ==== Iterating and Stupid First ====
 
-//Iterating// needs to be called out separately because so many of us and
-the organisations we work for are so bad at it. Iterating is tied very
-closely to //stupid first//. Brian Kernighan [[LINK]] said that we
-should never write programs as clever as we are because you have to be
-20% smarter to debug them. Most designers of programs seem to have a
-jolly laugh at this and then forget it.
+//Iterating// needs to be called out separately because so many of us
+and the organisations we work for are so bad at it. Iterating is tied
+very closely to //stupid first//. Brian Kernighan said
+that
+[[http://en.wikiquote.org/wiki/Brian_Kernighan|we should never write programs as clever as we are]]
+because you have to be 20% smarter to debug them. Most designers of
+programs seem to have a jolly laugh at this and then forget it.
 
 But //how// you iterate is that you //start stupid//. Then changing
 something is easy. Starting stupid could be as easy as making a tracer
