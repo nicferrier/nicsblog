@@ -163,7 +163,7 @@ macro that allowed us to write something like this:
 
 {{{
 ##! lisp
-(change ticket-7899 false
+(change ticket-7899 nil
   (progn
      ;; what happens when the toggle is on
      ... )
@@ -455,13 +455,12 @@ and sometimes it was hard to explain to people how it worked.
 Change driven development clearly encompases a lot of stuff that
 people already did, toggles being a case in point. But change
 management is still more than just toggles, it's toggling every change
-and therefore representing the changes has very high level constructs
-indeed.
+and therefore representing the change as high level constructs.
 
 When I talked to Martin Fowler about Change and tracer bullets he
 understood what I was talking about, "this is what we all did in the
-SmallTalk days" he said. Like me, Martin often tries to relate current
-practices to what was done before in a process that worked.
+SmallTalk days" he said. It makes sense to me that way too. It also
+looks a lot like transactional change on databases.
 
 As I've talked to more and more people about this stuff I have become
 convinced that it is the understanding of Change that adds coherenence
