@@ -131,7 +131,7 @@ smtp_sasl_security_options = noanonymous
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 }}}
 
-Where ///MTA-name// is the name of my actual, Internet connected, MTA.
+Where //MTA-name// is the name of my actual, Internet connected, MTA.
 
 This sets up the SMTP engine to send auth to servers. You then have to
 add your login details for the MTA to {{{/etc/postfix/sasl_passwd}}};
