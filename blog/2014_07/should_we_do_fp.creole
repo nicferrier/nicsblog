@@ -1,0 +1,95 @@
+= on whether FP languages help =
+
+I was trying to help a company I was working with build a new engineering
+culture that looks modern. One that challenges engineers to do new and
+amazing things. Like a NetFlix or an Amazon yadda yadda.
+
+One of the things I spotted was that there was not really any new
+programming languages being used. Mostly Java and C#. Hardly any
+JavaScript and no functional programming. So I started touting it's
+benefits and the benefits of using functional programming languages.
+
+I get picked up: it's not necessary to use a functional
+programming language to do functional programming, say my
+detractors. You can use any old language to be functional in.
+
+This is such an old chestnut I had to lay it to rest. Of couse,
+technically this is true. But the spirit of it is false.
+
+Some languages encourage functional thinking, they are ones we tend to
+call functional.
+
+Python, is a case in point. It's not a functional language. More and
+more is being done by the language maintainers to make it functional
+though. They've added comprehensions, Haskell style, for example. And
+lots of interesting map/reduce type functions, Clojure style.
+
+But check it out:
+
+{{{
+d = {"a": 1}
+print del a["a"]
+}}}
+
+still causes an error because {{{del}}} does not return a value. It's
+just a statement and statements don't return values.
+
+Why does that matter? Well what if you want to remove a number of keys
+from a dict but remember the values? it's now a lot more
+involved. Maybe now the best way is to make a new dict from the old
+one by specifying the keys you want to keep. But what if you don't
+know the keys you want to keep? What if they are the random ones?
+
+It's just //harder// because Python just //isn't// very functional.
+
+So we //can// do functional programming in Python. But it isn't as
+easy. And we have to know more of Python to do it. Which increases our
+dissonance.
+
+
+=== my Dad and the soldering iron ===
+
+The example I like to use here is soldering irons. Bear with
+me. You'll get it.
+
+My Dad got me a soldering iron when I was about 11 or 12. It had a
+nail for a tip. I couldn't solder anything with it. I wanted to solder
+things like integrated circuits and be some sort of electronics whiz
+kid. But it had a nail for a tip. I did try. Honest I did. But it
+didn't take long before I went back to him and said:
+
+//Dad, this soldering iron has a nail for a tip and I can't solder
+anything with it.//
+
+And he said:
+
+//If you were any good you'd be able to solder with anything.//
+
+And I said:
+
+//But I'm not any good. I need to learn.//
+
+And he went quiet.
+
+
+=== So should we introduce FP languages into our company? ===
+
+If you're reading this and thinking //"but we're doing DevOps and we're
+doing MicroServices.... we're doing too much already"// then you're
+not getting it. The point is that these three things are complimentary
+and mutually beneficial.
+
+FP reduces the amount of code you need to say complex things,
+MicroServices let you architect your systems with small parts (which
+because of the FP can do complicated things) and DevOps let's you
+rapidly deploy and evolve these things.
+
+If you're doing any one of these without the others then I'm
+sorry. You're doing it wrong. It may be a wrong you can cope with, but
+eventually the wrong will out and you will curse yourself.
+
+So kick off a new Scala project and a new Clojure project. Make them
+small and make them deliver quickly. Get your programmers learning new
+ways to express themselves. Get moving, get changing.
+
+
