@@ -27,7 +27,7 @@ lots of interesting map/reduce type functions, Clojure style.
 But check it out:
 
 {{{
-#! python
+##! python
 d = {"a": 1}
 print del a["a"]
 }}}
