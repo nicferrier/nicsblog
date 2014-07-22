@@ -1,0 +1,52 @@
+= Juxt and why you should use them =
+
+I spent a lovely sunny afternoon having a chat with Malcom Sparks
+of [[http://juxt.pro|Juxt]]. Juxt are a small team of Clojure
+programmers trying to build a consultancy around building software. I
+think the project is deceptively important and I hope I can explain
+why.
+
+Clojure is a Lisp so people always assume I'm biased towards it. In
+fact, the reverse is true. Lispers are nearly always really hard to
+please about what a Lisp is. Actually, we just tend to be hard to
+please.
+
+The thing that is interesting to me about Clojure is the emphasis on
+immutability. This is a very important concept for improving software
+production. We have all seen how immutabile deployment, championed by
+NetFlix et al, have made delivery at speed natural, even
+easy. 
+
+Immutability at micro level, affecting how engineers practice writing
+code, is similarly ground shifting. Particularly it increases the ease
+with with reliable sofware can be made. On the face of it, good
+software gets cheaper to make. The trouble is, Clojure programmers are
+few and far between. No one has industrialized Clojure yet.
+
+Juxt is such an effort. They are techies, it's clear. They are master
+programmers, that's also clear. They're not Accenture. They are not
+going to deliver 200 people to your site next Wednesday. They're not
+even ThoughtWorks, who might deliver 10 programmers, 2 project
+managers and a DevOps guy to your site next Wednesday.
+
+Instead I think they're something more important than that. They are
+programmers employing programmers to do work with the best tools. If
+you ask Juxt to deliver your project, it might take them a month or so
+to have people in place. But those people will get into place because
+Juxt are about doing work in the most interesting ways. And note, the
+most interesting ways are the mostly quickly reliable.
+
+The core of Juxt is some principal level characters who really
+understand the nitty gritty of big software development. All people
+who have delivered many big projects. And the important thing is that
+they can pull on this very flexible pool of people who want to work
+with them and in this way.
+
+Juxt face problems, of course. Their sales pipeline is always going to
+be difficult. Because they're programmers, not salesmen. For some
+reason business people who have software problems rarely act
+rationally in finding solutions so Juxt are going to have to rely on
+technical people realizing their value.
+
+I hope that happens. It's such an efficient way to get software
+written.
