@@ -19,7 +19,7 @@ ways to build tooling for new languages.
 Languages that are less Emacs-able, like Java, seem to me to be seeing
 something of a decline.
 
-{{/img/tiobe-index-2014-07-27.png}}
+{{/stuff/img/tiobe-index-2014-07-27.png}}
 [[http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html]]
 
 If my theory is right then the upsurge won't last unless we Emacs
