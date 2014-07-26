@@ -1,0 +1,92 @@
+= an Emacs book - maybe =
+
+I've thought for a long time about writing an Emacs book. The recent
+release
+of
+[[http://www.amazon.co.uk/gp/product/1934356980/ref=oh_details_o00_s00_i02?ie=UTF8&psc=1|Practical VIM]]
+I have thought more about it. The VIM book is very nice. And it's
+telling that a modern book about VIM (using the terminal is encouraged
+in this book!) is being sold. Many younger programmers are coming to
+VIM as a great text editing tool.
+
+Emacs is experiencing something of an increase in popularity too. I
+believe this is directly correlated with a similar decrease in
+homogenity in our industry. In short, the programming world is
+fracturing, many different languages are being picked up, new
+languages are being produced and Emacs and VIM are relatively quick
+ways to build tooling for new languages.
+
+Languages that are less Emacs-able, like Java, seem to me to be seeing
+something of a decline.
+
+{{tiobe-index-2014-07-24.png}}
+[[http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html]]
+
+If my theory is right then the upsurge won't last unless we Emacs
+advocates try and capitalize on it by trying hard to make good tools
+for the new languages and by documenting Emacs for the new generation
+of programmers.
+
+=== reasons why people are considering Emacs ===
+
+For one thing there's a whole generation of people who have never used
+Emacs and who aren't necessarily biased against it because of a poor
+experience. And Emacs has massively improved over the last 10 years,
+so a lot of the things that may have driven people away in the past
+have got better.
+
+Two languages in specific seem to be driving users to Emacs, Clojure
+and JavaScript. Both are well suited to being developed in Emacs
+because of the parenthetical nature of both languages, Clojure is a
+straight up Lisp and JavaScript has a Lisp-y nature with it's style of
+many nested functions (originally JavaScript was a Scheme, of course).
+
+But neither of these languages is a good reason to use Emacs and for
+us Emacs advocates it's almost inevitably the path to
+disappointment. Better tools will be made for Clojure and JavaScript
+and the users will drift away. We've seen it time and time again.
+
+=== what's the right reason to use Emacs? ===
+
+The right reason to use Emacs is that it's a tool for building editing
+tools. 
+
+VIM is a superior editor out of the box for nearly every conceivable
+editing task. But Emacs, with only a little customization, is soon
+just as good. And just as good specifically for you. And with a little
+more customization it's absolutely specifically your tool, crafted to
+your hands. Just like any master craftsmen the best programmers make
+their own tools. VIM users tend to make those tools out of the Unix
+shell. But in Emacs we think we have a better solution, a more
+flexible solution. Sometimes we can use the Unix way, sometimes we can
+use other methods.
+
+The point about Emacs is it's hackability, the whole design of the
+system encourages people to make it better, for them.
+
+This is also a fatal flaw for encouraging new people to use
+it. Especially people who aren't aware that programming is something
+of a craft.
+
+It's also a fatal flaw for documenting Emacs. Much of the goodness of
+Emacs is add ons. One of the key things that makes Emacs great for
+Clojure users, //paredit//, doesn't even come with standard Emacs. And
+it's been superseeded by a newer replacement, //smartparens//.
+
+Whole chunks of Emacs clearly need replacing, //dired// is a particular
+abomination in my view. So anything that gets written may be woefully
+out of date in a few years.
+
+How is anyone supposed to represent that dynamism in a positive way in
+a book?
+
+=== gotta try ===
+
+It does seem someone should try and provide a decent medium level
+introduction to Emacs. People do expect such things to be around, they
+might even enjoy reading it. Certainly the VIM book is very good to
+dip into.
+
+I like the idea of a tips book. It seems like the right thing for an
+editor.
+
