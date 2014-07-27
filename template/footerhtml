@@ -63,6 +63,7 @@
             </ul>
 	    <a id='emacslisp'></a><h4>Emacs Lisp</h4>
             <ul>
+              <li><a href="/blog/2014_07/an-emacs-book">Maybe I'll write an Emacs book</a></li>
               <li><a href="/blog/2013_09/test-smtp-auth">Testing and setting up SMTP Auth</a></li>
               <li><a href="/blog/2013_08/the-emacs-tapas">About Emacs Bites screencasts</a></li>
               <li><a href="/blog/2013_06/adding-namespaces-to-elisp">A proposal for adding namespaces to EmacsLisp</a></li>
@@ -114,6 +115,8 @@
 
 	    <a id='devops'></a><h4>DevOps</h4>
             <ul>
+              <li><a href="/blog/2014_07/why-juxt-matters">Why Juxt matters and why you should use them</a></li>
+              <li><a href="/blog/2014_07/should-we-do-fp">Why DevOps and Functional Programming are not just complementary</a></li>
               <li><a href="/blog/2013_11/copying-martin-fowler">Why enterprises should copy what <i>Martin Fowler</i> does at <i>ThoughtWorks</i></a></li>
               <li><a href="/blog/2013_07/the-pgdevbox"><i>The PostgreSQL Dev Box</i> - easily get going with PostgreSQL</a></li>
               <li><a href="/blog/2013_05/the-product-owner"><i>The role of the Product Owner</i> - and how it works with a DevOps team</a></li>
