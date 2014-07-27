@@ -130,12 +130,13 @@
 
 	    <h4>Thoughts and ponderings</h4>
             <ul>
+              <li><a href="/blog/2014_07/things-in-july">Interesting things from July 2014</a></li>
               <li><a href="/blog/2013_08/lets-not-code"><i>Let's not learn to code</i> - why I don't like NoFlo</a></li>
               <li><a href="/blog/2013_04/you-are-not-an-engineer"><i>You are not an engineer</i> - introspecive, existential hand wringing</a></li>
               <li><a href="/blog/2013_04/swearing-at-work">Swearing at work - a guide for the passionate</a></li>
-              <li><a href="/blog/2013_04/april-2013-stuff">Early April's roundup</a></li>
-              <li><a href="/blog/2013_03/interesting-things-from-march">Interesting things from March</a></li>
-              <li><a href="/blog/2013_02/things-of-interest-the-last-week">Interesting things from the end of February</a></li>
+              <li><a href="/blog/2013_04/april-2013-stuff">Early April 2013 roundup</a></li>
+              <li><a href="/blog/2013_03/interesting-things-from-march">Interesting things from March 2013</a></li>
+              <li><a href="/blog/2013_02/things-of-interest-the-last-week">Interesting things from the end of February 2013</a></li>
             </ul>
 
             <h4><code>shell</code> for life</h4>
