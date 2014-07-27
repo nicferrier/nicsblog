@@ -8,72 +8,55 @@ these.
 
 === Why you should build an Immutable Infrastructure -  ===
 [[http://www.javacodegeeks.com/2014/07/why-you-should-build-an-immutable-infrastructure.html|via @cquinn: Why you should build an Immutable Infrastructure ]]
+- //2014-07-27T13:22:16Z//
 
-//2014-07-27T13:22:16Z//
 
 === The Transit format  (a kind of extended/extensible JSON) ===
 [[https://github.com/cognitect/transit-format|Transit is the new hotness.]]
-
-//2014-07-27T01:59:51Z//
+- //2014-07-27T01:59:51Z//
 
 === Transit may be pretty neat with JavaScript, but it really ROCKS with ClojureScript  ===
 [[http://swannodette.github.io/2014/07/26/transit--clojurescript/|More on Transit, JSON & ClojureScript]]
-
-//2014-07-27T13:22:06Z//
+- //2014-07-27T13:22:06Z//
 
 === Ep1 of LispCast Clojure core.async: Channels ===
 [[https://www.youtube.com/watch?v=msv8Fvtd6YQ|Ep1 of LispCast Clojure core.async: Channels]]
-
-//2014-07-27T01:54:48Z//
+- //2014-07-27T01:54:48Z//
 
 === iodine - VPN over DNS ===
 [[http://grahamedgecombe.com/blog/ip-over-dns-with-iodine|Very good fun. I think this might just work on popular WIFI. Will have to give it a try and update next week.]]
-
-//2014-07-27T01:47:22Z//
-
-IP over DNS with Iodine - via Graham Edgecombe
+- //2014-07-27T01:47:22Z// - IP over DNS with Iodine - via Graham Edgecombe
 
 === Git diff parsing in elisp -  could be easily extended. ===
 [[http://nic.ferrier.me.uk/pastes/ZTM2ZTJlYmFjYTRiMGEyMWViYjRmN2NjZWM5YWVjZDM5YTliMDA2NQ==|git diff parsing in elisp]]
-
-//2014-07-26T21:38:23Z//
-
-My own gitt diff parser for doing draft commit messages which I've now
-extended and put it on [[https://github.com/nicferrier/emacs-git-draft|github]].
+- //2014-07-26T21:38:23Z// - My own gitt diff parser for doing draft
+commit messages which I've now extended and put it on [[https://github.com/nicferrier/emacs-git-draft|github]].
 
 === Funny and informative article from @jaffathecake about appcache ===
 [[http://alistapart.com/article/application-cache-is-a-douchebag|Funny and informative article from @jaffathecake about appcache]]
-
-//2014-07-26T14:43:21Z//
+- //2014-07-26T14:43:21Z//
 
 === About appcache, very comprehensive ===
 [[https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache|Using the application cache - via MDN]]
-
-//2014-07-26T14:42:07Z//
+- //2014-07-26T14:42:07Z//
 
 
 === CoreOS Stable Release  ===
 [[https://coreos.com/blog/stable-release/|CoreOS has it's first stable release]]
-
-//2014-07-25T23:33:24Z//
+- //2014-07-25T23:33:24Z//
 
 === defunkt/fakefs - ruby fake filesystem ===
 [[https://github.com/defunkt/fakefs|A fake file system]]
-
-//2014-07-25T21:24:01Z//
-
-A fake file system, I've done this a few times (most recently
+- //2014-07-25T21:24:01Z// - A fake file system, I've done this a few times (most recently
 in [[http://github.com/nicferrier/emacs-fakir|fakir]] and it's a very
 useful trick for testing stuff.
 
 === boot2docker linux distro ===
 [[https://github.com/boot2docker/boot2docker|A linux distro designed just for booting to docker. V.clever. Check it out.]]
-
-//2014-07-24T18:25:34Z//
+- //2014-07-24T18:25:34Z//
 
 
 ===  Using JavaScript libraries in ClojureScript ===
 [[http://lukevanderhart.com/2011/09/30/using-javascript-and-clojurescript.html|How to use JS libs from ClojureScript]]
-
-//2014-07-23T22:33:33Z//
+- //2014-07-23T22:33:33Z//
 
