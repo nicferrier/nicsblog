@@ -1,0 +1,35 @@
+= Nic's law of first class-ness =
+
+This is my first law so I might not have the process completely
+right. You just write a blog post claiming your law, right? Thought
+so.
+
+Nic's law of first class-ness states:
+
+//everything around computer code eventually migrates to being first class//
+
+which means that tools, techniques and processes for dealing with code
+eventually get replaced by first class techniques in the source code
+itself.
+
+Some examples:
+
+* mutliple-processes have become co-routines, CSPs, actors
+* multiple binary versions becomes version toggles
+* any source code change becomes a toggled change
+
+An addendum to the rule might go on to explain that just because
+things become first class that doesn't mean that we stop using the
+original thing completely. Just because we do versioned change in code
+now it doesn't mean that we abandon git, it's just we use git for
+something else (personal workflow now).
+
+But that also is not intended to weasel away from the fact that
+everything around computer code eventually becomes first class. Git
+might not be replaced by first class-ness in the first instance. But
+that is what will ultimately replace it.
+
+And humans? they're around code, right? Yes. That's right. They are.
+
+//Nic Ferrier reserves the right to retract this rule at any time
+under the Internet Convention For Making Rules Up On The Spot//
