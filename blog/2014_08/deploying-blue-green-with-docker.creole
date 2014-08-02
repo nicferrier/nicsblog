@@ -42,6 +42,8 @@ online HTML of the GNU EmacsLisp manual.
 So the app is a few functions of Elnode (nothing nodejs couldn't do)
 and some browerify'd JavaScript.
 
+You can see the app [[http://gnudoc.ferrier.me.uk|here]]
+
 == deployment ==
 
 I was able to really quickly make an app with Elnode and
