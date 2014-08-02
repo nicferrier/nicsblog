@@ -102,7 +102,7 @@ function remoteDeploy {
     sudo docker.io pull nicferrier/elnode-gnudoc
 
     # What's the current deploy hosted on?
-    CURRENTPORT=$(sudo sed -nre 's/.*(801[5-6]).*/\1/p' /etc/nginx/sites-enabled/gnudoc.conf)
+    local currentport=$(sudo sed -nre 's/.*(8[0-9]{3}).*/\1/p' /etc/nginx/sites-enabled/gnudoc.conf)
 
     # Pull out the IP/port of the dockers that are the correct image
     sudo docker.io ps -q |  while read dockid
@@ -119,7 +119,7 @@ function remoteDeploy {
     do
         echo "$dockid using $port" > /dev/stderr
         # Stop any elnode-gnudoc container that's running on a non-live port
-        if [ "$CURRENTPORT" != "$port" ] 
+        if [ "$currentport" != "$port" ] 
         then
             echo "killing $dockid because it's not on $CURRENTPORT" > /dev/stderr
             sudo docker.io kill $dockid
@@ -128,13 +128,15 @@ function remoteDeploy {
     done | while read dockid port
     do
         # When we get here we should only have the live docker running
-        if [ "$CURRENTPORT" != "$port" ]
+        if [ "$currentport" == "$port" ]
         then
-            echo "starting $dockid on $port avoiding nginx on $CURRENTPORT" > /dev/stderr
+            local newport
+            newport=$(expr $port + 1)
+            echo "starting $dockid on $newport avoiding nginx on $CURRENTPORT" > /dev/stderr
             # Start the new docker
-            sudo docker.io run -d -p $port:8015 elnode-gnudoc # we could curl check here
+            sudo docker.io run -d -p $newport:8015 -t nicferrier/elnode-gnudoc # we could curl check here
             # Rewrite the nginx config
-            sudo sed -ibk -re 's/801[5-6]/8016/' /etc/nginx/sites-enabled/gnudoc.conf
+            sudo sed -ibk -re "s/$port/$newport/" /etc/nginx/sites-enabled/gnudoc.conf
             # Restart nginx
             sudo /etc/init.d/nginx reload
         fi
