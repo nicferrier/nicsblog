@@ -5,7 +5,7 @@ about it but it does have utility. In this article I want to show how
 docker and a simple bash script can achieve a quite advanced
 blue/green deployment pipeline.
 
-=== what is blue/green deployment? ===
+== what is blue/green deployment? ==
 
 [[http://martinfowler.com/bliki/BlueGreenDeployment.html|Here's what Martin Fowler says]].
 
@@ -18,7 +18,7 @@ continues to run while you deploy to the other. When you have finished
 deploying (and that might include some tests) you can switch the live
 one over to the newly deployed version.
 
-=== the app ===
+== the app ==
 
 {{/stuff/img/screenshot-of-gnudoc-2014-08-02.png?size=500|Screenshot of GNU docapp}}
 
@@ -42,7 +42,7 @@ online HTML of the GNU EmacsLisp manual.
 So the app is a few functions of Elnode (nothing nodejs couldn't do)
 and some browerify'd JavaScript.
 
-=== deployment ===
+== deployment ==
 
 I was able to really quickly make an app with Elnode and
 JavaScript. But how to deploy? I happen to have docker images for
@@ -174,7 +174,7 @@ It seems a useful way to avoid more complicated ssh tools like
 Capistrano.
 
 
-=== pipemills and fp ===
+== pipemills and fp ==
 
 The second interesting thing about the script is how we can use
 functional programming style in that remote deploy step. The
@@ -208,7 +208,7 @@ imaginary fp notation like this:
 It makes me wonder again if pipemills should be supported in shells
 with some better abstraction then just the {{{while read ...}}} form.
 
-=== So. ===
+== So. ==
 
 Using a pretty simple BASH script, coded in a functional way that we
 can reason about, we can do blue/green in a stable and controllable
