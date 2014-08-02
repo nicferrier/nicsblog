@@ -13,6 +13,11 @@ It's a description of deploying an app without disrupting the running
 of the existing app. It's a great method for webapps because it
 reduces downtime to a minimum.
 
+The basic idea is that you run two instances of your whole app. One
+continues to run while you deploy to the other. When you have finished
+deploying (and that might include some tests) you can switch the live
+one over to the newly deployed version.
+
 === the app ===
 
 {{/stuff/img/screenshot-of-gnudoc-2014-08-02.png?size=500|Screenshot of GNU docapp}}
@@ -43,7 +48,29 @@ I was able to really quickly make an app with Elnode and
 JavaScript. But how to deploy? I happen to have docker images for
 Elnode so I started to use docker to deploy.
 
-Here's the basic pipeline:
+Docker works well for this because it encapsulates the whole stack so
+well. Although I have to have something to do the blue/green
+switching, in this case nginx, that's so simple that I don't have to
+worry about errors.
+
+Here's my nginx config:
+
+{{{
+##! conf
+server {
+   server_name gnudoc.ferrier.me.uk;
+   access_log /var/log/nginx/gnudoc-access.log;
+   location / {
+      proxy_pass http://localhost:8016;
+      proxy_http_version 1.1;
+   }
+}
+}}}
+
+It really is trivial.
+
+
+There is still a complicated deployment pipeline though:
 
 * make change to the app, commit to git
 * push to github
@@ -55,12 +82,8 @@ Here's the basic pipeline:
 * sed the nginx config  to use the newly chosen port - again not disruprint the running nginx
 * restart nginx
 
-Only at the last point do  we change what we're actually serving.
-
-Thing is, it's still a lot of typing. But it's also pretty easy to
-turn into a simple shell script.
-
-Here's my effort:
+This is still too much typing for me. So here's my effort at a BASH
+script to do this:
 
 {{{
 ##! shell-script
@@ -150,6 +173,9 @@ script.
 It seems a useful way to avoid more complicated ssh tools like
 Capistrano.
 
+
+=== pipemills and fp ===
+
 The second interesting thing about the script is how we can use
 functional programming style in that remote deploy step. The
 {{{while}}}s are pipemills, they chain a series of transformations
@@ -187,4 +213,3 @@ with some better abstraction then just the {{{while read ...}}} form.
 Using a pretty simple BASH script, coded in a functional way that we
 can reason about, we can do blue/green in a stable and controllable
 way.
-
