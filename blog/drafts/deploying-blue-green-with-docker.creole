@@ -15,7 +15,7 @@ reduces downtime to a minimum.
 
 === the app ===
 
-{{screenshot-of-gnudoc-2014-08-02.png}}
+{{/stuff/img/screenshot-of-gnudoc-2014-08-02.png|Screenshot of GNU docapp}}
 
 About 10 years ago someone asked me if we could make a better web
 based documentation viewer than what was spat out by GNU's makeinfo
