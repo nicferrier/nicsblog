@@ -60,9 +60,10 @@ Only at the last point do  we change what we're actually serving.
 Thing is, it's still a lot of typing. But it's also pretty easy to
 turn into a simple shell script.
 
-Here's my go:
+Here's my effort:
 
 {{{
+##! shell-script
 #!/bin/bash
 
 # Simple bash deployment script for gnudoc
@@ -156,10 +157,13 @@ together. The sequence of mills above could be expressed in an
 imaginary fp notation like this:
 
 {{{
-##! js2-mode
+##! javascript
 ->> list-dockers
    filter (docker) { return docker.image == "elnode-gnudoc" }
-   map (docker) { return docker["port"] = docker.port }
+   map (docker) { 
+     docker["port"] = docker.port
+     return docker
+   }
    map (docker) { 
      if docker.port == currentNginxPort {
         dockerStop currentNginxPort
@@ -176,7 +180,7 @@ imaginary fp notation like this:
 }}}
 
 It makes me wonder again if pipemills should be supported in shells
-with some better abstraction.
+with some better abstraction then just the {{{while read ...}}} form.
 
 === So. ===
 

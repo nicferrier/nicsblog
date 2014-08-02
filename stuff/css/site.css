@@ -142,6 +142,10 @@ img[title="closeup fridgeletters"] {
     border: solid thin PowderBlue;
 }
 
+img[title="Screenshot of GNU docapp"] {
+    float: right;
+    margin: 10px -100px 10px 30px;
+}
 
 a {
 text-decoration: none;
