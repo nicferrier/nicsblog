@@ -1,0 +1,184 @@
+= docker blue/green deployment =
+
+Docker is the new hotness in Linux deployment. There's a lot of hype
+about it but it does have utility. In this article I want to show how
+docker and a simple bash script can achieve a quite advanced
+blue/green deployment pipeline.
+
+=== what is blue/green deployment? ===
+
+[[http://martinfowler.com/bliki/BlueGreenDeployment.html|Here's what Martin Fowler says]].
+
+It's a description of deploying an app without disrupting the running
+of the existing app. It's a great method for webapps because it
+reduces downtime to a minimum.
+
+=== the app ===
+
+About 10 years ago someone asked me if we could make a better web
+based documentation viewer than what was spat out by GNU's makeinfo
+tool. I was sure that it could be done easily but at the time I didn't
+have the spare hours.
+
+However, that stuff has got //so// much easier in the last 10
+years. The
+[[https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history|history state API]],
+[[http://api.jquery.com/jquery.ajax/|reliable ajax]] and
+even
+[[https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_multi-column_layouts|multi column layouts]]
+all make this stuff much more possible.
+
+In a few hours I was able to put together a simple demo of how this
+could be done using an Elnode proxy pulling a js based viewer and the
+online HTML of the GNU EmacsLisp manual.
+
+So the app is a few functions of Elnode (nothing nodejs couldn't do)
+and some browerify'd JavaScript.
+
+=== deployment ===
+
+I was able to really quickly make an app with Elnode and
+JavaScript. But how to deploy? I happen to have docker images for
+Elnode so I started to use docker to deploy.
+
+Here's the basic pipeline:
+
+* make change to the app, commit to git
+* push to github
+* do a {{{docker build --no-cache}}} which pulls the github and rebuilds the browserify
+* push the docker to the docker registry
+* then switch to the live host
+* pull the docker from the registry - this does not disrupt any running container
+* start the docker, use a different HTTP port - again it does not disrupt the existing container
+* sed the nginx config  to use the newly chosen port - again not disruprint the running nginx
+* restart nginx
+
+Only at the last point do  we change what we're actually serving.
+
+Thing is, it's still a lot of typing. But it's also pretty easy to
+turn into a simple shell script.
+
+Here's my go:
+
+{{{
+#!/bin/bash
+
+# Simple bash deployment script for gnudoc
+#
+# Rebuilds the current docker, pushes it to the registry and then, on
+# the remote: pulls and tries to start in a blue green way
+
+# This is the script run on the remote machine
+function remoteDeploy {
+    # Pull the new dockers
+    sudo docker.io pull nicferrier/elnode
+
+    # What's the current deploy hosted on?
+    CURRENTPORT=$(sudo sed -nre 's/.*(801[5-6]).*/\1/p' /etc/nginx/sites-enabled/gnudoc.conf)
+
+    # Pull out the IP/port of the dockers that are the correct image
+    sudo docker.io ps -q |  while read dockid
+    do 
+        ( sudo docker.io inspect -f '{{ .Config.Image }}' $dockid \
+            | grep nicferrier/elnode-gnudoc > /dev/null ) && echo $dockid
+    done | while read dockid ;
+    do
+        echo "elnode-gnudoc $dockid docker found" > /dev/stderr
+        # It's quite hard to access the keys of NetworkSettings.Ports
+        printf "$dockid " ; sudo docker.io inspect $dockid \
+            | jq -r '.[0] | .NetworkSettings.Ports | to_entries | map(select(.key == "8015/tcp")) | .[0] | .value | .[0] | .HostPort'
+    done | while read dockid port 
+    do
+        echo "$dockid using $port" > /dev/stderr
+        # Stop any elnode-gnudoc container that's running on a non-live port
+        if [ "$CURRENTPORT" != "$port" ] 
+        then
+            echo "killing $dockid because it's not on $CURRENTPORT" > /dev/stderr
+            sudo docker.io kill $dockid
+        fi
+        echo $dockid $port
+    done | while read dockid port
+    do
+        # When we get here we should only have the live docker running
+        if [ "$CURRENTPORT" != "$port" ]
+        then
+            echo "starting $dockid on $port avoiding nginx on $CURRENTPORT" > /dev/stderr
+            # Start the new docker
+            sudo docker.io run -d -p $port:8015 elnode-gnudoc # we could curl check here
+            # Rewrite the nginx config
+            sudo sed -ibk -re 's/801[5-6]/8016/' /etc/nginx/sites-enabled/gnudoc.conf
+            # Restart nginx
+            sudo /etc/init.d/nginx reload
+        fi
+    done
+}
+
+( typeset -fp remoteDeploy ; echo remoteDeploy ) > /tmp/gnudocdeploy
+
+cd $(dirname $0)
+sudo docker build --no-cache -t nicferrier/elnode-gnudoc .
+sudo docker push nicferrier/elnode-gnudoc
+
+# Now the remote parts
+scp /tmp/gnudocdeploy po5.ferrier.me.uk:/tmp/gnudocdeploy
+ssh po5.ferrier.me.uk bash /tmp/gnudocdeploy
+
+# deploy ends here
+}}}
+
+There are two interesting things here. First, controlling the remote
+machine is always a pain. Using a BASH function and then sending it as
+a script to the remote side for execution is something I'd not
+considered doing before:
+
+{{{
+##! shell-script
+function doStuffOnRemote {
+    sudo /etc/init.d/nginx reload
+}
+
+( typeset -fp doStuffOnRemote ; echo doStuffOnRemote ) > /tmp/deployment-script
+}}}
+
+Anything we put in the function can be sent to the remote side and if
+we ust add a line to call the function at the end we have a usable
+script.
+
+It seems a useful way to avoid more complicated ssh tools like
+Capistrano.
+
+The second interesting thing about the script is how we can use
+functional programming style in that remote deploy step. The
+{{{while}}}s are pipemills, they chain a series of transformations
+together. The sequence of mills above could be expressed in an
+imaginary fp notation like this:
+
+{{{
+##! js2-mode
+->> list-dockers
+   filter (docker) { return docker.image == "elnode-gnudoc" }
+   map (docker) { return docker["port"] = docker.port }
+   map (docker) { 
+     if docker.port == currentNginxPort {
+        dockerStop currentNginxPort
+     }
+     return docker
+   }
+   map (docker) {
+     if docker.port != currentNginxPort {
+        dockerRun docker.port
+        sed nginx.conf
+        nginxReload
+     }
+   }
+}}}
+
+It makes me wonder again if pipemills should be supported in shells
+with some better abstraction.
+
+=== So. ===
+
+Using a pretty simple BASH script, coded in a functional way that we
+can reason about, we can do blue/green in a stable and controllable
+way.
+
