@@ -143,15 +143,12 @@ function remoteDeploy {
     done
 }
 
-( typeset -fp remoteDeploy ; echo remoteDeploy ) > /tmp/gnudocdeploy
-
 cd $(dirname $0)
 sudo docker build --no-cache -t nicferrier/elnode-gnudoc .
 sudo docker push nicferrier/elnode-gnudoc
 
 # Now the remote parts
-scp /tmp/gnudocdeploy po5.ferrier.me.uk:/tmp/gnudocdeploy
-ssh po5.ferrier.me.uk bash /tmp/gnudocdeploy
+( typeset -fp remoteDeploy ; echo remoteDeploy ) | ssh po5.ferrier.me.uk bash -
 
 # deploy ends here
 }}}
@@ -217,3 +214,17 @@ with some better abstraction then just the {{{while read ...}}} form.
 Using a pretty simple BASH script, coded in a functional way that we
 can reason about, we can do blue/green in a stable and controllable
 way.
+
+
+
+== Update ==
+
+I was sending the shell function to a file and then scping the file
+but after a little consideration I realized it was very possible to
+just send the function directly to bash on the other side:
+
+{{{
+( typeset -fp functionName ; echo functionName ) | ssh host bash -
+}}}
+
+works a charm.
