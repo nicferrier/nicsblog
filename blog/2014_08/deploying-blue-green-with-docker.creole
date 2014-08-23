@@ -1,5 +1,7 @@
 = docker blue/green deployment =
 
+//see [[#update---2014-August-20th|updates]] ...//
+
 Docker is the new hotness in Linux deployment. There's a lot of hype
 about it but it does have utility. In this article I want to show how
 docker and a simple bash script can achieve a quite advanced
