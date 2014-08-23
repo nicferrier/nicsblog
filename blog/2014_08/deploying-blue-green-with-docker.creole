@@ -216,8 +216,7 @@ can reason about, we can do blue/green in a stable and controllable
 way.
 
 
-
-== Update ==
+=== update - 2014 August 5th ===
 
 I was sending the shell function to a file and then scping the file
 but after a little consideration I realized it was very possible to
@@ -228,3 +227,19 @@ just send the function directly to bash on the other side:
 }}}
 
 works a charm.
+
+
+
+=== update - 2014 August 20th ===
+
+I needed this again and again so I turned the above into a generic
+tool in a hideous week (shell is hard to genericize and debug).
+
+The result is
+[[https://github.com/nicferrier/docker-shell-deploy|docker shell deploy]]
+which you can use to add a deploy script to your repo. The deploy
+script is very minimal and just pulls in more code from GitHub, thus
+achieving a level of upgradability.
+
+It's still the sort of thing I may turn into a tool and package up.
+
