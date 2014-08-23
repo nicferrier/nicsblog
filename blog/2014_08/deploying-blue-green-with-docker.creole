@@ -216,7 +216,7 @@ can reason about, we can do blue/green in a stable and controllable
 way.
 
 
-=== update - 2014 August 5th ===
+== update - 2014 August 5th ==
 
 I was sending the shell function to a file and then scping the file
 but after a little consideration I realized it was very possible to
@@ -230,7 +230,7 @@ works a charm.
 
 
 
-=== update - 2014 August 20th ===
+== update - 2014 August 20th ==
 
 I needed this again and again so I turned the above into a generic
 tool in a hideous week (shell is hard to genericize and debug).
