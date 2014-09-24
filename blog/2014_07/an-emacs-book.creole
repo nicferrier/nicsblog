@@ -1,6 +1,6 @@
 = an Emacs book - maybe =
 
-//see [[#update--2014-September-24th|updates]]//
+//see [[#update---2014-September-24th|updates]]//
 
 I've thought for a long time about writing an Emacs book. Since the
 recent release
