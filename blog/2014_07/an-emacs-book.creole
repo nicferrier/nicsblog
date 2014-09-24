@@ -1,5 +1,7 @@
 = an Emacs book - maybe =
 
+//see [[#update--2014-September-24th|updates]]//
+
 I've thought for a long time about writing an Emacs book. Since the
 recent release
 of
@@ -104,3 +106,20 @@ have to release it every 2 years to start with, or maybe it's just an
 online thing. I don't know. But I'm going to try.
 
 Anyone who wants to help do get in touch via the usual channels.
+
+
+== update - 2014 September 24th ==
+
+I've been looking into doing this but as I've done so a number of
+other, some what related efforts have started or come to my attention:
+
+* [[https://github.com/bbatsov/emacs-lisp-style-guide|@batsov's style guide]]
+* [[http://endlessparentheses.com/|endless parentheses is a blog, but a very good Emacs intro]]
+* [[https://github.com/pierre-lecocq/emacs4developers|very much a programmer's intro book]]
+
+I am still considering whether I should start work on something
+myself, start work on curating something or just contribute to one of
+the above.
+
+Maybe you should too?
+
