@@ -1,0 +1,102 @@
+= solutions to programming erlang =
+
+I pickup languages willy nilly. I find I can learn enough to use them
+quite fast. This year I've written a few 1000 lines of Go and D
+without really trying very hard to learn either language. I also quite
+like reading programming language books. I've read books on Go and D
+this year.
+
+Another programming book I brought this year
+was
+[[https://pragprog.com/book/jaerlang/programming-erlang|Joe Armstrong's Programming Erlang]]. It's
+a good book. So I decided I would use it to learn Erlang //properly//
+as Joe seems to intend (//note//, I've picked Erlang up enough to use it
+and forgotten it several times in the last 15 years).
+
+One of the things Joe does is give you exercises at the end of every
+chapter. When I was 25 I used to hate these because it reminded me of
+school. But now memories of school are dimmed (though not enough to go
+on fondly about how they were the best days of my life, you must be a
+total amnesiac to think that, surely). Anyway, I'm rambling. Here are
+my answers to his exercises.
+
+I hope people will tweet criticisms of
+them [[http://twiter.com/nicferrier|@nicferrier]] and tell me how to
+write better erlang.
+
+
+=== Chapter 4 question 1 ===
+
+Extend {{{gemoetry.erl}}}:
+
+{{{
+-module(geometry).
+-export([area/1]).
+
+area({rectangle, Width, Height}) -> Width * Height;
+area({square, Side}) -> Side * Side;
+
+% exercises from @joerl's book chapter 4
+area({circle, Radius}) -> 3.141579*Radius;
+area({triangle, Width, Height}) -> (Width*Height) / 2.
+
+% end.
+}}}
+
+this is too simple for me to have done it badly, surely?
+
+=== Chapter 4, question 2 ===
+
+Make your own {{{tuple_to_list}}}:
+
+{{{
+% for @joerl book chapter 4
+-module(nic_tuple).
+-export([my_tuple_to_list/1]).
+
+my_tuple_to_list({ Atom, Tuple }) -> [Atom, Tuple];
+my_tuple_to_list({}) -> [];
+my_tuple_to_list({ Atom }) -> [Atom].
+    
+% end.
+}}}
+
+=== Chapter 4, question 3 ===
+
+Part 1 is making a timer function.
+
+{{{
+-module(nic).
+-export([timeit/1]).
+
+now_to_seconds({Mega, Sec, _}) ->
+    (Mega * 1000000) + Sec.
+
+now_to_microseconds({Mega, Sec, Micro}) ->
+    Micro + (now_to_seconds({Mega, Sec, Micro}) * 1000000).
+
+dotiming({Fn, Start}) -> 
+    dotiming({Fn, Fn(), Start, now()});
+dotiming({Fn, Result, Start, End}) -> 
+    {{ function, Fn }, 
+     { result, Result }, 
+     { time_microsecs, now_to_microseconds(End) - now_to_microseconds(Start)}}.
+
+timeit(Fn) -> dotiming({Fn, now()}).
+
+% nic.erl ends here
+}}}
+
+I struggled with this for a few hours because I couldn't see how to
+subtract one time from another. In the end I cheated and went and
+pinched a definition of now_to_seconds from
+[[http://stackoverflow.com/a/838088/130125|a StackOverflow answer]]. That
+let me deal with the time in the way I wanted to... but maybe I missed
+something idiomatic?
+
+
+
+== that's all so far ... ==
+
+I'll do more as I get them I guess.
+

@@ -56,13 +56,25 @@
             </ul>
 	</li>
 	<li id='footertoc'>
-            <a id='teamchat'></a><h4>TeamChat.net</h4>
+	    <a id='devops'></a><h4>DevOps</h4>
             <ul>
-              <li><a href="/blog/2012_11/teamchat_about">Introducuing TeamChat</a></li>
-              <li><a href="/blog/2012_11/chat-ops-from-jesse">Jesse Newland's on ChatOps</a></li>
-            </ul>
-	    <a id='emacslisp'></a><h4>Emacs Lisp</h4>
+              <li><a href="/blog/2014_08/deploying-blue-green-with-docker">Deploying blue/green with docker and simple shell</a></li>
+              <li><a href="/blog/2014_07/why-juxt-matters">Why Juxt matters and why you should use them</a></li>
+              <li><a href="/blog/2014_07/should-we-do-fp">Why DevOps and Functional Programming are not just complementary</a></li>
+              <li><a href="/blog/2013_11/copying-martin-fowler">Why enterprises should copy what <i>Martin Fowler</i> does at <i>ThoughtWorks</i></a></li>
+              <li><a href="/blog/2013_07/the-pgdevbox"><i>The PostgreSQL Dev Box</i> - easily get going with PostgreSQL</a></li>
+              <li><a href="/blog/2013_05/the-product-owner"><i>The role of the Product Owner</i> - and how it works with a DevOps team</a></li>
+              <li><a href="/blog/2013_04/dear-nic-are-netflix-evil"><i>Dear Nic</i> are NetFlix <i>really</i> evil?</a></li>
+              <li><a href="/blog/2013_02/dear-nic-says-jim"><i>Dear Nic</i> tell me about piped logging</a></li>
+              <li><a href="/blog/2012_12/street-java"><i>Street</i> Java</a></li>
+              <li><a href="/blog/2012_11/chat-ops-from-jesse">Github's Jesse Newland's on ChatOps</a></li>
+              <li><a href="/blog/2010_11/virtualization_for_python">Dependancy management for Python with VEH</a></li>
+              <li><a href="/blog/2010_04/how-repos-work-at-woome">How release management worked at WooMe</a></li>
+	    </ul>
+
+	    <a id='emacslisp'></a><h4>Emacs Lisp and other languages</h4>
             <ul>
+              <li><a href="/blog/2014_09/my-erlang-solutions-for-joes-book">My Erlang Solutions to Joe Armstrong's book</a></li>
               <li><a href="/blog/2014_07/an-emacs-book">Maybe I'll write an Emacs book</a></li>
               <li><a href="/blog/2013_09/test-smtp-auth">Testing and setting up SMTP Auth</a></li>
               <li><a href="/blog/2013_08/the-emacs-tapas">About Emacs Bites screencasts</a></li>
@@ -113,21 +125,6 @@
               <li><a href="/blog/2010_10/elnode">Introducing Elnode, an EmacsLisp web server</a></li>
             </ul>
 
-	    <a id='devops'></a><h4>DevOps</h4>
-            <ul>
-              <li><a href="/blog/2014_07/why-juxt-matters">Why Juxt matters and why you should use them</a></li>
-              <li><a href="/blog/2014_07/should-we-do-fp">Why DevOps and Functional Programming are not just complementary</a></li>
-              <li><a href="/blog/2013_11/copying-martin-fowler">Why enterprises should copy what <i>Martin Fowler</i> does at <i>ThoughtWorks</i></a></li>
-              <li><a href="/blog/2013_07/the-pgdevbox"><i>The PostgreSQL Dev Box</i> - easily get going with PostgreSQL</a></li>
-              <li><a href="/blog/2013_05/the-product-owner"><i>The role of the Product Owner</i> - and how it works with a DevOps team</a></li>
-              <li><a href="/blog/2013_04/dear-nic-are-netflix-evil"><i>Dear Nic</i> are NetFlix <i>really</i> evil?</a></li>
-              <li><a href="/blog/2013_02/dear-nic-says-jim"><i>Dear Nic</i> tell me about piped logging</a></li>
-              <li><a href="/blog/2012_12/street-java"><i>Street</i> Java</a></li>
-              <li><a href="/blog/2012_11/chat-ops-from-jesse">Github's Jesse Newland's on ChatOps</a></li>
-              <li><a href="/blog/2010_11/virtualization_for_python">Dependancy management for Python with VEH</a></li>
-              <li><a href="/blog/2010_04/how-repos-work-at-woome">How release management worked at WooMe</a></li>
-	    </ul>
-
 	    <h4>Thoughts and ponderings</h4>
             <ul>
               <li><a href="/blog/2014_07/things-in-july">Interesting things from July 2014</a></li>
@@ -137,6 +134,12 @@
               <li><a href="/blog/2013_04/april-2013-stuff">Early April 2013 roundup</a></li>
               <li><a href="/blog/2013_03/interesting-things-from-march">Interesting things from March 2013</a></li>
               <li><a href="/blog/2013_02/things-of-interest-the-last-week">Interesting things from the end of February 2013</a></li>
+            </ul>
+
+            <a id='teamchat'></a><h4>TeamChat.net</h4>
+            <ul>
+              <li><a href="/blog/2012_11/teamchat_about">Introducuing TeamChat</a></li>
+              <li><a href="/blog/2012_11/chat-ops-from-jesse">Jesse Newland's on ChatOps</a></li>
             </ul>
 
             <h4><code>shell</code> for life</h4>
