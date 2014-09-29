@@ -1,0 +1,133 @@
+= over riding unix programs =
+
+I have started to play with erlang and I was finding some of the Emacs
+support a little annoying. These days erlang is maybe best installed
+with the {{{kerl}}} script. {{{kerl}}} is an example of a thing quite
+common in unix land these days, {{{rbenv}}} and {{{rvm}}} for Ruby,
+{{{composer}}} for PHP, {{{opam}}} for OCaml and many other language
+specific tools all manage getting a language runtime onto your machine
+where your local operating system is probably quite bad at it.
+
+And erlang needs these things more than most. Latest erlang is version
+17, but version 17 isn't widely adopted. Many popular erlang programs
+are written in 16.
+
+The pattern is pretty much the same for all of these programs, these
+use a shell script designed to be sourced into your shell process
+environment, hacking paths and doing other things so that when you
+type {{{erl}}} or whatever, the right program is run.
+
+This is great. But I use Emacs and I don't want to choose the erlang I
+am using before I start. I want to choose it inside Emacs. 
+
+So we might try and run the activate script inside Emacs, maybe we
+could even read it and execute it line by line, with Lisp. I mean, how
+hard can shell be?
+
+//the activate script//
+
+{{{
+#!/bin/bash
+# credits to virtualenv
+kerl_deactivate()
+{
+    if [ -n "$_KERL_PATH_REMOVABLE" ]; then
+        PATH=${PATH//${_KERL_PATH_REMOVABLE}:/}
+        export PATH
+        unset _KERL_PATH_REMOVABLE
+    fi
+    if [ -n "$_KERL_MANPATH_REMOVABLE" ]; then
+        MANPATH=${MANPATH//${_KERL_MANPATH_REMOVABLE}:/}
+        export MANPATH
+        unset _KERL_MANPATH_REMOVABLE
+    fi
+    if [ -n "$_KERL_SAVED_REBAR_PLT_DIR" ]; then
+        REBAR_PLT_DIR="$_KERL_SAVED_REBAR_PLT_DIR"
+        export REBAR_PLT_DIR
+        unset _KERL_SAVED_REBAR_PLT_DIR
+    fi
+    if [ -n "$_KERL_ACTIVE_DIR" ]; then
+        unset _KERL_ACTIVE_DIR
+    fi 
+    if [ -n "$_KERL_SAVED_PS1" ]; then
+        PS1="$_KERL_SAVED_PS1"
+        export PS1
+        unset _KERL_SAVED_PS1
+    fi
+    if [ -n "$BASH" -o -n "$ZSH_VERSION" ]; then
+        hash -r
+    fi
+    if [ ! "$1" = "nondestructive" ]; then
+        unset -f kerl_deactivate
+    fi
+}
+kerl_deactivate nondestructive
+
+_KERL_SAVED_REBAR_PLT_DIR="$REBAR_PLT_DIR"
+export _KERL_SAVED_REBAR_PLT_DIR
+_KERL_PATH_REMOVABLE="/home/nicferrier/sources/erlang-r16b02/bin"
+PATH="${_KERL_PATH_REMOVABLE}:$PATH"
+export PATH _KERL_PATH_REMOVABLE
+_KERL_MANPATH_REMOVABLE="/home/nicferrier/sources/erlang-r16b02/man"
+MANPATH="${_KERL_MANPATH_REMOVABLE}:$MANPATH"
+export MANPATH _KERL_MANPATH_REMOVABLE
+REBAR_PLT_DIR="/home/nicferrier/sources/erlang-r16b02"
+export REBAR_PLT_DIR
+_KERL_ACTIVE_DIR="/home/nicferrier/sources/erlang-r16b02"
+export _KERL_ACTIVE_DIR
+if [ -f "/home/nicferrier/.kerlrc" ]; then . "/home/nicferrier/.kerlrc"; fi
+if [ -n "$KERL_ENABLE_PROMPT" ]; then
+    _KERL_SAVED_PS1="$PS1"
+    export _KERL_SAVED_PS1
+    PS1="(r16b02)$PS1"
+    export PS1
+fi
+if [ -n "$BASH" -o -n "$ZSH_VERSION" ]; then
+    hash -r
+fi
+}}}
+
+Quite hard then.
+
+So what's the solution? Well, I think I came up with one. You can
+treat the erlang commands as overridable functions that we can wrap
+inside Emacs.
+
+So instead of calling the program {{{erl}}} we could call a Bash
+script {{{erl}}} that:
+
+* sources the correct activate script
+* calls {{{erl}}} with whatever arguments it was sent
+
+So all we have to do is replace all the erlang programs we use with a
+shell script to do call the program with the environment activated. We
+can go one further than that and make the shell script so abstract it
+could perform the function of any erlang program, simply by execing to
+whatever name it was. Here's what I came up with:
+
+{{{
+#!/bin/bash
+source $HOME/sources/erlang-r16b02/activate
+erlangexe=$(basename $0)
+exec ${erlangexe#.erl-}
+}}}
+
+What I do is generate this script and then make symlinks to it that
+look like: {{{.erl-}}}//program-name// - the script can then take care
+of disambiguating what called it.
+
+
+It seems that this way of dealing with this pattern could be made
+completely generic across all types of this program.
+
+Right now I have implemented this for erlang, but if I meet more of
+these problems I'll definitely try and solve it the same way. And
+maybe then I will genericize it.
+
+
+I always like to think of other ways that Emacs could do the same
+thing. There aren't many, to be frank. It seems weak that I have to
+make a bunch of symlinks to the script, or even save the script on the
+disc at all. Emacs //could// do that all totally in memory if it could
+make a fake file system in the style of //plan-9// or //fuse//. Maybe
+that's the next thing we should add to Emacs.
