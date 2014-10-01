@@ -41,13 +41,13 @@
                 <span style="color: Black; font-weight: bold;">elnode @github</span>
             </a>      
 
-            <h4 id="devopstalks">DevOps talks and videos</h4>
+            <h4 class="talks" id="devopstalks">DevOps talks and videos</h4>
             <ul>
                 <li><iframe width="300" height="169" src="//www.youtube.com/embed/eTeKDStj30Y" frameborder="0" allowfullscreen></iframe></li>
                 <li><iframe width="251" height="188" src="http://www.youtube.com/embed/EKWn_J4q62c" frameborder="0" allowfullscreen></iframe></li>
             </ul>
             
-            <h4 id="emacstalks">Emacs talks</h4>
+            <h4 class="talks" id="emacstalks">Emacs talks</h4>
             <ul>
               <li><a href="http://youtu.be/H9E5qmiuYOQ">Emacsing the EmacsWiki @emacsconf</a></li>
               <li><a href="http://youtu.be/6tLbEtBaQfc">Packaging with ELPA - basics</a></li>
