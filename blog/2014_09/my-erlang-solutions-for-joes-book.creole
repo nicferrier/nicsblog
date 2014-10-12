@@ -25,6 +25,8 @@ them [[http://twiter.com/nicferrier|@nicferrier]] and tell me how to
 write better erlang.
 
 
+
+
 === Chapter 4 question 1 ===
 
 Extend {{{gemoetry.erl}}}:
@@ -89,11 +91,61 @@ timeit(Fn) -> dotiming({Fn, now()}).
 
 I struggled with this for a few hours because I couldn't see how to
 subtract one time from another. In the end I cheated and went and
-pinched a definition of now_to_seconds from
+pinched a definition of now_to_seconds
+from
 [[http://stackoverflow.com/a/838088/130125|a StackOverflow answer]]. That
 let me deal with the time in the way I wanted to... but maybe I missed
 something idiomatic?
 
+The second part of the question asks you to build a pretty printer for
+the current date and time:
+
+{{{
+-module(datepp).
+-export([my_date_string/0]).
+
+% Formatting the current day
+%
+%   nic:my_date_string(). -> "12th october 2014"
+
+month(N) -> 
+    element(N, {january, february,
+                march, april, may, 
+                june, july, august, 
+                september,  october, november, 
+                december}).
+
+day_ordinal(N) when N < 11, N > 13 ->
+    io_lib:format("~w~s", 
+                  [N,
+                   case (N rem 10) of
+                       1 -> "st";
+                       2 -> "nd";
+                       3 -> "rd"
+                   end]);
+day_ordinal(N) when N >= 11, N < 14 ->
+    io_lib:format("~wth", [N]).
+
+my_date_fmt({{Year, Month, Day}, {Hour, Minute, Second}}) ->
+    io:format("~w:~2..0w:~2..0w ~s ~w ~w~n", 
+              [Hour, Minute, Second, day_ordinal(Day), month(Month), Year]).
+
+my_date_string() ->
+    my_date_fmt(erlang:localtime()).
+}}}
+
+
+The erlang format printing is a little bit unusual I guess.  That part
+of it involved me constanly referring to the erlang {{{io}}} manual.
+
+I also experienced a little annoyance with the book at this point. I'm
+a very doing learner. I don't like the overly academic and this
+question felt unnecessarily //we don't know that yet//. But these days
+it's so easy to just Google. Often in the past I've thought of that as
+cheating. But now
+that
+[[https://twitter.com/search?q=%23devgoogle|looking up answers on the Internet is my career]]
+I don't see it the same way.
 
 
 == that's all so far ... ==
