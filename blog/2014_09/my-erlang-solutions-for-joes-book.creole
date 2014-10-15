@@ -147,6 +147,99 @@ that
 [[https://twitter.com/search?q=%23devgoogle|looking up answers on the Internet is my career]]
 I don't see it the same way.
 
+=== Chapter 4, question 5 ===
+
+Back to the trivial:
+
+{{{
+-module(math_functions).
+-export([even/1, odd/1, filter/2,split/1,split2/1]).
+
+
+even(X) when X rem 2 == 0 ->
+    true;
+even(X) when X rem 2 > 0 ->
+    false.
+
+odd(X) ->
+    not(even(X)).
+}}}
+
+These are actually done in the chapter a little earlier so I'm not
+sure why he did this. I tried to write them a little differently, I
+did them with guards so pattern matching. Emacs could do a better job
+of highlighting the patterns in this situation?
+
+=== Chapter 4, question 6  ===
+
+Again, trivial:
+
+{{{
+filter(F, L) ->
+    [X || X <- L, F(X)].
+}}}
+
+The only catch was the ordering of the clauses, I think Python has the
+same as this, something like:
+
+{{{
+[X for X in L if F(X)]
+}}}
+
+but it still tripped me up, I tried this at first:
+
+{{{
+[X || F(X), X <- L].
+}}}
+
+I think I just expected to be writing things backwards.
+
+=== Chapter 4, question 7 ===
+
+Again, this one wasn't hard either. I didn't really have to think
+about this much, it's just reiterating what was said in the chapter.
+
+{{{
+split(L) ->
+    {
+       filter(fun (X) -> even(X) end, L),
+       filter(fun (X) -> odd(X) end, L) 
+      }.
+
+
+odds_evens([H|T], Odds, Evens) when H rem 2 == 0 ->
+    odds_evens(T, Odds, [H|Evens]);
+odds_evens([H|T], Odds, Evens) when H rem 2 > 0 ->
+    odds_evens(T, [H|Odds], Evens);
+odds_evens([], Odds, Evens) ->
+    { Odds, Evens }.
+
+split2(L) ->
+    odds_evens(L, [], []).
+}}}
+
+Again, I did it with guards instead of a case statement. I may try and
+add guard syntax highlighting to the Emacs Erlang mode, I think that
+would be very useful.
+
+
+=== So how goes learning Erlang? ===
+
+I haven't devoted as much time to it as I would like... and that
+worries me because mostly I am falling over syntax and learning syntax
+requires practice. For me the questions need to be spread through the
+book a bit more and there need to be more of them.
+
+I have also more than once cursed Joe for not making an answers site
+somewhere. It would be nice to discuss Erlang in that way.
+
+I think I need a project to do in Erlang, to have my mind on as I
+learn it //properly// so I decided I would try and write an HTTP
+client that can talk on Unix sockets. Curl has miserably failed to add
+that functionality (despite the presence of a patch) so it seems like
+a good thing to do.
+ 
+
 
 == that's all so far ... ==
 
