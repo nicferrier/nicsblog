@@ -1,0 +1,167 @@
+= setting up owncloud on raspberry pi =
+
+{{http://owncloud.org/wp-content/themes/owncloudorgnew/assets/img/home/ocsplash.png}}
+
+[[http://owncloud.org/|OwnCloud]] is this pretty awesome free (as in
+freedom) software file synchronization service.
+
+In the old days (which means more than about 5 years ago) I used to
+manage sync between all the computers in my family with rsync. But now
+my eldest daughter has a Mac and there are a bunch of different phone
+operating systems. Managing things with rsync is hard.
+
+Another thing that is changed is that I don't keep server boxes in the
+house anymore. I used to. But not now. Other people's VPS are just so
+much easier for hard work. So it's hard to build a lot of
+centralization.
+
+I started to look at owncloud but I was wondering if it would really
+work in the house without me buying a server. Even a low powered one.
+
+I do have a spare raspberry pi though. Maybe it would work on that? I
+decided to give it a go. Here is the basics of what I did.
+
+== The PI ==
+
+The Pi is just a Raspberry Pi Model B+ with Raspbian which I made just
+by using
+the [[http://www.raspberrypi.org/downloads/|NOOBS install]]. That's
+probably the most difficult part and you can avoid any work by buying
+one from a supplier somewhere.
+
+One thing, I fixed the address of the Pi on my local network by using
+my router to give it a persistent address. This requires that you know
+the MAC address of the Pi, if you log into the Pi it's easy to find:
+
+
+{{{
+pi@raspberrypi ~ $ ifconfig
+eth0      Link encap:Ethernet  HWaddr b8:27:eb:8f:b7:ae  
+          inet addr:172.30.1.10  Bcast:172.30.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:16817 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:16661 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:2056133 (1.9 MiB)  TX bytes:12778552 (12.1 MiB)
+}}}
+
+Here we see {{{eth0}}} has MAC address {{{b8:27:eb:8f:b7:ae}}} and you
+can use that with most routers to setup a persistent IP address:
+
+{{/img/stuff/Screenshot_from_2014-10-16_18:01:07.png}}
+
+== Set up owncloud ==
+
+This is actually really easy, though they don't make it as simple as
+it should be.
+
+First, add the owncloud repository to your Raspberry Pi's list of
+places where it downloads sources:
+
+{{{
+$ sudo bash
+# echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/Debian_7.0/ /' \
+   >> /etc/apt/sources.list.d/owncloud.list 
+# wget http://download.opensuse.org/repositories/isv:ownCloud:community/Debian_7.0/Release.key
+# apt-key add - < Release.key  
+# apt-get update
+# apt-get install --fix-missing owncloud
+}}}
+
+that is basically it.
+
+However, while I was doing this the Pi seemed to crash a number of
+times. Here's some tricks for getting yourself out of crashes:
+
+If you're missing packages and it's all going wonky:
+
+{{{
+# apt-get -f install
+}}}
+
+can help sort them out.
+
+If you're setting up packages (it's not downloading anything anymore)
+and it starts doing wierd things try:
+
+{{{
+# dpkg --configure -a
+}}}
+
+All the time keep returning to:
+
+{{{
+# apt-get install --fix-missing owncloud
+}}}
+
+and in the end everything should be good.
+
+It took me about 2 hours to download and install on the Pi.
+
+It is rather slow.
+
+== Are we there yet? ==
+
+When I was done and everything seemed to be configured I rebooted the
+Pi for good measure.
+
+== Hit it ==
+
+Then I hit {{{http://172.30.1.10/owncloud}}}, the address I've told
+me router to reserve for the Pi, up came owncloud's config screen.
+
+Great!
+
+== OwnCloud post install config ==
+
+[[http://doc.owncloud.org/server/7.0/admin_manual/installation/installation_wizard.html|OwnCloud gets you to config some stuff]]
+like admin username and password. It's pretty trivial. I didn't bother
+telling it anything other than a username and password.
+
+== Setup my first client ==
+
+Now I setup my Ubuntu laptop:
+
+{{{
+$ wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/xUbuntu_12.04/Release.key
+$ mv Release.key Downloads/owncloud-repo-Release.key
+$ sudo apt-key add - < Downloads/owncloud-repo-Release.key 
+$ sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/xUbuntu_14.04/ /' >> /etc/apt/sources.list.d/owncloud-client.list"
+$ sudo apt-get update
+$ sudo apt-get install owncloud-client
+}}}
+
+and finally I ran the client from the Unity command line, which is
+accessed with ALT+F2:
+
+{{{
+owncloud
+}}}
+
+I entered the username and password I'd entered to setup the server
+and that was it. It's now running happily.
+
+
+== Issues ==
+
+I didn't yet put a decent USB disc on the Pi. I'll need to as the Pi
+has limited storage built in.
+
+When I do I'll need to do this:
+
+* shut down owncloud on the pi
+* take owncloud out of init
+* shut down the pi
+* start up
+* connect drive to pi
+* map the drive to the file system and move the data to it
+* alter the owncloud boot script to detect the connected disc
+** and fail if not there
+* start up owncloud
+
+
+I didn't install a cert either. This might not be an issue as long as
+I never want to use it out of the house. Given that it's in my house
+this might not be an issue. If we all go on holiday for 2 weeks it
+might have a long sync up time... other than that a day or so probably
+isn't going to be bad.
