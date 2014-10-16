@@ -48,7 +48,7 @@ eth0      Link encap:Ethernet  HWaddr b8:27:eb:8f:b7:ae
 Here we see {{{eth0}}} has MAC address {{{b8:27:eb:8f:b7:ae}}} and you
 can use that with most routers to setup a persistent IP address:
 
-{{/img/stuff/Screenshot_from_2014-10-16_18:01:07.png}}
+{{/stuff/img/Screenshot_from_2014-10-16_18:01:07.png}}
 
 == Set up owncloud ==
 
