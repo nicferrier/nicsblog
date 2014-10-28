@@ -1,6 +1,6 @@
 = concurrency and emacs - a surprising next step =
 
-I admire and applaud [[http://twitter.com/@bruceconnor|Artur Malabarba's]] recent thread
+I admire and applaud [[http://endlessparentheses.com|Artur Malabarba's]] recent thread
 on
 [[http://www.reddit.com/r/emacs/comments/2khl98/big_things_to_expect_from_emacs_25/|reddit]]
 about Emacs 25 and I love that he's picked on my favourite bug bears
