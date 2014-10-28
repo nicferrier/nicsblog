@@ -1,0 +1,81 @@
+= concurrency and emacs - a surprising next step =
+
+I admire and applaud Bruce O'Connor's recent thread
+on
+[[http://www.reddit.com/r/emacs/comments/2khl98/big_things_to_expect_from_emacs_25/|reddit]]
+about Emacs 25 and I love that he's picked on my favourite bug bears
+with Emacs.
+
+Bruce called out concurrency particularly. I have spent some time
+looking at this problem and even chewed it over in person with Tom
+Tromey. Tom really knows about concurrency and Emacs, having already
+implemented a full port of the Threads API to Emacs. It's in a
+branch. Go check it out. It's not going anywhere because people have
+unrealistic expectations that it will work with debuggers and stuff. I
+mean really? That's nuts. It will take years to support concurrency
+properly in Emacs. Sigh.
+
+Anyway, he and I cooked up half a plan for how concurrency could be
+added. It should be very restricted. Perhaps threads could have their
+own state and only be allowed to communicate with the rest of Emacs
+via messaging. There are precedents for this, it's basically
+how
+[[https://developer.mozilla.org/en/docs/Web/Guide/Performance/Using_web_workers|JavaScript worker threads are designed]].
+
+So I've been thinking about the next thing that we could do to move
+this plan forward.
+
+I think it's not to add threads at all. It's to do something
+completely different. Add a headless startup option to Emacs.
+
+Right now I think most people who've got this far are thinking //What
+is the old goat on about now? We've got headless startup options and
+what are they to do with concurrency anyway?//
+
+Well, I want to build a headless startup option that will help us
+start an async Emacs process from inside Emacs, and then communicate
+with it.
+
+We can do this right now, both John Wiegley and I have implemented it
+(and some others too I've no doubt). But it's hard and error prone.
+
+The current Emacs startup options are:
+
+* start a headless daemon
+** //not the same as a process//
+** daemons detach and the host process loses control of them
+** it's hard to send the daemon input
+* start a headless batch process
+** not the same as a headless process
+** there's no user init
+** it's hard to send it more input
+* or we can start a headed emacs in term or gui mode
+
+What I want is this:
+
+* I want to be able to start an emacs in headless mode,
+** without detaching the process from stdin and stdout
+** and with it running my emacs init
+** if it needs to ask for input (from epa for example) it should do so from stdin
+** there's an ielm or an eshell on stdin
+** there's a startup option to change the prompt of the //shell//
+** when I send EOF the Emacs process dies
+
+This seems to me a fairly measured wish list. We already have line
+oriented {{{eshell}}} and {{{ielm}}}. We already have more complex
+headlessness.
+
+If we had this sort of Emacs startup it would be easy for us to start
+long running async processes that we could use for processing in the
+same way we use might use threads.
+
+We would start to build use cases around it. People would do all sorts
+of things and work out useful interesting ideas.
+
+Then, when we added worker threads natively to Emacs it wouldn't be
+too much of a leap.
+
+This seems like the easiest, simplest next step. So this is what I'm
+going to try and do.
+
+Help me out if you want!
