@@ -1,12 +1,12 @@
 = concurrency and emacs - a surprising next step =
 
-I admire and applaud Bruce O'Connor's recent thread
+I admire and applaud [[http://twitter.com/@bruceconnor|Artur Malabarba's]] recent thread
 on
 [[http://www.reddit.com/r/emacs/comments/2khl98/big_things_to_expect_from_emacs_25/|reddit]]
 about Emacs 25 and I love that he's picked on my favourite bug bears
 with Emacs.
 
-Bruce called out concurrency particularly. I have spent some time
+Artur called out concurrency particularly. I have spent some time
 looking at this problem and even chewed it over in person with Tom
 Tromey. Tom really knows about concurrency and Emacs, having already
 implemented a full port of the Threads API to Emacs. It's in a
