@@ -211,7 +211,7 @@ monkey.
 
 === Self organizing sucks because managers are in charge ===
 
-Meijer was beginning to lose at this point for me. This is such an
+Meijer was beginning to lose it at this point for me. This is such an
 utter bullshit attack on agile it's hard to respond.
 
 Let me respond this way. I do not believe managers are the answer to
@@ -374,13 +374,13 @@ have been tightly project managed day to day maybe a scrum master type
 who is more servant leader than project manager would help teams learn
 to work things out for themselves a bit.
 
-Sprints are utterly ridiculous ways to produce software. They
-always create a situation where you can't deliver fast enough, they
-encourage programmers to hoard code and to make branche and more and
-more busy work in the process. They're useless. But in the situation
-where programmers have been fed day to day and week to week a long
-project plan of work maybe they're a way forward for setting tighter
-loops with the business.
+Sprints are utterly ridiculous ways to produce software. They always
+create a situation where you can't deliver fast enough, they encourage
+programmers to hoard code and to make source code branches and more
+and more busy work in the process. They're useless. But in the
+situation where programmers have been fed day to day and week to week
+a long project plan of work maybe they're a way forward for setting
+tighter loops with the business.
 
 Sprint planning is utterly ridiculous because estimates are stupidly
 hard and people always fixate on it... but maybe just maybe in a
