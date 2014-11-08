@@ -29,7 +29,7 @@ argument here:
 * programmers should be utterly professional - no amateurs!
 * heirarchies are the only ways to run a company
 
-He doens't really offer a clear argument of why //agile is crap// it's
+He doesn't really offer a clear argument of why //agile is crap// it's
 more threaded through the talk. But pulling out specific things:
 
 * standups are crap
@@ -185,7 +185,7 @@ Java//.
 
 Another trusism is that people who like a technique often fixate on it
 and think it's the solution for everyone. The Agile Manifesto has an
-answer to that //Individuals and interations over processes and
+answer to that: //Individuals and interations over processes and
 tools// - I like to say //People Not Processes//.
 
 Erik has a whole section of his talk where he explains the best
@@ -194,9 +194,9 @@ understood ways of finding breakage in big systems. It's simple
 //move fast, break things//. But it's good to understand that Facebook
 had to change that to //move fast with safety//. Why did they have to
 change it? Because it turns out when you break things you don't make
-much money. So try not to break things. Don't try so hard it stops you
-working though but have good monitoring and ways o abstracting things
-from breakage before you deliver them.
+much money. So try not to break things. Don't try so hard that it
+stops you working though; but have good monitoring and ways of
+abstracting things from breakage before you deliver them.
 
 That doesn't mean you shouldn't have a chaos monkey. But would you
 role out a chaos monkey on a system that wasn't prepared at all for
@@ -269,24 +269,28 @@ So at this point I'd like to start taking a step back from Meijer's
 argument and starting to point out what I think the problem with
 building software is.
 
-And yet we know that software is changing the world. Many companies
-are finding a harsh reality in a software driven world that they have
-ignored technology or pushed it one side for two long and now it is
-eating their bottom line. This is absolutely a result of the ignorant
-attitude that Meijer is proposing: command and control, heirarchy, do
-what you're told, have a load of slaves do the work for you.
+We know that software is changing the world. Many companies are
+finding the reality is that they have ignored technology or pushed it
+to one side for too long and now it's eating their bottom line. This
+is absolutely a result of the ignorant attitude that Meijer is
+proposing: command and control, heirarchy, do what you're told, have a
+load of slaves do the work for you.
 
 Meijer starts his talk by lauding Facebook and Netflix as being ideal
 companies. And then he goes back to talking about rigid structures
 being the way forward. But neither Facebook nor Netflix are run
-rigily. In fact, Facebook is run with what is described as
-//programmer anarchy//. This is where programmers decide what they're
-going to work on next. You don't have managers, you don't have product
-owners, scrum masters or any of that. You have people who commit code.
+rigidly. In fact, Facebook is run with what is described
+as
+[[http://www.infoq.com/news/2012/02/programmer-anarchy|//programmer anarchy//]]. This
+is where programmers decide what they're going to work on next. You
+don't have managers, you don't have product owners, scrum masters or
+any of that. You have people who commit code.
 
 And that sounds great. It sounds a bit like the hacker culture that
-Meijer is seeking. But it's not command and control. It's not the
-Army. It appears to be anarchy. But it's not anarchy of course. The
+Meijer says he is seeking. But it's not command and control. It's not
+the Army. Which he also says he's seeking.
+
+It appears to be anarchy. But it's not anarchy of course. The
 programmers can be trusted to do the right thing because they're all
 super smart and mature programmers. Among the best programmers in the
 world. And that's because Facebook is an attractive place to
@@ -317,15 +321,15 @@ everything. Unless you have your hand on the rudder you're going to
 get lost and it's plain that most CEOs of non-technology companies
 have no idea about technology.
 
-In britain we have this situation in
+In Britain we have this situation in
 spades. [[http://www.roberthalf.co.uk/id/PR-03593/FTSE-100-Companies-UK-Press-Release|52 of the FTSE 100 CEOs had a finance/accountancy background]]
 in 2013, compared to 4 with a technology background. Since all
 companies are software companies now that's a pretty sad statistic. I
-could tell you 100 anecdotes about appalling management, about the IT
+could tell you 100 anecdotes about appalling management; about the IT
 director at Safeway Supermarket in 1998 who said:
 
 //the Internet is amazing isn't it? You should get me a meeting with
-it's IT director so we can do a deal//
+the IT director there so we can get on the Internet//
 
 or in the last few years, the director of a company experiencing lots
 of critical failures who told me:
@@ -391,14 +395,105 @@ to do together, business people and IT people.
 So Scrum is shit. Except when it isn't.
 
 
-== Maturity ==
+== So. Much. Else. ==
+
+Really, I could go on for another few days writing down everything
+that is wrong with the video. Here's a few more things:
+
+=== the purpose of a company is to make money ===
+
+Not if you're the BBC. Or a charity. Money is a great monitoring tool
+for companies that exist like that. But there are plenty of
+organizations that need to make software that don't work like that.
+
+=== software is replacing everything - sorry non-programmers ===
+
+But sorry programmers too because sofftware is replacing programmers
+as well. Erik doesn't own up to that though.
+
+=== 10th man is about yelling at each other ===
+
+Or maybe it could be about critical thinking instead of adversarial
+bullshit Erik? Maybe?
+
+There's a lot more on this, about how adverserial culture doesn't work
+that well for better engineering, the experiences are out there and
+documented. If you know what you're doing you'd have looked them up.
+
+=== Code always wins. Always. ===
+
+I call bullshit. Steve Jobs. Not a programmer. Steve Ballmer. Not a
+programmer. All those CEOs. Not programmers. Does the better code
+always win? No. Does the first code always win? No. What exactly does
+//Code always wins// mean??
+
+=== Move fast break things ===
+
+Doesn't work in regulated markets. You wanna tell a gambling regulator
+//Sorry, we broke the gambling laws because, you know, we're a hacker
+firm!// and see how long you stay in business.
+
+=== Programmers are rock stars ===
+
+Do I have to explain why this is bullshit? It leads to so much
+cultural crap I don't even want to get started. None of it is about
+agile it's about being a decent human being.
+
+=== Programmers are useless after they're 30 ===
+
+Except maybe some of the best programmers we have in the world
+today. [[http://en.wikipedia.org/wiki/Go_%28programming_language%29|Ken Thompson, Rob Pike]],
+[[http://en.wikipedia.org/wiki/Erlang_%28programming_language%29|Joe Armstrong]],
+[[https://stallman.org/|Richard Stallman]],
+[[http://en.wikipedia.org/wiki/GNU_C_Library|Ulrich Drepper]], Erik
+Meijer himself and many more. I could go on.
+
+Note that I didn't say //all of the best programmers are old
+dudes//. Some are though. You wanna throw them all on the scrap heap
+Erik?
+
+=== Companies should be like Armies ===
+Because, ya know, making money is just like killing people.
+
+When you go and talk to officers in the army they use lots of agile
+techniques during actual war. Outside of war they tend to be quite
+rigid structures dominated by things other than competence at
+fighting.
+
+=== Programmers should be professional computer scientists ===
+
+The programming world would be a sad place I think. Larry Wall was a
+linguist before working on Perl. Joe Armstrong was a Physicist. Lots
+of people come from their own domains and start working on
+problems. That's surely a good thing?
+
+
+== Fin. ==
 
 So here's my final thoughts. It's not agile that sucks that is
 dragging programmers down. It's the inability of programmers and
-business people to understand each other. It's business people being
-ridiculously naive about technology and it's technical people not
-caring who, what or why the bills get paid.
+business people to understand each other.
+
+I have worked hard all my life to try to make software better so I
+tend to rail against the business people who just can't be arsed
+changing anything:
+
+//oh, that's an IT problem//
+
+or
+
+//I don't know about that - you'd have to talk to IT//
+
+are not acceptable responses but I hear them all the time.
+
+But on the other hand those business people have often been so
+conditioned by unimaginative, over-constrained IT people.
+
+And yeah Erik, your anti-agile programmer monoculture will sure fix
+that problem.
 
 So Erik Meijer and all you other programmer accusers - stop talking
-about how agile sucks. And start actually engaging with businesses to
-help them fix their software delivery.
+about how agile sucks. Instead, start engaging with the business you
+work in to help them fix their software delivery. It's not going to be
+//easy//. It's going to be //hard//. And it's not going to be
+//anything like computer programming//. But it's worth doing all the same.
