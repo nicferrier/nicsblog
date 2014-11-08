@@ -249,3 +249,93 @@ would become a very common idiom.
 Given this system you can see the common case of unqualified names in
 a package being used. It would be simple, just define all the
 functions unqualified and {{{defalias}}} the external ones.
+
+
+== Update: Worthwhile alternatives ==
+
+rms provided thoughts on
+this
+[[https://lists.gnu.org/archive/html/emacs-devel/2013-07/msg00820.html|subject]]. He
+really understands more about Lisp than most people I know (and by
+understand I mean that, not he has learned the CommonLisp spec
+backwards or anything like that).
+
+Like pretty much everything rms says I thought they were
+worthwhile. So I added them here:
+
+Emacs provides lots of ways to type the long names with fewer
+characters.  That is a better solution because it doesn't complicate
+the meaning of code.
+
+If people don't want to have shorter names appear in the code,
+then I suggest a system of read-time aliases:
+
+{{{
+(def-read-alias 'foo 'foo:bar)
+}}}
+
+would tell the reader to replace `foo' with `foo:bar':
+
+{{{
+'foo => foo:bar
+}}}
+
+`:::' could inhibit the alias processing for the symbol that follows.
+
+{{{
+':::foo => foo
+}}}
+
+{{{prin1}}} could detect the cases where aliasing occurs
+and replace the expansions with their aliases, or use `:::'
+to protect against aliasing.
+
+A file could load read aliases by calling `load-read-aliases'.
+For instance,
+
+{{{
+(load-read-aliases "cl-read-aliases")
+}}}
+
+Eval from files and buffers would have to handle this form specially.
+Compilation too.
+
+In the case of reading from a buffer, Emacs would set up the list of
+aliases and pass that as an argument to `eval-region'.  Emacs could
+use that list of aliases to make various Emacs features DTRT with them.
+
+
+=== Using aliases ===
+
+I came up with a way to achieve the flet solution mentioned
+above. This means you can make aliases for functions which at least
+means you can make your code clearer.
+
+{{{
+(defmacro ejit/bind-if (bind test cons &rest alt)
+  "BIND, TEST and then CONS or ALT.
+
+For example:
+
+ (ejit/bind-if (var (somefunc))
+     (eq var 10)
+   (* var 3)
+   (/ var 5))
+
+BIND is local to the if."
+  (declare (indent 2))
+  `(let (,bind)
+     (if ,test
+         ,cons
+         ;; Else
+         ,@alt)))
+
+(defun some-function ()
+  (symbol-macrolet ((bind-if ejit/bind-if))
+     (bind-if test
+        consequent
+        alternate)))
+}}}
+
+This seems to me like it might have legs. I am pondering.
+
