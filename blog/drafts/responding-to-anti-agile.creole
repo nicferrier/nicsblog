@@ -1,0 +1,404 @@
+= in defense of agile =
+
+There are two sorts of people in the world right now who are fucking
+up the production of software. The first, people who have no clue
+about software, is still the larger group. The second though is
+experienced programmers so focussed on programming they can't
+see the world around them. Erik Meijer's latest diatribe against agile
+puts him firmly in the second group.
+
+Meijer stood up in front of the crowd at //reaktordevday.fi// and
+delivered this:
+
+<<html
+<iframe src="//player.vimeo.com/video/110554082" width="500"
+height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen
+allowfullscreen></iframe> <p><a href="http://vimeo.com/110554082">One
+Hacker Way - Erik Meijer</a> from <a
+href="http://vimeo.com/reaktorfi">Reaktor</a> on <a
+href="https://vimeo.com">Vimeo</a>.</p>
+html>>
+
+If you don't want to watch the whole thing I'll try and summarize his
+argument here:
+
+* agile is crap
+* companies make money and can be organized around feedback loops through continuous improvement
+* non-programmers have no value
+* programmers are like super sports stars and all need to be paid $1M and worked till they burn out
+* programmers should be utterly professional - no amateurs!
+* heirarchies are the only ways to run a company
+
+He doens't really offer a clear argument of why //agile is crap// it's
+more threaded through the talk. But pulling out specific things:
+
+* standups are crap
+* snake oil! - no empirical data!
+* TDD sucks because tests don't find real failures
+* self organizing sucks because managers are in charge
+
+Maybe the most sensible way to do this is to follow Erik's list.
+
+== Agile is crap ==
+
+Erik begins with...
+
+=== Standups are crap ===
+
+Religiously having a stand up meeting every day for 10 minutes,
+whatever the situation, would be pretty stupid. It's even more stupid
+to do it literally standing up.
+
+People don't tend to start things because they are stupid
+though. There must be a reason for //standups//. There is. In a
+complex software project there are usually quite a lot of people doing
+a lot of different things. So it's good to catch up fairly frequently
+to exchange information. Why are these things held standing up? The
+original intention was to stop them going on for ages, because people
+don't like standing up.
+
+So what is stupid? is it the the need for information exchange or the
+bit where we all stand up at 10am and stay standing till everyone
+vaguely thinks we are done? Do you think the former or the latter is
+what agile is proposing?
+
+When I first joined ThoughtWorks my first engagement was at a
+Government client. We did a standup meeting. They started to go on for
+a while. More than 10 minutes. I used to get bored. After we'd had the
+first one then we'd have another one for the programmers. I got even
+more bored. I had heard about ThoughtWorks sometimes cargo culting and
+so one day, I deliberately sat down. The project manager told me,
+abruptly, to stand up. She was a young, relatively inexperienced
+project manager and I was an old, grizzled hacker. I was shocked. I
+wasn't shocked because she thought you had to standup at a standup
+meeting, I was shocked because she was rude and rigid. Maybe she
+thought I was being rude but the right approach was surely to come up
+to me afterwards and ask why I was not conforming to the acccepted
+practice. That would have given her the opportunity to learn, maybe I
+was just being lazy, maybe standing up does have good things about it,
+or maybe I had a real point.
+
+In fact standing up does have good things about it, it's different
+from what we normally do so it's supposed to keep us alert and
+concentrating. But that state is highly individual and
+contextual. Will we still have standups if everyone gets a standup
+desk? Will we have one if if everyone's remote? If someone is more
+alert lieing down why not do that? And the real point is to //be short
+and to the point//. It's not the standup at all.
+
+This story has a happy ending, I met the project manager on another
+gig later on and we talked it over. She learned why I did the opposite
+to everyone else at standups and I hope she's better for that
+knowledge. I think she is. She thought she was. What would she learn
+from Erik?  Would it make her better at helping get software built?
+
+So what should you do if you feel standups are bullshit? Should you
+refuse to attend? Maybe you could engage in the process, explain your
+concerns to your team and try and make it better? Also, if people do
+go on forever, stop them, because this is a short meeting.
+
+I've done standups on irc, over skype, in person, on the phone... all
+sorts of ways. You don't need to standup and if anyone says you do
+take them aside and have a chat about it.
+
+Next up...
+
+=== Snake oil ===
+
+There's certainly is a lot of Snake Oil in Agile. By which I mean
+salespeople saying //Do this and your software will be better!// Cargo
+Cultists is another way of saying it (cargo cults have
+a
+[[http://en.wikipedia.org/wiki/Cargo_cult|fascinating history by the way]]). I
+tend to think of the Cargo Cultists being more naive than the Snake
+Oil salesmen.
+
+One of Meijer's criticisms is //there's no empirical evidence!// and
+he then goes on to propose a quite disgustingly anti-people system as
+a suitable alternative, again with //NO emprirical evidence// that it
+works.
+
+We do know some things about //agile methods// though. For example, we
+know that shorter cycle times (the length of time it takes you to
+deliver a system to your customers) mean getting more feedback. Erik
+calls that out as a good thing without once admitting that it's a
+central tenent of agile.
+
+But let's go back to Erik's proposed solution: there is no proof that
+his solution works. His proposal is based on Facebook and Netflix. But
+his proposal isn't the summary of how those companies work. Human
+systems are hard to judge. Social science is soft and fuzzy and not at
+all easy to do because practicising on humans is at best difficult and
+at worst unethical.
+
+What we have instead of lots of proof is experience. Things that
+seemed to work in one place that maybe we can replicate in
+another. And in this talk we have Erik Meijer doing exactly that,
+pointing at Facebook and Netflix and saying "this works! copy
+this!". I think, if he continues down the road of trying to help
+companies build better software, he'll find that he spends a lot of
+his time analyzing case studies from companies where things have
+worked, to try to replicate the good things, and from companies where
+things have not worked to try to eradicate the bad things. As he does
+this he'll build up a base of knowledge about how people work that
+maybe he didn't have before. If he starts to talk about it he might
+find himself sounding like one of those agile snake oil salesmen.
+
+In other words Erik Meijer can rage about Snake Oil but perhaps that's
+because he has a good dose
+of
+[[http://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect|Dunning Kreuger syndrome]]
+about social science.
+
+While standups seems trivial and snake oil seems nebulous now we have
+something concrete:
+
+=== TDD sucks! ===
+
+I was at a gig last year in a big failing gambling firm. I asked
+different teams over and over what TDD stood for and always recevied
+the same answer //Test Driven Development//. It doesn't. That's quite
+wrong. It's *Test Driven Design*. Erik is making the same mistake I
+think. He's right, there is often no point in writing unit tests, they
+are quite useless in the face of systems failure. But writing unit
+tests is not what is good about TDD. The process of writing the test
+causes us to think about the abstraction that we need to put into the
+code to make it testable. It turns out that these same abstractions
+are the very ones we need to be making more reliable
+software. Abstracting the database from the code, for example, so we
+can test the logic of the code without the database, is something that
+we can turn into a shippable code. It's the same code the chaos monkey
+will exercise when he trashes the db underneath us.
+
+So TDD doesn't //suck//. It's not for everyone and it's crucial that
+proponents seek to understand that. Particularly there seems to be
+something about TDD that makes it useful for languages like Java and
+C# and less useful for functional languages. There are lots of reasons
+for that I think, but mainly it's about the checks and balances on
+your thinking about a piece of code. With object oriented programming
+there is no way to see the weaknesses your contracts create except
+compiling and using them. Tests achieve that. TDD achieves that with a
+fast feedback loop. With functional languages we nearly always have a
+REPL and so we tend to design and use our functions that way. Some
+proponents even say //TDD is my REPL// and they specifically mean //in
+Java//.
+
+Another trusism is that people who like a technique often fixate on it
+and think it's the solution for everyone. The Agile Manifesto has an
+answer to that //Individuals and interations over processes and
+tools// - I like to say //People Not Processes//.
+
+Erik has a whole section of his talk where he explains the best
+understood ways of finding breakage in big systems. It's simple
+//deliver fast, respond fast to breakage//. Facebook used to say
+//move fast, break things//. But it's good to understand that Facebook
+had to change that to //move fast with safety//. Why did they have to
+change it? Because it turns out when you break things you don't make
+much money. So try not to break things. Don't try so hard it stops you
+working though but have good monitoring and ways o abstracting things
+from breakage before you deliver them.
+
+That doesn't mean you shouldn't have a chaos monkey. But would you
+role out a chaos monkey on a system that wasn't prepared at all for
+it? I think that would be easy. I could write a chaos monkey that
+would take down the systems of most companies I've been at. It
+wouldn't need to be sophisticated at all because the software it's
+testing is so crap.
+
+So maybe the thing is you should work //towards// having a chaos
+monkey.
+
+
+=== Self organizing sucks because managers are in charge ===
+
+Meijer was beginning to lose at this point for me. This is such an
+utter bullshit attack on agile it's hard to respond.
+
+Let me respond this way. I do not believe managers are the answer to
+economic problems.
+
+I've been working in software for 30 years. I've been trying to help
+companies adapt to the changes wrought by information technology the
+whole time. Over my whole lifetime I've seen the problem more and more
+as [[http://en.wikipedia.org/wiki/The_Two_Cultures|C.P.Snow]] did in
+his famous Two Cultures:
+
+<<html
+<blockquote>
+A good many times I have been present at gatherings of people who, by
+the standards of the traditional culture, are thought highly educated
+and who have with considerable gusto been expressing their incredulity
+at the illiteracy of scientists. Once or twice I have been provoked
+and have asked the company how many of them could describe the Second
+Law of Thermodynamics. The response was cold: it was also
+negative. Yet I was asking something which is the scientific
+equivalent of: Have you read a work of Shakespeare's?</blockquote>
+
+<blockquote>I now believe that if I had asked an even simpler question
+- such as, What do you mean by mass, or acceleration, which is the
+scientific equivalent of saying, Can you read? — not more than one in
+ten of the highly educated would have felt that I was speaking the
+same language. So the great edifice of modern physics goes up, and the
+majority of the cleverest people in the western world have about as
+much insight into it as their neolithic ancestors would have had.
+</blockquote>
+html>>
+
+In other words technologists don't tend to explain technology very
+well or engage in details about management and humanists doing
+management don't try and understand technology. Worse, I have often
+seen managers wearing luddite attitudes as a badge of honour:
+
+//Oh I have no idea about technology, I'm absolutely useless! I leave it to
+my children!//
+
+What could be a more trivializing dismissal: //technology is for
+children!//.
+
+And here we have Erik Meijer following the same track. Programming is
+hard and like war, leave it to young people who we can pay well but
+burn out. Older fellows (and I do get the sense while listening to
+Erik that he's talking about //fellows//) can be the managers. Meijer
+is dismissive of the people in the room who aren't coding. But what
+does he think they're doing?
+
+
+== Making money through rigid structure ==
+
+So at this point I'd like to start taking a step back from Meijer's
+argument and starting to point out what I think the problem with
+building software is.
+
+And yet we know that software is changing the world. Many companies
+are finding a harsh reality in a software driven world that they have
+ignored technology or pushed it one side for two long and now it is
+eating their bottom line. This is absolutely a result of the ignorant
+attitude that Meijer is proposing: command and control, heirarchy, do
+what you're told, have a load of slaves do the work for you.
+
+Meijer starts his talk by lauding Facebook and Netflix as being ideal
+companies. And then he goes back to talking about rigid structures
+being the way forward. But neither Facebook nor Netflix are run
+rigily. In fact, Facebook is run with what is described as
+//programmer anarchy//. This is where programmers decide what they're
+going to work on next. You don't have managers, you don't have product
+owners, scrum masters or any of that. You have people who commit code.
+
+And that sounds great. It sounds a bit like the hacker culture that
+Meijer is seeking. But it's not command and control. It's not the
+Army. It appears to be anarchy. But it's not anarchy of course. The
+programmers can be trusted to do the right thing because they're all
+super smart and mature programmers. Among the best programmers in the
+world. And that's because Facebook is an attractive place to
+work. Netflix have the same attitude. They hire what they think are
+the best people.
+
+Who doesn't hire what they think are the best people? Well, most firms
+as it turns out. It turns out that not even Facebook and Netflix do
+that all the time. Why? Economics. Meijer talks a lot about how some
+people are paid huge amounts by Silicon Valley and there is this
+marvellous appreciation of talent... but we know that for
+years
+[[http://pando.com/2014/03/22/revealed-apple-and-googles-wage-fixing-cartel-involved-dozens-more-companies-over-one-million-employees/|Steve Jobs ran a cartel between Apple and other silicon valley firms]]
+to push salaries of programmers down. So it's not just about
+appreciating talent.
+
+In my experience most companies are playing a numbers game with
+technology. It is an accountants solution to a problem they don't
+understand:
+
+//Let's throw some money at this and then we'll cut if off if it
+doesn't work//
+
+It's a dim view of investment and it's a bullshit answer to the
+problem of building software and it's exactly what lets snake oil
+salesmen, shoddy programmers and other fuck ups take over and ruin
+everything. Unless you have your hand on the rudder you're going to
+get lost and it's plain that most CEOs of non-technology companies
+have no idea about technology.
+
+In britain we have this situation in
+spades. [[http://www.roberthalf.co.uk/id/PR-03593/FTSE-100-Companies-UK-Press-Release|52 of the FTSE 100 CEOs had a finance/accountancy background]]
+in 2013, compared to 4 with a technology background. Since all
+companies are software companies now that's a pretty sad statistic. I
+could tell you 100 anecdotes about appalling management, about the IT
+director at Safeway Supermarket in 1998 who said:
+
+//the Internet is amazing isn't it? You should get me a meeting with
+it's IT director so we can do a deal//
+
+or in the last few years, the director of a company experiencing lots
+of critical failures who told me:
+
+//it doesn't matter that the database went down! that's an Oracle
+problem, not OUR problem!//
+
+These people weren't agilists. They were the managers that Meijer
+wants to put in charge of everything. They //were// in charge of
+everything.
+
+
+== Scrum and maturity ==
+
+I do want to talk about Scrum a little bit. Meijer calls out Scrum
+directly. 15 years ago I was a Scrum advocate. I liked it. But times
+change. It seems to me now mostly a repository of practices that
+people think will help big companies adapt to less command and
+control. But slowly. So Scrum seems to have become deliberately
+adapted for large, poorly performing organizations. People in the
+Scrum community that I meet talk a lot about managing poor
+developers. Compare and contrast with Netflix and Facebook, even if
+they're not hiring the best they are at least hiring //good//. In many
+large companies
+there
+[[http://www.telegraph.co.uk/news/worldnews/europe/germany/9200054/German-civil-servant-says-he-did-nothing-for-14-years.html|are plenty of bad people]]
+but did they start off bad or were they made bad because of the
+company?
+
+Scrum is an attempt to build a system that accomodates and manages
+good and bad people. Personally I think Scrum is a disaster because it
+makes people stop thinking and start talking about whether this is
+Scrum or not. If it's not Scrum we shouldn't be doing it! But that is
+so obviously the enemy of better.
+
+There is a huge amount of religion about Scrum, you need a Scrum
+master and they have to be this sort of person who helps developers
+and they don't code themselves. You need Sprints and they need to be
+about 2 weeks long. You need Sprint planning because otherwise how
+will we know what the people are doing in the Sprint?
+
+All of this is rubbish. Unequivocally. You don't need a Scrum master
+for a team, in fact it actively discourages the team from looking
+after themselves. But in a situation where you have developers who
+have been tightly project managed day to day maybe a scrum master type
+who is more servant leader than project manager would help teams learn
+to work things out for themselves a bit.
+
+Sprints are utterly ridiculous ways to produce software. They
+always create a situation where you can't deliver fast enough, they
+encourage programmers to hoard code and to make branche and more and
+more busy work in the process. They're useless. But in the situation
+where programmers have been fed day to day and week to week a long
+project plan of work maybe they're a way forward for setting tighter
+loops with the business.
+
+Sprint planning is utterly ridiculous because estimates are stupidly
+hard and people always fixate on it... but maybe just maybe in a
+business where project plans have been top down and taken for ages
+they might help you understand the scope of what you're agreeing
+to do together, business people and IT people.
+
+So Scrum is shit. Except when it isn't.
+
+
+== Maturity ==
+
+So here's my final thoughts. It's not agile that sucks that is
+dragging programmers down. It's the inability of programmers and
+business people to understand each other. It's business people being
+ridiculously naive about technology and it's technical people not
+caring who, what or why the bills get paid.
+
+So Erik Meijer and all you other programmer accusers - stop talking
+about how agile sucks. And start actually engaging with businesses to
+help them fix their software delivery.
