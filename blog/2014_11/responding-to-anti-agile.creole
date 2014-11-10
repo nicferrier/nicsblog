@@ -185,7 +185,7 @@ Java//.
 
 Another trusism is that people who like a technique often fixate on it
 and think it's the solution for everyone. The Agile Manifesto has an
-answer to that: //Individuals and interations over processes and
+answer to that: //Individuals and interactions over processes and
 tools// - I like to say //People Not Processes//.
 
 Erik has a whole section of his talk where he explains the best
