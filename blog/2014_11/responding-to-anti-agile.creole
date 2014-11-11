@@ -199,7 +199,7 @@ stops you working though; but have good monitoring and ways of
 abstracting things from breakage before you deliver them.
 
 That doesn't mean you shouldn't have a chaos monkey. But would you
-role out a chaos monkey on a system that wasn't prepared at all for
+roll out a chaos monkey on a system that wasn't prepared at all for
 it? I think that would be easy. I could write a chaos monkey that
 would take down the systems of most companies I've been at. It
 wouldn't need to be sophisticated at all because the software it's
