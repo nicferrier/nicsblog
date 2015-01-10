@@ -1,0 +1,109 @@
+= 7 deadly smells =
+
+A fish rots from the head they say and that's certainly what appears
+to be happening to many enterprises. But if you are a CEO of an
+enterprise company I'm not sure how you are supposed to know what is
+going on in the world. Technology has taken over and a lot of what
+you thought you knew just isn't true anymore. You're probably a
+certain age, a certain gender and a certain sexuality. When you grew
+up the world operated in a certain way. People like you were in
+charge. Now there are these mobile phone thingies, these crazy tech
+companies like Facebook have multi-billion dollar valuations and no
+matter what you do you don't seem to be able to make anything work
+quite like they do.
+
+So I thought I'd write a helpful guide for these folks that they could
+use to at least sense check whether they have a problem with
+technology, or not, as I expect their existing technology leadership
+tell them.
+
+It's not long. I know you're, errrrr... busy. Or something.
+
+== release time ==
+
+How long does it take you to release software? If it takes anything
+longer than 20 minutes you probably have a problem. If it takes more
+than an hour you definitely have a problem. If it takes multiple hours
+you have a laughably serious problem.
+
+This is a very specific question. You can ask it about each one of
+your systems.
+
+== cycle time ==
+
+How long does it take you to deliver an idea that you had? I bet it's
+months. More than 6 months I bet. This is a problem. It means you're
+not cutting the idea down to the essentials. And it means your tech
+leaders are spending time on over engineering (I know! that sounds
+incredible because your systems seem so poor, how could they be
+spending time gold plating??).
+
+== do you have manual sign off? ==
+
+Are your business people affraid to release your software? do they
+insist on having a manual sign off by them before software is
+released? then you have a major problem. You probably have people
+who's job it is to test your website in the dumbest way possible. You
+don't want to be spending money on that. It also means your
+programmers aren't spending time making sure this stuff works.
+
+== your tools are all 10 years old ==
+
+Java, for example. If your technical people say //"we use tried and
+trusted tools"// it's not a good sigh. Technology is about the
+application of new things. We all know that the rate of change is
+accelerating. So why are you using things that are 10 years old? It's
+probably coz the other straight, white guys you've hired to run
+technology are comfortable with what they used when they were still
+real engineers, instead of the managers they've been turned into. You
+know the rate of change is accelerating so why do you accept what
+they're telling you? it's obviously false.
+
+== you don't publish open source software ==
+
+Software isn't like other things. Another thing you know
+implicitly. People spend a lot of time comparing it to building a
+house, or a souflé. It's not. It's nothing like those
+things. Non-technical people compare it to those things because they
+know you need a comparison you udnerstand. One of the ways software is
+different is that it's better when it's collaborative. Open source is
+like, the ultimate, collaboration. You need to be doing it. If you're
+not, you're doing it wrong. Check.
+
+== you have one size fits all for your IT tools ==
+
+Your developers particularly need different tools. If you have an IT
+department that are putting in one strategy for everyone (for example,
+everyone has a Windows desktop) then you are likely causing massive
+problems for building quality software. Technology has made it
+possible for us to manage more complexity. So why are your IT people
+constantly arguing to simplify things?
+
+== diversity ==
+
+Are nearly all your programmers blokes? This leads to poor teams. That
+might sound counter intuitive because the Rugger and Footie teams at
+school were all chaps, right? But then the Rugger and Footie team
+probably also not known for their scientific understanding or
+creativity. Having everyone the //same// leads to group think and
+tolerance of the failure of that sort of individual. That is the enemy
+of good technology.
+
+Note that it's not enough to check you have ladies wandering around
+the tech department. Find out how many non-white and non-male
+programmers you have.
+
+You want to test my assertion? try a tame locker room joke and see how
+your programmers respond.
+
+
+
+== finally ==
+
+These are just 7 things. Note that I didn't talk about how much you
+pay for good IT people. I don't think you'd listen to that. I think
+you'll learn that one for yourself if you start to challenge people on
+these above.
+
+Why should you challenge your people? Well, these are just 7 little
+things right? Why would it be a problem asking?
