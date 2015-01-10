@@ -12,6 +12,9 @@ companies like Facebook have multi-billion dollar valuations and no
 matter what you do you don't seem to be able to make anything work
 quite like they do.
 
+Maybe you can just blame your CIO for this mess. How many have you had
+in the last few years? is it getting any better? No. I thought not.
+
 So I thought I'd write a helpful guide for these folks that they could
 use to at least sense check whether they have a problem with
 technology, or not, as I expect their existing technology leadership
@@ -38,6 +41,17 @@ leaders are spending time on over engineering (I know! that sounds
 incredible because your systems seem so poor, how could they be
 spending time gold plating??).
 
+== you have one size fits all for your IT tools ==
+
+Your developers particularly need different tools to your business
+people. Engineering, after all, is all about tools, hammers, lathes,
+microscopes. IT engineering is no different. If you have a corporate
+IT department that are putting in one strategy for everyone, or worse,
+some outsourced arrangement doing the same thing, then you are likely
+causing massive problems for building quality software. Technology has
+made it possible for us to manage more complexity. So why are your IT
+people constantly arguing to simplify things?
+
 == do you have manual sign off? ==
 
 Are your business people affraid to release your software? do they
@@ -50,7 +64,7 @@ programmers aren't spending time making sure this stuff works.
 == your tools are all 10 years old ==
 
 Java, for example. If your technical people say //"we use tried and
-trusted tools"// it's not a good sigh. Technology is about the
+trusted tools"// it's not a good sign. Technology is about the
 application of new things. We all know that the rate of change is
 accelerating. So why are you using things that are 10 years old? It's
 probably coz the other straight, white guys you've hired to run
@@ -65,19 +79,10 @@ Software isn't like other things. Another thing you know
 implicitly. People spend a lot of time comparing it to building a
 house, or a souflé. It's not. It's nothing like those
 things. Non-technical people compare it to those things because they
-know you need a comparison you udnerstand. One of the ways software is
+know you need a comparison you understand. One of the ways software is
 different is that it's better when it's collaborative. Open source is
 like, the ultimate, collaboration. You need to be doing it. If you're
 not, you're doing it wrong. Check.
-
-== you have one size fits all for your IT tools ==
-
-Your developers particularly need different tools. If you have an IT
-department that are putting in one strategy for everyone (for example,
-everyone has a Windows desktop) then you are likely causing massive
-problems for building quality software. Technology has made it
-possible for us to manage more complexity. So why are your IT people
-constantly arguing to simplify things?
 
 == diversity ==
 
@@ -95,7 +100,6 @@ programmers you have.
 
 You want to test my assertion? try a tame locker room joke and see how
 your programmers respond.
-
 
 
 == finally ==
