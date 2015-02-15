@@ -57,7 +57,7 @@
 	<li id='footertoc'>
 	    <a id='devops'></a><h4>DevOps</h4>
             <ul>
-                <li><a href="/blog/2015_02/7-deadly-smells">7 deadly smells - a small guide for CEOs</a></li>
+                <li><a href="/blog/2015_02/7-deadly-smells-for-ceos">7 deadly smells - a small guide for CEOs</a></li>
                 <li><a href="/blog/2014_11/responding-to-anti-agile">Responding to Anti-Agile</a></li>
                 <li><a href="/blog/2014_08/deploying-blue-green-with-docker">Deploying blue/green with docker and simple shell</a></li>
                 <li><a href="/blog/2014_07/why-juxt-matters">Why Juxt matters and why you should use them</a></li>
