@@ -26,6 +26,20 @@ padding-top: 0em;
 padding-bottom: 2em;
 }
 
+#pagelayer0 {
+content: "";
+background: url(/stuff/img/nic.jpg) no-repeat right;
+background-size: 400px;
+background-attachment: fixed;
+opacity: 0.3;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+position: absolute;
+z-index: -1;
+}
+
 #headlinks {
     margin: 0 0 0 0;
     padding: 0 0 0 0;

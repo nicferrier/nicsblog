@@ -1,7 +1,8 @@
 <div id="page">
+    <div id="pagelayer0"></div>
     <ul id="headlinks">
-        <li>click <a href="/blog/2014_11/responding-to-anti-agile">here for in defence of agile ...</a></li>
+        <li>click here for <a href="/blog/2014_11/responding-to-anti-agile">in defence of agile ...</a></li>
         <li><a href="/blog/2013_08/the-emacs-tapas">why you should do FP with DevOps ...</a></li>
-        <li><a href="#footer">other articles ...</a></li>
+        <li><a href="#footer">other articles from nic ferrier...</a></li>
     </ul>
     <div id="content">
