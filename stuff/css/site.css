@@ -26,6 +26,19 @@ padding-top: 0em;
 padding-bottom: 2em;
 }
 
+#headlinks {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    list-style-type: none;
+    font-style: italic;
+}
+
+#headlinks li {
+    display: inline;
+    margin: 0 2em 0 0;
+    padding: 0 0 0 0;
+}
+
 #sidenav {
 list-style-type: none;
 font-size: 1.3em;

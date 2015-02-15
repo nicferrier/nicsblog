@@ -1,56 +1,7 @@
-<div id="title">
-<a href="#footer">moar articles</a><br/>
-<a href="https://twitter.com/share" class="twitter-share-button" data-via="nicferrier">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<br/>
-<a href="https://twitter.com/nicferrier" class="twitter-follow-button" data-show-count="false">Follow @nicferrier</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<br/>
-<iframe style="border: 0; margin: 0; padding: 0;"
-        src="https://www.gittip.com/nicferrier/widget.html"
-        width="48pt" height="20pt"></iframe>
-</div>
-<div id="header">
-    <ul>
-	<li id='footerside'>
-            <a id="donate"/>
-	    <form action='https://www.paypal.com/cgi-bin/webscr' method='post'>
-		<input type='hidden' name='cmd' value='_s-xclick'/>
-		<input type='hidden' name='hosted_button_id' value='4UGG7UKDFWCQ6'/>
-                <div id="pp_donate" style="font-size: 90%">Click <em>donate</em> to support my work on Emacs, Elnode and Marmalade</div>
-  		<input type='image'
-		       src='https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif' 
-		       border='0'
-			   name='submit'
-			   alt='Donate to efforts on any of this stuff with PayPal.'/>
-		<img alt='' border='0' src='https://www.paypalobjects.com/en_GB/i/scr/pixel.gif' width='1' height='1'/>
-	    </form>
-            <div id="pp_donate" style="font-size: 90%">Or <em>donate</em> with gittip</div>
-            <iframe style="border: 0; margin: 0; padding: 0;"
-                    src="https://www.gittip.com/nicferrier/widget.html"
-                    width="48pt" height="20pt"></iframe>
-            <div style="height: 20px;"></div>
-            <a href="http://uk.linkedin.com/in/nicferrier">
-              <img src="http://www.linkedin.com/img/webpromo/btn_myprofile_160x33.png" width="160" height="33" border="0" alt="View Nic Ferrier's profile on LinkedIn">
-            </a>
-            <div style="height: 20px;"></div>
-            <a href="http://stackoverflow.com/users/130125/nic-ferrier">
-              <img src="http://stackoverflow.com/users/flair/130125.png" 
-                   width="208" height="58" 
-                   alt="profile for nic ferrier at Stack Overflow, Q&amp;A for professional and enthusiast programmers" 
-                   title="profile for nic ferrier at Stack Overflow, Q&amp;A for professional and enthusiast programmers"></img>
-            </a>
-            <div style="height: 20px;"></div>
-            <a style="float: right; display: block; background-color: white; height: 40px; width: 250px; border: 1px solid #ff8000;" 
-               href="http://emacswiki.org/emacs/NicFerrier">
-                <span style="color: #ff8000">nic ferrier emacswiki</span> <img height="30px" src="http://www.emacswiki.org/emacs_logo.png"></img>
-            </a>
-            <div style="height: 60px;"></div>
-            <a style="float: right; display: block; padding-right: 1em; background-color: white; background-image: url(https://raw.github.com/nicferrier/elnode/master/default-wiki-logo.gif); height: 40px; width: 250px; border: 1px solid #4183C4;"
-               href="https://github.com/nicferrier/elnode">
-                <span style="color: Black; font-weight: bold;">elnode @github</span>
-            </a>
-	</li>
-</div>
 <div id="page">
-<div id="content">
+    <ul id="headlinks">
+        <li>click <a href="/blog/2014_11/responding-to-anti-agile">here for in defence of agile ...</a></li>
+        <li><a href="/blog/2013_08/the-emacs-tapas">why you should do FP with DevOps ...</a></li>
+        <li><a href="#footer">other articles ...</a></li>
+    </ul>
+    <div id="content">
