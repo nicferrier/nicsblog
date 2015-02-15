@@ -290,12 +290,11 @@ And that sounds great. It sounds a bit like the hacker culture that
 Meijer says he is seeking. But it's not command and control. It's not
 the Army. Which he also says he's seeking.
 
-It appears to be anarchy. But it's not anarchy of course. The
-programmers can be trusted to do the right thing because they're all
-super smart and mature programmers. Among the best programmers in the
-world. And that's because Facebook is an attractive place to
-work. Netflix have the same attitude. They hire what they think are
-the best people.
+It appears to be anarchy. But it's not chaos. The programmers can be
+trusted to do the right thing because they're all super smart and
+mature programmers. Among the best programmers in the world. And
+that's because Facebook is an attractive place to work. Netflix have
+the same attitude. They hire what they think are the best people.
 
 Who doesn't hire what they think are the best people? Well, most firms
 as it turns out. It turns out that not even Facebook and Netflix do
