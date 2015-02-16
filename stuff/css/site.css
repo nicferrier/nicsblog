@@ -30,7 +30,7 @@ padding-bottom: 2em;
 content: "";
 background: url(/stuff/img/nic.jpg) no-repeat right;
 background-size: 400px;
-background-attachment: fixed;
+background-attachment: scroll;
 opacity: 0.3;
 top: 0;
 left: 0;
