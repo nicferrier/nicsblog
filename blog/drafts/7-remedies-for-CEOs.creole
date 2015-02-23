@@ -1,0 +1,170 @@
+= 7 remedies for CEOs =
+
+I recently published
+some
+[[/blog/2015_02/7-deadly-smells-for-ceos|advice for the CEO in your life]]
+and some people suggested to me that it was all too easy to throw
+rocks at these guys (because they are, nearly always, guys) but it
+would be better, said these people, not to throw rocks but to suggest
+fixes.
+
+Well, in my experience, CEOs aren't listening to anyone except the
+last person to leave from the bar at Davos... but hey ho. I'm game!
+
+So here are the 7 blindingly obvious, to me at least, things that a
+CEO of an enterprise company could do to fix his or her business so
+they don't get eaten by software.
+
+
+== decide to do some things - monitor them ==
+
+This is the headline. Too many businesses are destroyed by the
+leadership having no focus. Y'all should be happy with this one
+because it's touted by all those business books you love to read when
+no one's looking.
+
+One key thing that I would emphasize here is the monitoring. Decide
+how you will monitor success and then do it... if you do that you have
+a clear goal that everyone in your organization can understand. I'd
+expect you to publish graphs.
+
+
+== hire good technical leaders ==
+
+A little controversial maybe... but lots of times I find that
+inexperienced technology leadership is holding organizations
+back. //Inexperienced?// you say looking at your 55 year old head of
+IT. Yeah, sure. But when was the last time he wrote a mobile app? Or
+debugged your website's client side memory profile. Should he be doing
+that? Not every day maybe but he should have a grasp.
+
+Their current employers may not thank me for mentioning them but
+here's a list of people in my contact book, for these kind of
+emergencies:
+
+J.P.Rangaswami
+Guy Duncan
+Rebecca Parsons
+Alex Fishlock
+Fred George
+Sue Black
+Caterina Fake
+Adiran Cockroft
+Dan Cresswell
+Martin Fowler
+
+I've left off Marissa Mayer. I don't think you could afford her.
+
+Some of these people might need a lot of persuading. But I think you
+could find passionate, committed, clever, insightful technologists who
+also know how to manage people.
+
+
+== set a target to reduce people or spend ==
+
+Whether you do software in house or buy it in you should look to be
+reducing money. But you should also be looking to increase spend on
+software production as a share of your overall operations.
+
+Whoa. How does that make sense? If IT isn't transforming the way you
+do business and making some people redundant it's not doing it's job.
+
+We all know that middle class jobs are now being threatened by IT. We
+can't run away from that. Do you want to make those parts automated
+and efficient now, when you can afford to say goodbye to people with
+good severence? or when you're really in trouble?
+
+If you do a lot of in house software and IT then setting an
+expectation of a slim down might just encourage the right solutions to
+emerge, instead of a lot of over engineered rubbish.
+
+Getting rid of any technology people who are not alligned with
+delivering to customers seems particularly obvious.
+
+
+== agree a strategy to demise all systems within 2 years ==
+
+Your products all suck. Don't they? Find out. Ask a teenager. Or maybe
+a customer.
+
+If they do, probably that's because you don't build products. Probably
+you build systems. Probably the hot shot IT director you've hired will
+tell you that.
+
+So make the statement that you'll demise all systems within 2
+years. Maybe you won't achieve that across the board, but at least it
+will be the right direction.
+
+Agreeing to do this with //all systems, all the time, forever// would be a
+//really// clever strategy.
+
+== set an expectation of 50% women in engineering - support efforts to achieve it ==
+
+I said in [[/blog/2015_02/7-deadly-smells-for-ceos|7 deadly smells]]
+that diversity was a big problem in products and technology because of
+the tendency of non-diverse groups to think the same.
+
+Fix it. It's not hard. The lowest hanging fruit for diversity in
+technical functions is gender diversity. There are a LOT of technical
+women. You can hire them with a little creativity.
+
+How? Well here are two suggestions:
+
+The attrition rate on women leaving the tech industry is enormous. No
+one is completely sure why this is. But it's your opportunity. What
+can you do to hire in Women who have left tech functions in other
+companies? Whatever you can do, do it.
+
+A second suggestion is to form or use hacker schools. These are low
+cost engineering schools where people learn how to code. Find one or
+form one where you are or in your nearest city. Sponsor it. Give them
+money. Even more valuable, give them time from your senior IT
+people. Even more valuable than that, show them your code. Then
+promise to hire any woman they graduate.
+
+Is diversity just about gender? No. But gender is a massive part of it
+and if you can fix that then you'll be on the path to better
+technology.
+
+
+== make a reward structure that rotates people ==
+
+Too many people in enterprises just get stuck there. I don't have much
+science for this, but I reckon engineers start to seriously lose
+effectiveness after 5 years at a company. 5 years is a technology
+cycle. You can try most things in 5 years. After 5 years the
+temptation not to try something new because //We tried that already//
+is strong. Your people should avoid that problem by leaving and going
+somewhere new.
+
+You should encourage that by rewarding people to leave. You could give
+hiring bonuses. Make promotion only by hiring. Make sure people do
+exit interviews. Build a network of ex-employees. Have events for
+ex-employees. Encourage them back (if they're good).
+
+== get involved ==
+
+Lastly. My little joke. None of this will work unless you get involved
+in technology more. If you're failing this is why. Is there a danger
+of meddling? you bet. Don't meddle. Listen to the rock star technology
+leader like you'd listen to your doctor. But you can get involved
+without meddling and without playing second fiddle to them.
+
+Attend your internal technology steering meetings. Demand that they be
+understandable.
+
+Learn how to code (seriously, everyone is doing this now, even
+Presidents).
+
+Go and visit a hacker school. Hang out.
+
+Ask your kids about tech. Go to your kids school.
+
+Learn how to be a product owner. Read books about it. Talk to good
+product owners.
+
+
+== All fixed now ==
+
+So there we are. My solutions. No one can claim I'm just throwing
+bricks now.
