@@ -19,9 +19,9 @@ they don't get eaten by software.
 == decide to do some things - monitor them ==
 
 This is the headline. Too many businesses are destroyed by the
-leadership having no focus. Y'all should be happy with this one
-because it's touted by all those business books you love to read when
-no one's looking.
+leadership having no focus. This is hardly new, it's touted by all
+those business books that are top sellers all the time. But still it
+seems a problem.
 
 One key thing that I would emphasize here is the monitoring. Decide
 how you will monitor success and then do it... if you do that you have
@@ -33,7 +33,7 @@ expect you to publish graphs.
 
 A little controversial maybe... but lots of times I find that
 inexperienced technology leadership is holding organizations
-back. //Inexperienced?// you say looking at your 55 year old head of
+back. //Inexperienced?// you say, looking at your 55 year old head of
 IT. Yeah, sure. But when was the last time he wrote a mobile app? Or
 debugged your website's client side memory profile. Should he be doing
 that? Not every day maybe but he should have a grasp.
@@ -42,16 +42,9 @@ Their current employers may not thank me for mentioning them but
 here's a list of people in my contact book, for these kind of
 emergencies:
 
-J.P.Rangaswami
-Guy Duncan
-Rebecca Parsons
-Alex Fishlock
-Fred George
-Sue Black
-Caterina Fake
-Adiran Cockroft
-Dan Cresswell
-Martin Fowler
+J.P.Rangaswami, Guy Duncan, Rebecca Parsons, Alex Fishlock, Fred
+George, Sue Black, Caterina Fake, Adiran Cockroft, Dan Cresswell,
+Martin Fowler.
 
 I've left off Marissa Mayer. I don't think you could afford her.
 
@@ -133,7 +126,7 @@ Too many people in enterprises just get stuck there. I don't have much
 science for this, but I reckon engineers start to seriously lose
 effectiveness after 5 years at a company. 5 years is a technology
 cycle. You can try most things in 5 years. After 5 years the
-temptation not to try something new because //We tried that already//
+temptation not to try something new because //we tried that already//
 is strong. Your people should avoid that problem by leaving and going
 somewhere new.
 
