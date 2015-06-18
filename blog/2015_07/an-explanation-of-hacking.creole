@@ -1,0 +1,49 @@
+= what hacking is =
+
+Hacking. It famously avoids definition. I've been thinking about this
+in the context of the DevOps movement. It's long been my view that
+DevOps just means making people into hackers, instead of dev, or ops
+(or test, or ux, or release engineering, or tools builders, or, or,
+or....)
+
+But the other day I came up with what I think is an amusing
+definition.
+
+A scientist is a person who finds and explains problems. For example,
+a scientist may be someone who realizes that the planet is warming up
+and further, that this is related to our use of fossil fuels. They may
+be brilliant at explaining that problem and showing the data.
+
+But ask them to come up with a solution and the solution may surprise
+you. For example, it might be a dyson sphere. A dyson sphere follows
+completely logically from an increasing use of energy and an over use
+of fossil fules. We're obviously going to carry on getting worse and
+worse, we should wrap the sun in a big metal sphere and collect all
+it's energy. Then we could reuse that energy in the most efficient
+way.
+
+An engineer is someone who might build what someone else has thought
+up. They rarely look for problems themselves and when they do it will
+probably be in a pattern based way: "there's a river. we need a
+bridge. I've built bridges".
+
+When the engineer is asked to build the dyson sphere it will get
+done. It'll be right. They'll make sure.
+
+A hacker might identify the problem of global warming. Or even just
+one aspect of it. But a hacker would never try to solve the problem
+with a dyson sphere. A hacker would always look for a more elegant
+solution. A hacker might look at the problem a totally different way
+in order to effect some sort of solution. For example, a hacker might
+say, the real problem is that we don't have an abstraction system for
+our energy. If we did, then alternative sources to fossil fuels would
+be possible. And that might encourage us to find different solutions.
+
+So, in other words, a hacker is someone who is able to understand and
+redefine problems to implement elegant solutions. They may not
+actually solve the problem. But they will be seeking to make it better
+in some way.
+
+Of course, this may explain why lots of people hate hackers. Because
+hackers don't do what you want. Annoyingly, they nearly always do
+something else.
