@@ -39,7 +39,8 @@ async function wiki2html (page) {
 exports.boot = function (portToListen, options) {
     let opts = options != undefined ? options : {};
     let rootDir = opts.rootDir != undefined ? opts.rootDir : __dirname + "/stuff";
-
+    console.log("rootDir", rootDir);
+    
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
@@ -74,7 +75,7 @@ exports.boot = function (portToListen, options) {
                 res.send(page);
             });
     
-    app.listen(portToListen, "localhost", function () {
+    app.listen(portToListen, "0.0.0.0", function () {
         console.log("listening on " + portToListen);
     });
 };
