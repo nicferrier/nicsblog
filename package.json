@@ -1,0 +1,43 @@
+{
+    "name": "nicsblog",
+    "version": "1.0.0",
+    "description": "this is Nic's blog which is a collection of creole.el creole files.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nicferrier/nicsblog.git"
+    },
+    "keywords": [],
+    "author": "Nic Ferrier, nic@ferrier.me.uk",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/nicferrier/nicsblog/issues"
+    },
+    "homepage": "https://github.com/nicferrier/nicsblog#readme",
+    "dependencies": {
+        "bcrypt": "^2.0.1",
+        "body-parser": "1.17.1",
+        "cookie-parser": "^1.4.3",
+        "eventsource": "^1.0.5",
+        "express": "4.14.0",
+        "express-http-proxy": "^1.2.0",
+        "express-jwt": "^5.3.1",
+        "form-data": "^2.3.2",
+        "multer": "^1.3.0",
+        "npm-creole": "^0.3.6",
+        "pg": "^7.4.1",
+        "serve-index": "1.8.0",
+        "sse-node": "1.0.2"
+    },
+    "devDependencies": {
+        "deep-equal": "1.0.1",
+        "assert-promise": "0.0.3",
+        "sha1": "1.1.1"
+    },
+    "engines": {
+        "node": ">=0.6"
+    }
+}
